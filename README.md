@@ -27,3 +27,4 @@ Avec comme paramètres: </br>
 <li>query : on entre le nom du film qu'on recherche</li>
 <li>language: permet de définir le retour de la requete que l'on souhaite</li>
 </ul>
+Avec ça, on peut récupérer l'id du film qui nous servira pour d'autres requête afin de compléter les informations. <br>
