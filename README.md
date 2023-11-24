@@ -42,3 +42,20 @@ Avec comme paramètres: </br>
 <li>movie_id: avec l'id du film que l'on peut récupérer dans la recherche du film</li>
 <li>language: permet de définir le langage du retour de la requete que l'on souhaite</li>
 </ul>
+Pour des images supplémentaires :
+GET https://api.themoviedb.org/3/movie/{movie_id}/images </br>
+Avec comme paramètres:
+<ul>
+<li>movie_id: avec l'id du film que l'on peut récupérer dans la recherche du film</li>
+</ul>
+Pour des mots clés :
+GET https://api.themoviedb.org/3/movie/{movie_id}/keywords </br>
+<ul>
+<li>movie_id: avec l'id du film que l'on peut récupérer dans la recherche du film</li>
+</ul>
+Pour des vidéos :
+GET  https://example.com/3/movie/{movie_id}/videos </br>
+<ul>
+<li>movie_id: avec l'id du film que l'on peut récupérer dans la recherche du film</li>
+<li>language: permet de définir le langage du retour de la requete que l'on souhaite</li>
+</ul>
