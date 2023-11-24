@@ -20,8 +20,8 @@ samples, guidance on mobile development, and a full API reference.
 
 <b>API key :</b> 5dab12725eee000f48841e59fcf60567
 
-Pour les recherches, utiliser la requete: </br>
-GET https://api.themoviedb.org/3/search/movie?api_key=5dab12725eee000f48841e59fcf60567&query=Hunger&language=fr-FR
+Pour les recherches, utiliser la requete : 
+GET https://api.themoviedb.org/3/search/movie?api_key=5dab12725eee000f48841e59fcf60567&query=Hunger&language=fr-FR </br>
 Avec comme paramètres:
 query : on entre le nom du film qu'on recherche
 language: permet de définir le retour de la requete que l'on souhaite
