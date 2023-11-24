@@ -25,6 +25,13 @@ GET https://api.themoviedb.org/3/search/movie?api_key=5dab12725eee000f48841e59fc
 Avec comme paramètres: </br>
 <ul>
 <li>query : on entre le nom du film qu'on recherche</li>
-<li>language: permet de définir le retour de la requete que l'on souhaite</li>
+<li>language: permet de définir le langage du retour de la requete que l'on souhaite</li>
 </ul>
-Avec ça, on peut récupérer l'id du film qui nous servira pour d'autres requête afin de compléter les informations. <br>
+Avec ça, on peut récupérer l'id du film qui nous servira pour d'autres requête afin de compléter les informations. </br>
+Pour les détails du film :
+GET https://api.themoviedb.org/3/movie/{movie_id} </br>
+Avec comme paramètre: </br>
+<ul>
+<li>movie_id: avec l'id du film que l'on peut récupérer dans la recherche du film</li>
+<li>language: permet de définir le langage du retour de la requete que l'on souhaite</li>
+</ul>
