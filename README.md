@@ -30,7 +30,14 @@ Avec comme paramètres: </br>
 Avec ça, on peut récupérer l'id du film qui nous servira pour d'autres requête afin de compléter les informations. </br>
 Pour les détails du film :
 GET https://api.themoviedb.org/3/movie/{movie_id} </br>
-Avec comme paramètre: </br>
+Avec comme paramètres: </br>
+<ul>
+<li>movie_id: avec l'id du film que l'on peut récupérer dans la recherche du film</li>
+<li>language: permet de définir le langage du retour de la requete que l'on souhaite</li>
+</ul>
+Pour les acteurs du films :
+GET https://api.themoviedb.org/3/movie/{movie_id}/credits </br>
+Avec comme paramètres: </br>
 <ul>
 <li>movie_id: avec l'id du film que l'on peut récupérer dans la recherche du film</li>
 <li>language: permet de définir le langage du retour de la requete que l'on souhaite</li>
