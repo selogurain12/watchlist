@@ -14,3 +14,15 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+# API TMDB utilisation
+<b>Lien vers le profil :</b>
+https://www.themoviedb.org/u/Lora2208
+
+API key: 5dab12725eee000f48841e59fcf60567
+
+Pour les recherches, utiliser la requete:
+GET https://api.themoviedb.org/3/search/movie?api_key=5dab12725eee000f48841e59fcf60567&query=Hunger&language=fr-FR
+Avec comme paramètres:
+query : on entre le nom du film qu'on recherche
+language: permet de définir le retour de la requete que l'on souhaite
