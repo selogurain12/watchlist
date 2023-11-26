@@ -18,8 +18,6 @@ samples, guidance on mobile development, and a full API reference.
 # API TMDB utilisation
 <b>Lien vers le profil :</b> https://www.themoviedb.org/u/Lora2208
 
-<b>API key :</b> 5dab12725eee000f48841e59fcf60567
-
 Pour les recherches, utiliser la requete : 
 GET https://api.themoviedb.org/3/search/movie?api_key=5dab12725eee000f48841e59fcf60567&query=Hunger&language=fr-FR </br>
 Avec comme paramètres: </br>
