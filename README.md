@@ -59,3 +59,8 @@ GET  https://example.com/3/movie/{movie_id}/videos </br>
 <li>movie_id: avec l'id du film que l'on peut récupérer dans la recherche du film</li>
 <li>language: permet de définir le langage du retour de la requete que l'on souhaite</li>
 </ul>
+Pour obtenir les sites de diffusions :
+GET https://api.themoviedb.org/3/movie/{movie_id}/watch/providers </br>
+<ul>
+<li>movie_id: avec l'id du film que l'on peut récupérer dans la recherche du film</li>
+</ul>
