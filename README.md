@@ -67,3 +67,9 @@ GET https://api.themoviedb.org/3/movie/{movie_id}/watch/providers?api_key=5dab12
 Pour obtenir un livre spécifique, il faut taper cette requête :<br/>
 GET https://www.googleapis.com/books/v1/volumes?q=Le+Manoir&key=AIzaSyCGcSwncdebsrg9ikPuAadV94BiX7HySjc<br/>
 q permet de passer en paramètre le titre d'un livre, on peut ainsi obtenir ses infos.
+
+# Lancement de l'application
+Ce servir de la commande :
+```
+flutter run
+```
