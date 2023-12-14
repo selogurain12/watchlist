@@ -73,3 +73,4 @@ Ce servir de la commande :
 ```
 flutter run
 ```
+Et lancer un emulateur pour voir le résultat.
