@@ -18,7 +18,7 @@ samples, guidance on mobile development, and a full API reference.
 # API TMDB utilisation
 <b>Lien vers le profil :</b> https://www.themoviedb.org/u/Lora2208
 
-Pour les recherches, utiliser la requete : 
+Pour les recherches, utiliser la requete : <br/>
 GET https://api.themoviedb.org/3/search/movie?api_key=5dab12725eee000f48841e59fcf60567&query=Hunger&language=fr-FR </br>
 Avec comme paramètres: </br>
 <ul>
@@ -26,44 +26,44 @@ Avec comme paramètres: </br>
 <li>language: permet de définir le langage du retour de la requete que l'on souhaite</li>
 </ul>
 Avec ça, on peut récupérer l'id du film qui nous servira pour d'autres requête afin de compléter les informations. </br>
-Pour les détails du film :
+Pour les détails du film :<br/>
 GET https://api.themoviedb.org/3/movie/{movie_id}?api_key=5dab12725eee000f48841e59fcf60567&language=fr-FR </br>
 Avec comme paramètres: </br>
 <ul>
 <li>movie_id: avec l'id du film que l'on peut récupérer dans la recherche du film</li>
 <li>language: permet de définir le langage du retour de la requete que l'on souhaite</li>
 </ul>
-Pour les acteurs du films :
+Pour les acteurs du films :<br/>
 GET https://api.themoviedb.org/3/movie/{movie_id}/credits?api_key=5dab12725eee000f48841e59fcf60567&language=fr-FR </br>
 Avec comme paramètres: </br>
 <ul>
 <li>movie_id: avec l'id du film que l'on peut récupérer dans la recherche du film</li>
 <li>language: permet de définir le langage du retour de la requete que l'on souhaite</li>
 </ul>
-Pour des images supplémentaires :
+Pour des images supplémentaires :<br/>
 GET https://api.themoviedb.org/3/movie/{movie_id}/images?api_key=5dab12725eee000f48841e59fcf60567&language=fr-FR </br>
 Avec comme paramètres:
 <ul>
 <li>movie_id: avec l'id du film que l'on peut récupérer dans la recherche du film</li>
 </ul>
-Pour des mots clés :
+Pour des mots clés :<br/>
 GET https://api.themoviedb.org/3/movie/{movie_id}/keywords?api_key=5dab12725eee000f48841e59fcf60567&language=fr-FR </br>
 <ul>
 <li>movie_id: avec l'id du film que l'on peut récupérer dans la recherche du film</li>
 </ul>
-Pour des vidéos :
+Pour des vidéos :<br/>
 GET  https://example.com/3/movie/{movie_id}/videos?api_key=5dab12725eee000f48841e59fcf60567&language=fr-FR </br>
 <ul>
 <li>movie_id: avec l'id du film que l'on peut récupérer dans la recherche du film</li>
 <li>language: permet de définir le langage du retour de la requete que l'on souhaite</li>
 </ul>
-Pour obtenir les sites de diffusions :
+Pour obtenir les sites de diffusions :<br/>
 GET https://api.themoviedb.org/3/movie/{movie_id}/watch/providers?api_key=5dab12725eee000f48841e59fcf60567&language=fr-FR </br>
 <ul>
 <li>movie_id: avec l'id du film que l'on peut récupérer dans la recherche du film</li>
 </ul>
 
 # API Books utilisation
-Pour obtenir un livre spécifique, il faut taper cette requête :
-GET https://www.googleapis.com/books/v1/volumes?q=Le+Manoir&key=AIzaSyCGcSwncdebsrg9ikPuAadV94BiX7HySjc
+Pour obtenir un livre spécifique, il faut taper cette requête :<br/>
+GET https://www.googleapis.com/books/v1/volumes?q=Le+Manoir&key=AIzaSyCGcSwncdebsrg9ikPuAadV94BiX7HySjc<br/>
 q permet de passer en paramètre le titre d'un livre, on peut ainsi obtenir ses infos.
