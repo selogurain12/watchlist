@@ -23,7 +23,9 @@ ApiMovieResponseModel _$ApiMovieResponseModelFromJson(
     ApiMovieResponseModel(
       id: json['id'] as int?,
       backdrop_path: json['backdrop_path'] as String?,
-      genre_ids: json['genre_ids'] as List<dynamic>?,
+      genre_ids: (json['genre_ids'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       original_language: json['original_language'] as String?,
       original_title: json['original_title'] as String?,
       overview: json['overview'] as String?,

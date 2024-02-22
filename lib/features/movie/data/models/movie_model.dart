@@ -31,7 +31,7 @@ class ApiMovieRequestModel extends ApiMovieRequestEntity {
 class ApiMovieResponseModel extends ApiMovieResponseEntity {
   final int? id;
   final String? backdrop_path;
-  final List? genre_ids;
+  final List<String>? genre_ids;
   final String? original_language;
   final String? original_title;
   final String? overview;
