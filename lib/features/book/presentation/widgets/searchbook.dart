@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:whashlist/features/book/presentation/bloc/book_bloc.dart';
 import 'package:whashlist/features/book/presentation/bloc/book_event.dart';
 import 'package:whashlist/features/book/presentation/bloc/book_state.dart';
@@ -32,9 +33,6 @@ class _SearchBookState extends State<SearchBook> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Rechercher un livre'),
-      ),
       body: Column(
         children: [
           Padding(
@@ -72,17 +70,42 @@ class _SearchBookState extends State<SearchBook> {
                 if (state is BookLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is BookLoaded) {
-                    return ListView.builder(
-                      itemCount: state.searchbook?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        final book = state.searchbook?[index];
-                        return ListTile(
-                          leading: Image.network(book?.imageLink ?? '', fit: BoxFit.cover, width: 50, height: 50,), // Assurez-vous que 'imageLink' est l'URL de l'image du livre
-                          title: Text(book?.title ?? 'Titre inconnu'),
-                        );
-                      },
-                    );
-                  } else if (state is BookError) {
+                  return GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // Nombre de colonnes
+                      childAspectRatio: 0.7, // Ratio pour la taille des enfants
+                      crossAxisSpacing: 8, // Espacement horizontal
+                      mainAxisSpacing: 8, // Espacement vertical
+                    ),
+                    itemCount: state.searchbook?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      final book = state.searchbook?[index];
+                      return Card(
+                        margin: EdgeInsets.all(8),
+                        child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            children: [
+                              Expanded(
+                               child: InkWell(
+                                onTap: () {
+                                  context.go("/detailsbook", extra: book);
+                                },
+                                child: Image.network(
+                                  book!.imageLink ?? "",
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(book.title ?? 'Titre inconnu', textAlign: TextAlign.center),
+                          ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                } else if (state is BookError) {
                   return const Center(child: Text('Erreur de chargement'));
                 }
                 return const SizedBox.shrink();
