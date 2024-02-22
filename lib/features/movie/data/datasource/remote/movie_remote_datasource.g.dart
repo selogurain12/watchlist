@@ -21,7 +21,7 @@ class _MovieApiService implements MovieApiService {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<ApiMovieResponseModel>> searchmovie({
+  Future<HttpResponse<List<ApiMovieResponseModel>>> searchmovie({
     ApiMovieRequestModel? body,
     String? contentType,
     String? accept,
@@ -36,8 +36,8 @@ class _MovieApiService implements MovieApiService {
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<ApiMovieResponseModel>>(Options(
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<HttpResponse<List<ApiMovieResponseModel>>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -45,7 +45,7 @@ class _MovieApiService implements MovieApiService {
     )
             .compose(
               _dio.options,
-              '/movie/',
+              '/movie',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -54,7 +54,10 @@ class _MovieApiService implements MovieApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiMovieResponseModel.fromJson(_result.data!);
+    var value = _result.data!
+        .map((dynamic i) =>
+            ApiMovieResponseModel.fromJson(i as Map<String, dynamic>))
+        .toList();
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

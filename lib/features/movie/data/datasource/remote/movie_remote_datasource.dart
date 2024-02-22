@@ -9,8 +9,8 @@ part 'movie_remote_datasource.g.dart';
 abstract class MovieApiService {
   factory MovieApiService(Dio dio) = _MovieApiService;
 
-  @POST("/movie/")
-  Future<HttpResponse<ApiMovieResponseModel>> searchmovie ({
+  @POST("/movie")
+  Future<HttpResponse<List<ApiMovieResponseModel>>> searchmovie ({
     @Body() ApiMovieRequestModel? body,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,

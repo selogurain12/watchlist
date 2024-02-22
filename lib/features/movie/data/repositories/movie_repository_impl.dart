@@ -10,7 +10,7 @@ class ApiMovieRepositoryImpl implements ApiMovieRepository {
   const ApiMovieRepositoryImpl(this.apiService);
 
   @override
-  Future<DataState<ApiMovieResponseModel>> searchmovie (
+  Future<DataState<List<ApiMovieResponseModel>>> searchmovie (
       {ApiMovieRequestEntity? body}) async {
     try {
       final response = await apiService.searchmovie(
