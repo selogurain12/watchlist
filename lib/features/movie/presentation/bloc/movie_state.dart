@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:whashlist/features/movie/domain/entities/movie_entity.dart';
 
 abstract class MovieState {
-  final ApiMovieResponseEntity? searchmovie;
+  final List<ApiMovieResponseEntity>? searchmovie;
   final DioException? error;
 
   const MovieState({
@@ -16,7 +16,7 @@ class MovieLoading extends MovieState {
 }
 
 class MovieLoaded extends MovieState {
-  const MovieLoaded({ApiMovieResponseEntity? searchmovie}) : super(searchmovie: searchmovie);
+  const MovieLoaded({List<ApiMovieResponseEntity>? searchmovie}) : super(searchmovie: searchmovie);
 }
 
 class MovieError extends MovieState {
