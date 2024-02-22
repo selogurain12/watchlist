@@ -33,55 +33,84 @@ class _AddMovieState extends State<AddMovie> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MovieBloc, MovieState>(
-      bloc: movieBloc,
-      builder: (context, state) {
-        String displayText = '';
-
-        if (state is MovieLoaded) {
-            displayText =
-                'Title: ${state.searchmovie?.title}';
-        }
-
-        print('Display Text: $query');
-
-
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () {
-                  movieBloc.add(SearchMovieEvent(query: query.text));
-                },
-              ),
-              Expanded(
-                child: TextFormField(
-                  controller: query,
-                  decoration: InputDecoration(
-                    hintText: 'Chercher un film...',
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: () {
-                        query.clear();
-                      },
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+     return Scaffold(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () {
+                    movieBloc.add(SearchMovieEvent(query: query.text));
+                  },
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: query,
+                    decoration: InputDecoration(
+                      hintText: 'Chercher un film...',
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () => query.clear(),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 16),
-              Text(
-                displayText,
-                style: const TextStyle(fontSize: 16),
-              ),
-            ],
+              ],
+            ),
           ),
-        );
-      },
+          Expanded(
+            child: BlocBuilder<MovieBloc, MovieState>(
+              bloc: movieBloc,
+              builder: (context, state) {
+                if (state is MovieLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is MovieLoaded) {
+                  return GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // Nombre de colonnes
+                      childAspectRatio: 0.7, // Ratio pour la taille des enfants
+                      crossAxisSpacing: 8, // Espacement horizontal
+                      mainAxisSpacing: 8, // Espacement vertical
+                    ),
+                    itemCount: state.searchmovie?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      final movie = state.searchmovie?[index];
+                      return Card(
+                        margin: const EdgeInsets.all(8),
+                        child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Image.network(
+                                  "https://image.tmdb.org/t/p/original/${movie!.poster_path}",
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Text(movie.title ?? 'Titre inconnu',
+                                  textAlign: TextAlign.center),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                } else if (state is MovieError) {
+                  return const Center(child: Text('Erreur de chargement'));
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
