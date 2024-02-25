@@ -32,6 +32,17 @@ ApiMovieResponseModel _$ApiMovieResponseModelFromJson(
       poster_path: json['poster_path'] as String?,
       release_date: json['release_date'] as String?,
       title: json['title'] as String?,
+      budget: json['budget'] as int?,
+      homepage: json['homepage'] as String?,
+      companiesname: (json['companiesname'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      companieslogo: (json['companieslogo'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      revenue: json['revenue'] as int?,
+      runtime: json['runtime'] as int?,
+      vote_average: (json['vote_average'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$ApiMovieResponseModelToJson(
@@ -46,4 +57,11 @@ Map<String, dynamic> _$ApiMovieResponseModelToJson(
       'poster_path': instance.poster_path,
       'release_date': instance.release_date,
       'title': instance.title,
+      'budget': instance.budget,
+      'homepage': instance.homepage,
+      'companiesname': instance.companiesname,
+      'companieslogo': instance.companieslogo,
+      'revenue': instance.revenue,
+      'runtime': instance.runtime,
+      'vote_average': instance.vote_average,
     };

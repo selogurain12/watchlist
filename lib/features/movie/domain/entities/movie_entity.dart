@@ -24,6 +24,13 @@ class ApiMovieResponseEntity extends Equatable {
   final String? poster_path;
   final String? release_date;
   final String? title;
+  final int? budget;
+  final String? homepage;
+  final List<String>? companiesname;
+  final List<String>? companieslogo;
+  final int? revenue;
+  final int? runtime;
+  final double? vote_average;
 
 
   const ApiMovieResponseEntity({
@@ -36,6 +43,13 @@ class ApiMovieResponseEntity extends Equatable {
     this.poster_path,
     this.release_date,
     this.title,
+    this.budget,
+    this.homepage,
+    this.companiesname,
+    this.companieslogo,
+    this.revenue,
+    this.runtime,
+    this.vote_average
   });
 
   @override
@@ -49,5 +63,12 @@ class ApiMovieResponseEntity extends Equatable {
     poster_path,
     release_date,
     title,
+    budget,
+    homepage,
+    companiesname,
+    companieslogo,
+    revenue,
+    runtime,
+    vote_average
   ];
 }

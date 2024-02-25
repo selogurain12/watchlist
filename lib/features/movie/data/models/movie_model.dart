@@ -38,6 +38,13 @@ class ApiMovieResponseModel extends ApiMovieResponseEntity {
   final String? poster_path;
   final String? release_date;
   final String? title;
+  final int? budget;
+  final String? homepage;
+  final List<String>? companiesname;
+  final List<String>? companieslogo;
+  final int? revenue;
+  final int? runtime;
+  final double? vote_average;
 
   const ApiMovieResponseModel({
     this.id,
@@ -49,6 +56,13 @@ class ApiMovieResponseModel extends ApiMovieResponseEntity {
     this.poster_path,
     this.release_date,
     this.title,
+    this.budget,
+    this.homepage,
+    this.companiesname,
+    this.companieslogo,
+    this.revenue,
+    this.runtime,
+    this.vote_average,
 }): super(
     id: id,
     backdrop_path: backdrop_path,
@@ -59,6 +73,13 @@ class ApiMovieResponseModel extends ApiMovieResponseEntity {
     poster_path: poster_path,
     release_date: release_date,
     title: title,
+    budget: budget,
+    homepage: homepage,
+    companiesname: companiesname,
+    companieslogo: companieslogo,
+    revenue: revenue,
+    runtime: runtime,
+    vote_average: vote_average
   );
 
   factory ApiMovieResponseModel.fromJson(Map<String, dynamic> json) =>
@@ -76,6 +97,13 @@ class ApiMovieResponseModel extends ApiMovieResponseEntity {
       poster_path: entity.poster_path,
       release_date: entity.release_date,
       title: entity.title,
+      budget: entity.budget,
+      homepage: entity.homepage,
+      companiesname: entity.companiesname,
+      companieslogo: entity.companieslogo,
+      revenue: entity.revenue,
+      runtime: entity.runtime,
+      vote_average: entity.vote_average
     );
   }
 }
