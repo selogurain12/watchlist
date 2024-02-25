@@ -1,7 +1,9 @@
 import 'package:whashlist/features/book/domain/entities/book_entity.dart';
 import 'package:whashlist/features/book/presentation/pages/detailsbook_screen.dart';
 import 'package:whashlist/features/book/presentation/pages/searchbook_screen.dart';
+import 'package:whashlist/features/movie/domain/entities/movie_entity.dart';
 import 'package:whashlist/features/movie/presentation/pages/addmovie_screen.dart';
+import 'package:whashlist/features/movie/presentation/pages/detailsmovie_screen.dart';
 import 'package:whashlist/features/user/presentation/pages/login_screen.dart';
 import 'package:whashlist/features/user/presentation/pages/register_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -39,6 +41,13 @@ final router = GoRouter(
       builder: ((context, state) {
         final book = state.extra as ApiBookResponseEntity;
         return DetailsbookScreen(book: book);
+      }) 
+    ),
+    GoRoute(
+      path: '/detailsmovie',
+      builder: ((context, state) {
+        final movie = state.extra as ApiMovieResponseEntity;
+        return DetailsmovieScreen(movie: movie);
       }) 
     ),
   ],
