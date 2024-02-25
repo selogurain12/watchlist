@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:whashlist/features/movie/presentation/bloc/movie_bloc.dart';
 import 'package:whashlist/features/movie/presentation/bloc/movie_event.dart';
 import 'package:whashlist/features/movie/presentation/bloc/movie_state.dart';
@@ -88,10 +89,15 @@ class _AddMovieState extends State<AddMovie> {
                           child: Column(
                             children: [
                               Expanded(
-                                child: Image.network(
+                                child: InkWell(
+                                  onTap: () {
+                                    context.go("/detailsmovie", extra: movie);
+                                  },
+                                  child: Image.network(
                                   "https://image.tmdb.org/t/p/original/${movie!.poster_path}",
                                   fit: BoxFit.cover,
                                 ),
+                                )
                               ),
                               SizedBox(height: 8),
                               Text(movie.title ?? 'Titre inconnu',
