@@ -2,7 +2,7 @@ import 'package:whashlist/features/book/domain/entities/book_entity.dart';
 import 'package:whashlist/features/book/presentation/pages/detailsbook_screen.dart';
 import 'package:whashlist/features/book/presentation/pages/searchbook_screen.dart';
 import 'package:whashlist/features/movie/domain/entities/movie_entity.dart';
-import 'package:whashlist/features/movie/presentation/pages/addmovie_screen.dart';
+import 'package:whashlist/features/movie/presentation/pages/searchmovie_screen.dart';
 import 'package:whashlist/features/movie/presentation/pages/detailsmovie_screen.dart';
 import 'package:whashlist/features/user/presentation/pages/login_screen.dart';
 import 'package:whashlist/features/user/presentation/pages/register_screen.dart';
@@ -34,7 +34,7 @@ final router = GoRouter(
     ),
     GoRoute(
       path: '/addmovie',
-      builder: (context, state) => const AddmovieScreen(),
+      builder: (context, state) => const SearchmovieScreen(),
     ),
     GoRoute(
       path: '/detailsbook',
