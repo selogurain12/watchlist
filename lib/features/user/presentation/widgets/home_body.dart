@@ -11,7 +11,7 @@ class HomeBody extends StatelessWidget{
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(10.0), // Espacement autour de la première paire de boutons
+              padding: const EdgeInsets.all(10.0),
               child: Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -24,8 +24,12 @@ class HomeBody extends StatelessWidget{
                           context.go('/addmovie');
                         },
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(color: Colors.blue)),
+                          backgroundColor: Colors.white,
+                          side: const BorderSide(color: Colors.blue),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0), // ajustez la valeur selon votre préférence
+                          ),
+                        ),
                         child: const Text(
                           'Ajouter un film',
                           style: TextStyle(color: Colors.black),
@@ -41,8 +45,12 @@ class HomeBody extends StatelessWidget{
                           context.go('/addbook');
                         },
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(color: Colors.blue)),
+                          backgroundColor: Colors.white,
+                          side: const BorderSide(color: Colors.blue),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0), // ajustez la valeur selon votre préférence
+                          ),
+                        ),
                         child: const Text(
                           'Ajouter un livre',
                           style: TextStyle(color: Colors.black),
@@ -70,8 +78,12 @@ class HomeBody extends StatelessWidget{
                           // );
                         },
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(color: Colors.blue)),
+                          backgroundColor: Colors.white,
+                          side: const BorderSide(color: Colors.blue),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0), // ajustez la valeur selon votre préférence
+                          ),
+                        ),
                         child: const Text(
                           'Ma Movielist',
                           style: TextStyle(color: Colors.black),
@@ -90,8 +102,12 @@ class HomeBody extends StatelessWidget{
                           // );
                         },
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(color: Colors.blue)),
+                          backgroundColor: Colors.white,
+                          side: const BorderSide(color: Colors.blue),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0), // ajustez la valeur selon votre préférence
+                          ),
+                        ),
                         child: const Text(
                           'Ma Booklist',
                           style: TextStyle(color: Colors.black),
@@ -119,8 +135,12 @@ class HomeBody extends StatelessWidget{
                           // );
                         },
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(color: Colors.blue)),
+                          backgroundColor: Colors.white,
+                          side: const BorderSide(color: Colors.blue),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0), // ajustez la valeur selon votre préférence
+                          ),
+                        ),
                         child: const Text(
                           'Mes filmothèques',
                           style: TextStyle(color: Colors.black),
@@ -139,8 +159,12 @@ class HomeBody extends StatelessWidget{
                           // );
                         },
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(color: Colors.blue)),
+                          backgroundColor: Colors.white,
+                          side: const BorderSide(color: Colors.blue),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0), // ajustez la valeur selon votre préférence
+                          ),
+                        ),
                         child: const Text(
                           'Mes bibliothèques',
                           style: TextStyle(color: Colors.black),
