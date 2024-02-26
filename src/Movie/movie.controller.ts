@@ -8,7 +8,6 @@ export class MovieController {
 
   @Post()
   async searchmovie(@Body('query') query: string) {
-    console.log(query)
       return this.movieService.searchmovie(query);
   }
 }

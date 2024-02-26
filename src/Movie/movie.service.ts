@@ -48,8 +48,6 @@ export class MovieService {
       const movies: Movie[] = await Promise.all(
         response.data.results.map(async (item: any) => {
           const movieDetails = await this.getDetailMovie(item.id);
-
-          // Merge movie details with existing properties
           const mergedMovie: Movie = {
             id: item.id,
             title: item.title,
@@ -62,7 +60,7 @@ export class MovieService {
             release_date: item.release_date,
             ...movieDetails,
           };
-
+          console.log(mergedMovie);
           return mergedMovie;
         })
       );
