@@ -1,4 +1,4 @@
-// ignore_for_file: overridden_fields, annotate_overrides
+// ignore_for_file: overridden_fields, annotate_overrides, non_constant_identifier_names
 
 
 import 'package:whashlist/features/movie/domain/entities/movie_entity.dart';
