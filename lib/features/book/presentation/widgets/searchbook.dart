@@ -67,23 +67,21 @@ class _SearchBookState extends State<SearchBook> {
             child: BlocBuilder<BookBloc, BookState>(
               bloc: bookBloc,
               builder: (context, state) {
-                if (state is BookLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is BookLoaded) {
+                if (state is BookLoaded) {
                   return GridView.builder(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, // Nombre de colonnes
-                      childAspectRatio: 0.7, // Ratio pour la taille des enfants
-                      crossAxisSpacing: 8, // Espacement horizontal
-                      mainAxisSpacing: 8, // Espacement vertical
+                      childAspectRatio: 0.8, // Ratio pour la taille des enfants
+                      crossAxisSpacing: 5, // Espacement horizontal
+                      mainAxisSpacing: 5, // Espacement vertical
                     ),
                     itemCount: state.searchbook?.length ?? 0,
                     itemBuilder: (context, index) {
                       final book = state.searchbook?[index];
                       return Card(
-                        margin: EdgeInsets.all(8),
+                        margin: const EdgeInsets.all(8),
                         child: Padding(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           child: Column(
                             children: [
                               Expanded(
@@ -97,7 +95,7 @@ class _SearchBookState extends State<SearchBook> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Text(book.title ?? 'Titre inconnu', textAlign: TextAlign.center),
                           ],
                           ),
