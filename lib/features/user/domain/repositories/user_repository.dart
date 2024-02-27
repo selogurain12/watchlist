@@ -9,8 +9,4 @@ abstract class UserRepository {
   Future<DataState<RegisterUserResponseEntity>> register({
     RegisterUserRequestEntity? body,
   });
-
-  Future<DataState<SearchUserResponseEntity>> searchuser({
-    SearchUserRequestEntity? body,
-  });
 }
