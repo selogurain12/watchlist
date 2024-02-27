@@ -10,26 +10,17 @@ part 'user_remote_datasource.g.dart';
 abstract class UserApiService {
   factory UserApiService(Dio dio) = _UserApiService;
 
-  @POST("/users/auth/login")
+  @POST("/user/auth/login")
   Future<HttpResponse<LoginUserResponseModel>> login({
     @Body() LoginUserRequestModel? body,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });
 
-  @POST("/users/auth/sign-up")
+  @POST("/user/auth/sign-up")
   Future<HttpResponse<RegisterUserResponseModel>> register({
     @Body() RegisterUserRequestModel? body,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });
-
-  @GET("/users/{id}")
-  Future<HttpResponse<SearchUserResponseModel>> searchuser({
-    @Path('id') int? id,
-    @Body() SearchUserRequestModel? body,
-    @Header('Content-Type') String? contentType,
-    @Header('Accept') String? accept,
-});
-
 }
