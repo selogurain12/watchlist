@@ -1,17 +1,16 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:whashlist/features/user/domain/entities/user_entity.dart';
 
 abstract class UserState {
   final LoginUserResponseEntity? login;
   final RegisterUserResponseEntity? register;
-  final SearchUserResponseEntity? searchuser;
   final DioException? error;
 
   const UserState({
     this.error,
     this.login,
     this.register,
-    this.searchuser,
   });
 }
 
@@ -20,9 +19,36 @@ class UserLoading extends UserState {
 }
 
 class UserLoaded extends UserState {
-  const UserLoaded({LoginUserResponseEntity? login, RegisterUserResponseEntity? register, SearchUserResponseEntity? searchuser}) : super(login: login, register: register);
+  const UserLoaded({LoginUserResponseEntity? login, RegisterUserResponseEntity? register}) : super(login: login, register: register);
 }
 
 class UserError extends UserState {
-  const UserError(DioException? error) : super(error: error);
+  final int? statusCode; // Include the status code in UserError
+  const UserError({DioException? error, this.statusCode}) : super(error: error);
+
+  // Getter for error message based on status code
+  String get errorMessage {
+    if (statusCode == 401) {
+      return 'Unauthorized: Invalid credentials';
+    } else if (statusCode == 404) {
+      return 'Not Found: User not found';
+    } else {
+      return 'An error occurred';
+    }
+  }
+}
+
+class UserProvider with ChangeNotifier {
+  String? userId;
+  String? userPrenom;
+  String? userNom;
+  String? userMail;
+
+  void setUser({String? id, String? prenom, String? nom, String? mail}) {
+    userId = id;
+    userPrenom = prenom;
+    userNom = nom;
+    userMail = mail;
+    notifyListeners();
+  }
 }
