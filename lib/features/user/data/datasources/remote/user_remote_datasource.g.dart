@@ -45,7 +45,7 @@ class _UserApiService implements UserApiService {
     )
             .compose(
               _dio.options,
-              '/users/auth/login',
+              '/user/auth/login',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -84,7 +84,7 @@ class _UserApiService implements UserApiService {
     )
             .compose(
               _dio.options,
-              '/users/auth/sign-up',
+              '/user/auth/sign-up',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -94,46 +94,6 @@ class _UserApiService implements UserApiService {
               baseUrl,
             ))));
     final value = RegisterUserResponseModel.fromJson(_result.data!);
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<SearchUserResponseModel>> searchuser({
-    int? id,
-    SearchUserRequestModel? body,
-    String? contentType,
-    String? accept,
-  }) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
-    final _headers = <String, dynamic>{
-      r'Content-Type': contentType,
-      r'Accept': accept,
-    };
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<SearchUserResponseModel>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-      contentType: contentType,
-    )
-            .compose(
-              _dio.options,
-              '/users/${id}',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = SearchUserResponseModel.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
