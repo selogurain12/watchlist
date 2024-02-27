@@ -61,31 +61,4 @@ class UserRepositoryImpl implements UserRepository {
       return DataFailure(e);
     }
   }
-
-  @override
-  Future<DataState<SearchUserResponseModel>> searchuser(
-      {int? userId,SearchUserRequestEntity? body}) async {
-    try {
-      final response = await apiService.searchuser(
-        id: userId,
-        body: SearchUserRequestModel.fromEntity(body!),
-        accept: "application/json",
-        contentType: "application/json",
-      );
-      if (response.response.statusCode == 201) {
-        return DataSuccess(response.data);
-      } else {
-        return DataFailure(
-          DioException(
-            requestOptions: response.response.requestOptions,
-            error: response.response.statusMessage,
-            response: response.response,
-            type: DioExceptionType.badResponse,
-          ),
-        );
-      }
-    } on DioException catch (e) {
-      return DataFailure(e);
-    }
-  }
 }
