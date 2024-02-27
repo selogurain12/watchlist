@@ -14,7 +14,6 @@ import 'package:whashlist/features/user/data/repositories/user_repository_impl.d
 import 'package:whashlist/features/user/domain/repositories/user_repository.dart';
 import 'package:whashlist/features/user/domain/usecases/login.dart';
 import 'package:whashlist/features/user/domain/usecases/register.dart';
-import 'package:whashlist/features/user/domain/usecases/searchuser.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -39,7 +38,6 @@ Future<void> initializeDependencies() async {
   // User
   sl.registerSingleton<LoginUseCase>(LoginUseCase(sl()));
   sl.registerSingleton<RegisterUseCase>(RegisterUseCase(sl()));
-  sl.registerSingleton<SearchUseCase>(SearchUseCase(sl()));
   // Book
   sl.registerSingleton<SearchBookUseCase>(SearchBookUseCase(sl()));
   //Movie
@@ -47,7 +45,7 @@ Future<void> initializeDependencies() async {
 
   /////////////////////////// BLOC ///////////////////////////////////////////////
   // User
-  sl.registerFactory<UserBloc>(() => UserBloc(sl(), sl(), sl()));
+  sl.registerFactory<UserBloc>(() => UserBloc(sl(), sl()));
   // Book
   sl.registerFactory<BookBloc>(() => BookBloc(sl()));
   //Movie
