@@ -34,8 +34,15 @@ class _DetailBookState extends State<DetailMovie> {
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  ElevatedButton(
+                  onPressed: (){
+
+                  }, 
+                  child: const Text("Ajouter à une bibliothèque")
+                  ),
+                  const SizedBox(height: 10),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
