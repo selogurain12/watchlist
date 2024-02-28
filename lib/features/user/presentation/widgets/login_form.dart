@@ -60,8 +60,15 @@ class _LoginFormState extends State<LoginForm> {
     }
     else if (state is UserLoaded) {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
-      userProvider.setUser(id: state.login?.id, prenom: state.login?.prenom, nom: state.login?.nom, mail: state.login?.mail);
-      context.go("/");
+      userProvider.setUser(
+        id: state.login?.id,
+        prenom: state.login?.prenom,
+        nom: state.login?.nom,
+        mail: state.login?.mail,
+      );
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      authProvider.login();
+      context.go("/connected");
     }
       },
       child: BlocBuilder<UserBloc, UserState>(
