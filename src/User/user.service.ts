@@ -32,8 +32,10 @@ export class UserService {
     if (login.mdp !== utilisateur.mdp) {
       throw new UnauthorizedException('Invalid credentials');
     }
+    const utilisateurSansMdp = { ...utilisateur };
+    delete utilisateurSansMdp.mdp;
 
-    return utilisateur;
+    return utilisateurSansMdp;
   }
 
   async findAll(): Promise<User[]> {
