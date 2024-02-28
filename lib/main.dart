@@ -10,11 +10,31 @@ import 'config/routes/app_routes.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDependencies();
-  runApp(ChangeNotifierProvider(
-      create: (context) => UserProvider(),
-      child: MyApp(),
-    ),);
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthProvider>(
+          create: (context) => AuthProvider(),
+        ),
+        ChangeNotifierProvider<UserProvider>(
+          create: (context) => UserProvider(),
+        ),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => sl<UserBloc>(),
+          ),
+          BlocProvider(
+            create: (context) => sl<BookBloc>(),
+          ),
+        ],
+        child: MyApp(),
+      ),
+    ),
+  );
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
