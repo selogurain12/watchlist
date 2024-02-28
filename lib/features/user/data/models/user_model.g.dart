@@ -23,18 +23,18 @@ Map<String, dynamic> _$LoginUserRequestModelToJson(
 LoginUserResponseModel _$LoginUserResponseModelFromJson(
         Map<String, dynamic> json) =>
     LoginUserResponseModel(
+      id: json['id'] as String?,
       nom: json['nom'] as String?,
       mail: json['mail'] as String?,
-      mdp: json['mdp'] as String?,
       prenom: json['prenom'] as String?,
     );
 
 Map<String, dynamic> _$LoginUserResponseModelToJson(
         LoginUserResponseModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'nom': instance.nom,
       'mail': instance.mail,
-      'mdp': instance.mdp,
       'prenom': instance.prenom,
     };
 

@@ -21,14 +21,12 @@ class LoginUserResponseEntity extends Equatable {
   final String? nom;
   final String? prenom;
   final String? mail;
-  final String? mdp;
 
   const LoginUserResponseEntity({
     this.id,
     this.nom,
     this.prenom,
     this.mail,
-    this.mdp,
   });
 
   @override
@@ -37,7 +35,6 @@ class LoginUserResponseEntity extends Equatable {
     nom,
     prenom,
     mail,
-    mdp
   ];
 }
 

@@ -33,20 +33,20 @@ class LoginUserRequestModel extends LoginUserRequestEntity {
 @JsonSerializable()
 class LoginUserResponseModel extends LoginUserResponseEntity {
 
+  final String? id;
   final String? nom;
   final String? mail;
-  final String? mdp;
   final String? prenom;
 
   const LoginUserResponseModel({
+    this.id,
     this.nom,
     this.mail,
-    this.mdp,
     this.prenom,
 }): super(
+    id: id,
     nom: nom,
     mail: mail,
-    mdp: mdp,
     prenom: prenom,
   );
 
@@ -56,9 +56,9 @@ class LoginUserResponseModel extends LoginUserResponseEntity {
 
   factory LoginUserResponseModel.fromEntity(LoginUserResponseEntity entity) {
     return LoginUserResponseModel(
+      id: entity.id,
       nom: entity.nom,
       mail: entity.mail,
-      mdp: entity.mdp,
       prenom: entity.prenom,
     );
   }
