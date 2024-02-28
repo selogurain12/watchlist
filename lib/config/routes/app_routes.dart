@@ -4,6 +4,7 @@ import 'package:whashlist/features/book/presentation/pages/searchbook_screen.dar
 import 'package:whashlist/features/movie/domain/entities/movie_entity.dart';
 import 'package:whashlist/features/movie/presentation/pages/searchmovie_screen.dart';
 import 'package:whashlist/features/movie/presentation/pages/detailsmovie_screen.dart';
+import 'package:whashlist/features/user/presentation/pages/connected_screen.dart';
 import 'package:whashlist/features/user/presentation/pages/login_screen.dart';
 import 'package:whashlist/features/user/presentation/pages/register_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -49,6 +50,10 @@ final router = GoRouter(
         final movie = state.extra as ApiMovieResponseEntity;
         return DetailsmovieScreen(movie: movie);
       }) 
+    ),
+    GoRoute(
+      path: '/connected',
+      builder: (context, state) => const ConnectedScreen(),
     ),
   ],
 );
