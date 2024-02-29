@@ -70,4 +70,37 @@ export class MovieService {
       throw error;
     }
   }
+
+  async getMovie(id: string): Promise<Movie> {
+    try {
+      const genreList = await this.getGenreList();
+      const apiUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=5dab12725eee000f48841e59fcf60567&language=fr-FR`;
+      const response = await axios.get(apiUrl);
+  
+      if (!response.data) {
+        throw new Error(`Movie details not found in API response`);
+      }
+  
+      const movieDetails: Movie = {
+        id: response.data.id,
+        title: response.data.title,
+        backdrop_path: response.data.backdrop_path,
+        genre_ids: response.data.genres.map((genre: any) => genreList[genre.id]),
+        original_language: response.data.original_language,
+        original_title: response.data.original_title,
+        overview: response.data.overview,
+        poster_path: response.data.poster_path,
+        release_date: response.data.release_date,
+        budget: response.data.budget ?? '',
+        homepage: response.data.homepage ?? '',
+        revenue: response.data.revenue ?? '',
+        runtime: response.data.runtime ?? '',
+        vote_average: response.data.vote_average ?? '',
+      };
+  
+      return movieDetails;
+    } catch (error) {
+      throw error;
+    }
+  }  
 }
