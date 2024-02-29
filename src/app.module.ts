@@ -2,9 +2,13 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
-import { User } from './user/user.entity';
+import { Statuser, User } from './user/user.entity';
 import { BookModule } from './Book/book.module';
 import { MovieModule } from './Movie/movie.module';
+import { UserMovieModule } from './UserMovie/usermovie.module';
+import { FilmFilmotheque, Filmotheque } from './UserMovie/usermovie.entity';
+import { Bibliotheque, LivreBibliotheque } from './UserBook/userbook.entity';
+import { UserBookModule } from './UserBook/userbook.module';
 
 @Module({
   imports: [
@@ -18,14 +22,16 @@ import { MovieModule } from './Movie/movie.module';
         username: configService.get<string>('DATABASE_USERNAME', 'lora'),
         password: configService.get<string>('DATABASE_PASSWORD', 'Juemlochda2003!'),
         database: configService.get<string>('DATABASE_NAME', 'watchlist'),
-        entities: [User],
+        entities: [User, Statuser, Filmotheque, FilmFilmotheque, Bibliotheque, LivreBibliotheque],
         synchronize: true,
       }),
       inject: [ConfigService],
     }),
     UserModule,
     BookModule,
-    MovieModule
+    MovieModule,
+    UserMovieModule,
+    UserBookModule
   ],
   providers: [ConfigService],
 })
