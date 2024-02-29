@@ -1,29 +1,36 @@
 import { Controller, Post, Body, Get } from "@nestjs/common";
-import { LoginDto, User } from "./user.entity";
+import { LoginDto, MeDto, Statuser, User, Username } from "./user.entity";
 import { UserService } from "./user.service";
 
 @Controller("/user")
 export class UserController {
     constructor(private readonly userService: UserService) {}
     @Post('auth/sign-up')
-    async signUp(@Body() user: User): Promise<User> {
-      const createdUser = await this.userService.register(user);
-      return {
-        id: createdUser.id,
-        nom: createdUser.nom,
-        prenom: createdUser.prenom,
-        mail: createdUser.mail,
-        mdp: createdUser.mdp,
-      };
+    async signUp(@Body() user: User): Promise<[User, Statuser]> {
+      return await this.userService.register(user);
     }
     @Post('auth/login')
     async login(@Body()  login: LoginDto): Promise<User> {
-      const utilisateur = await this.userService.login(login);
-      return utilisateur;
+      return await this.userService.login(login);
     }
   
     @Get()
     async getUsers(): Promise<User[]>{
        return this.userService.findAll();
+    }
+
+    @Post('me')
+    async me(@Body() user: MeDto): Promise<[User, Statuser]> {
+      return await this.userService.me(user);
+    }
+
+    @Post('search')
+    async searchuser(@Body() username: Username): Promise<User> {
+      return await this.userService.searchuser(username);
+    }
+
+    @Post('me/stats')
+    async statsuser(@Body() user: MeDto): Promise<Statuser> {
+      return await this.userService.statsuser(user);
     }
 }
