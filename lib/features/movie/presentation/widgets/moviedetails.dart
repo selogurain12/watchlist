@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:whashlist/features/movie/domain/entities/movie_entity.dart';
+import 'package:provider/provider.dart';
+import 'package:whashlist/features/movie/domain/entities/searchmovie_entity.dart';
+import 'package:whashlist/features/filmotheques/presentation/widgets/addmovietofilmo.dart';
+import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 
 class DetailMovie extends StatefulWidget {
-  final ApiMovieResponseEntity movie;
+  final SearchMovieResponseEntity movie;
 
   const DetailMovie({Key? key, required this.movie}) : super(key: key);
 
   @override
-  State<DetailMovie> createState() => _DetailBookState();
+  State<DetailMovie> createState() => _DetailMovieState();
 }
 
-class _DetailBookState extends State<DetailMovie> {
+class _DetailMovieState extends State<DetailMovie> {
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -36,12 +40,18 @@ class _DetailBookState extends State<DetailMovie> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                if(authProvider.isLoggedIn)
                   ElevatedButton(
-                  onPressed: (){
-                    
-                  }, 
-                  child: const Text("Ajouter à une bibliothèque")
-                  ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AddMovie(movie: widget.movie);
+                      },
+                    );
+                  },
+                  child: const Text("Ajouter à une bibliothèque"),
+                ),
                   const SizedBox(height: 10),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
