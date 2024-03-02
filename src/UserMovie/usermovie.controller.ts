@@ -12,7 +12,7 @@ export class UserMovieController {
         return await this.usermovieService.createfilmotheque(filmo);
     }
 
-    @Post("filmotheque")
+    @Post("filmotheques")
     async filmotheque(@Body() id: searchfilmoDto): Promise<Filmotheque[]> {
         return await this.usermovieService.filmotheque(id);
     }
