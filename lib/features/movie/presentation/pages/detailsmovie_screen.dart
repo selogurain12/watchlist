@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:whashlist/features/movie/domain/entities/movie_entity.dart';
+import 'package:whashlist/features/movie/domain/entities/searchmovie_entity.dart';
 import 'package:whashlist/features/movie/presentation/widgets/moviedetails.dart';
 
 class DetailsmovieScreen extends StatelessWidget {
-  final ApiMovieResponseEntity movie;
+  final SearchMovieResponseEntity movie;
   const DetailsmovieScreen({Key? key, required this.movie}) : super(key: key);
 
   @override
