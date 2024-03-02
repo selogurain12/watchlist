@@ -29,7 +29,7 @@ Future<void> main() async {
             create: (context) => sl<BookBloc>(),
           ),
         ],
-        child: MyApp(),
+        child: const MyApp(),
       ),
     ),
   );
