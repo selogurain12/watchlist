@@ -60,7 +60,6 @@ export class MovieService {
             release_date: item.release_date,
             ...movieDetails,
           };
-          console.log(mergedMovie);
           return mergedMovie;
         })
       );
