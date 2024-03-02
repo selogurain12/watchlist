@@ -1,7 +1,7 @@
 import 'package:whashlist/features/book/domain/entities/book_entity.dart';
 import 'package:whashlist/features/book/presentation/pages/detailsbook_screen.dart';
 import 'package:whashlist/features/book/presentation/pages/searchbook_screen.dart';
-import 'package:whashlist/features/movie/domain/entities/movie_entity.dart';
+import 'package:whashlist/features/movie/domain/entities/searchmovie_entity.dart';
 import 'package:whashlist/features/movie/presentation/pages/searchmovie_screen.dart';
 import 'package:whashlist/features/movie/presentation/pages/detailsmovie_screen.dart';
 import 'package:whashlist/features/user/presentation/pages/connected_screen.dart';
@@ -47,7 +47,7 @@ final router = GoRouter(
     GoRoute(
       path: '/detailsmovie',
       builder: ((context, state) {
-        final movie = state.extra as ApiMovieResponseEntity;
+        final movie = state.extra as SearchMovieResponseEntity;
         return DetailsmovieScreen(movie: movie);
       }) 
     ),
