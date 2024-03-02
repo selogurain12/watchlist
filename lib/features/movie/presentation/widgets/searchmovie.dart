@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:whashlist/features/movie/presentation/bloc/movie_bloc.dart';
-import 'package:whashlist/features/movie/presentation/bloc/movie_event.dart';
-import 'package:whashlist/features/movie/presentation/bloc/movie_state.dart';
+import 'package:whashlist/features/movie/presentation/bloc/searchmovie_bloc.dart';
+import 'package:whashlist/features/movie/presentation/bloc/searchmovie_event.dart';
+import 'package:whashlist/features/movie/presentation/bloc/searchmovie_state.dart';
 import 'package:whashlist/injection_container.dart';
 
 class SearchMovie extends StatefulWidget {
@@ -14,13 +14,13 @@ class SearchMovie extends StatefulWidget {
 }
 
 class _SearchMovieState extends State<SearchMovie> {
-  late MovieBloc movieBloc;
+  late SearchMovieBloc movieBloc;
   late TextEditingController query;
 
   @override
   void initState() {
     super.initState();
-    movieBloc = sl<MovieBloc>();
+    movieBloc = sl<SearchMovieBloc>();
     query = TextEditingController();
   }
 
@@ -43,7 +43,7 @@ class _SearchMovieState extends State<SearchMovie> {
                 IconButton(
                   icon: const Icon(Icons.search),
                   onPressed: () {
-                    movieBloc.add(SearchMovieEvent(query: query.text));
+                    movieBloc.add(SearchMoviesEvent(query: query.text));
                   },
                 ),
                 Expanded(
@@ -65,10 +65,10 @@ class _SearchMovieState extends State<SearchMovie> {
             ),
           ),
           Expanded(
-            child: BlocBuilder<MovieBloc, MovieState>(
+            child: BlocBuilder<SearchMovieBloc, SearchMovieState>(
               bloc: movieBloc,
               builder: (context, state) {
-                if (state is MovieLoaded) {
+                if (state is SearchMovieLoaded) {
                   return GridView.builder(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, // Nombre de colonnes
@@ -105,7 +105,7 @@ class _SearchMovieState extends State<SearchMovie> {
                       );
                     },
                   );
-                } else if (state is MovieError) {
+                } else if (state is SearchMovieError) {
                   return const Center(child: Text('Erreur de chargement'));
                 }
                 return const SizedBox.shrink();
