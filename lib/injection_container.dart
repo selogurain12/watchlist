@@ -7,6 +7,8 @@ import 'package:whashlist/features/book/presentation/bloc/book_bloc.dart';
 import 'package:whashlist/features/filmotheques/data/datasource/remote/filmotheques_remote_datasource.dart';
 import 'package:whashlist/features/filmotheques/data/repositories/filmotheques_repository_impl.dart';
 import 'package:whashlist/features/filmotheques/domain/repositories/filmotheques_repository.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/addfilmotheque.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/addmovie.dart';
 import 'package:whashlist/features/filmotheques/domain/usecases/filmotheques.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_bloc.dart';
 import 'package:whashlist/features/movie/data/datasource/remote/searchmovie_remote_datasource.dart';
@@ -52,6 +54,8 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<SearchMovieUseCase>(SearchMovieUseCase(sl()));
   //Filmotheques
   sl.registerSingleton<FilmothequesUseCase>(FilmothequesUseCase(sl()));
+  sl.registerSingleton<AddFilmothequeUseCase>(AddFilmothequeUseCase(sl()));
+  sl.registerSingleton<FilmFilmothequeUseCase>(FilmFilmothequeUseCase(sl()));
 
   /////////////////////////// BLOC ///////////////////////////////////////////////
   // User
@@ -61,5 +65,5 @@ Future<void> initializeDependencies() async {
   //Movie
   sl.registerFactory<SearchMovieBloc>(() => SearchMovieBloc(sl()));
   //Filmotheques
-  sl.registerFactory<FilmothequesBloc>(() => FilmothequesBloc(sl()));
+  sl.registerFactory<FilmothequesBloc>(() => FilmothequesBloc(sl(), sl(), sl()));
 }
