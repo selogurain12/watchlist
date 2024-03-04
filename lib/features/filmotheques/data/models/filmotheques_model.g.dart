@@ -33,3 +33,47 @@ Map<String, dynamic> _$FilmothequesResponseModelToJson(
       'nom': instance.nom,
       'id_user': instance.id_user,
     };
+
+AddFilmothequeRequestModel _$AddFilmothequeRequestModelFromJson(
+        Map<String, dynamic> json) =>
+    AddFilmothequeRequestModel(
+      nom: json['nom'] as String?,
+      id_user: json['id_user'] as String?,
+    );
+
+Map<String, dynamic> _$AddFilmothequeRequestModelToJson(
+        AddFilmothequeRequestModel instance) =>
+    <String, dynamic>{
+      'id_user': instance.id_user,
+      'nom': instance.nom,
+    };
+
+FilmFilmothequeRequestModel _$FilmFilmothequeRequestModelFromJson(
+        Map<String, dynamic> json) =>
+    FilmFilmothequeRequestModel(
+      id_film: json['id_film'] as String?,
+      id_filmotheque: json['id_filmotheque'] as String?,
+    );
+
+Map<String, dynamic> _$FilmFilmothequeRequestModelToJson(
+        FilmFilmothequeRequestModel instance) =>
+    <String, dynamic>{
+      'id_film': instance.id_film,
+      'id_filmotheque': instance.id_filmotheque,
+    };
+
+FilmFilmothequeResponseModel _$FilmFilmothequeResponseModelFromJson(
+        Map<String, dynamic> json) =>
+    FilmFilmothequeResponseModel(
+      id: json['id'] as String?,
+      id_film: json['id_film'] as String?,
+      id_filmotheque: json['id_filmotheque'] as String?,
+    );
+
+Map<String, dynamic> _$FilmFilmothequeResponseModelToJson(
+        FilmFilmothequeResponseModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'id_film': instance.id_film,
+      'id_filmotheque': instance.id_filmotheque,
+    };

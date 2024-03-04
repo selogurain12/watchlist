@@ -35,4 +35,58 @@ class FilmothequesRepositoryImpl implements FilmothequesRepository {
       return DataFailure(e);
     }
   }
+
+  @override
+  Future<DataState<FilmothequesResponseModel>> addfilmotheque (
+      {AddFilmothequeRequestEntity? body}) async {
+    try {
+      final response = await apiService.addfilmotheque(
+        body: AddFilmothequeRequestModel.fromEntity(body!),
+        accept: "application/json",
+        contentType: "application/json",
+      );
+      if (response.response.statusCode == 201) {
+        // await _getAndSaveToken();
+        return DataSuccess(response.data);
+      } else {
+        return DataFailure(
+          DioException(
+            requestOptions: response.response.requestOptions,
+            error: response.response.statusMessage,
+            response: response.response,
+            type: DioExceptionType.badResponse,
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return DataFailure(e);
+    }
+  }
+
+   @override
+  Future<DataState<FilmFilmothequeResponseModel>> addmovie (
+      {FilmFilmothequeRequestEntity? body}) async {
+    try {
+      final response = await apiService.addmovie(
+        body: FilmFilmothequeRequestModel.fromEntity(body!),
+        accept: "application/json",
+        contentType: "application/json",
+      );
+      if (response.response.statusCode == 201) {
+        // await _getAndSaveToken();
+        return DataSuccess(response.data);
+      } else {
+        return DataFailure(
+          DioException(
+            requestOptions: response.response.requestOptions,
+            error: response.response.statusMessage,
+            response: response.response,
+            type: DioExceptionType.badResponse,
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return DataFailure(e);
+    }
+  }
 }

@@ -54,3 +54,82 @@ class FilmothequesResponseModel extends FilmothequesResponseEntity {
     );
   }
 }
+
+@JsonSerializable()
+class AddFilmothequeRequestModel extends AddFilmothequeRequestEntity {
+  final String? id_user;
+  final String? nom;
+
+  const AddFilmothequeRequestModel({
+    this.nom,
+    this.id_user,
+}): super(
+    nom: nom,
+    id_user: id_user,
+  );
+
+  factory AddFilmothequeRequestModel.fromJson(Map<String, dynamic> json) =>
+    _$AddFilmothequeRequestModelFromJson(json);
+  Map<String, dynamic> toJson() => _$AddFilmothequeRequestModelToJson(this);
+
+  factory AddFilmothequeRequestModel.fromEntity(AddFilmothequeRequestEntity entity) {
+    return AddFilmothequeRequestModel(
+      nom: entity.nom,
+      id_user: entity.id_user,
+    );
+  }
+}
+
+@JsonSerializable()
+class FilmFilmothequeRequestModel extends FilmFilmothequeRequestEntity {
+  final String? id_film;
+  final String? id_filmotheque;
+
+  const FilmFilmothequeRequestModel({
+    this.id_film,
+    this.id_filmotheque,
+}): super(
+    id_film: id_film,
+    id_filmotheque: id_filmotheque,
+  );
+
+  factory FilmFilmothequeRequestModel.fromJson(Map<String, dynamic> json) =>
+    _$FilmFilmothequeRequestModelFromJson(json);
+  Map<String, dynamic> toJson() => _$FilmFilmothequeRequestModelToJson(this);
+
+  factory FilmFilmothequeRequestModel.fromEntity(FilmFilmothequeRequestEntity entity) {
+    return FilmFilmothequeRequestModel(
+      id_film: entity.id_film,
+      id_filmotheque: entity.id_filmotheque,
+    );
+  }
+}
+
+@JsonSerializable()
+class FilmFilmothequeResponseModel extends FilmFilmothequeResponseEntity {
+  final String? id;
+  final String? id_film;
+  final String? id_filmotheque;
+
+  const FilmFilmothequeResponseModel({
+    this.id,
+    this.id_film,
+    this.id_filmotheque
+}): super(
+    id: id,
+    id_film: id_film,
+    id_filmotheque: id_filmotheque
+  );
+
+  factory FilmFilmothequeResponseModel.fromJson(Map<String, dynamic> json) =>
+    _$FilmFilmothequeResponseModelFromJson(json);
+  Map<String, dynamic> toJson() => _$FilmFilmothequeResponseModelToJson(this);
+
+  factory FilmFilmothequeResponseModel.fromEntity(FilmFilmothequeResponseEntity entity) {
+    return FilmFilmothequeResponseModel(
+      id: entity.id,
+      id_film: entity.id_film,
+      id_filmotheque: entity.id_filmotheque,
+    );
+  }
+}

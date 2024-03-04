@@ -5,4 +5,12 @@ abstract class FilmothequesRepository {
   Future<DataState<List<FilmothequesResponseEntity>>> filmotheques({
     FilmothequesRequestEntity? body,
   });
+
+  Future<DataState<FilmothequesResponseEntity>> addfilmotheque({
+    AddFilmothequeRequestEntity? body,
+  });
+
+  Future<DataState<FilmFilmothequeResponseEntity>> addmovie({
+    FilmFilmothequeRequestEntity? body,
+  });
 }

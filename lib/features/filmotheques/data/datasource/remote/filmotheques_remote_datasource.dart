@@ -15,4 +15,18 @@ abstract class FilmothequesService {
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });
+
+  @POST("/user/me/addfilmotheque")
+  Future<HttpResponse<FilmothequesResponseModel>> addfilmotheque ({
+    @Body() AddFilmothequeRequestModel? body,
+    @Header('Content-Type') String? contentType,
+    @Header('Accept') String? accept,
+  });
+
+  @POST("/user/me/filmotheque/addmovie")
+  Future<HttpResponse<FilmFilmothequeResponseModel>> addmovie ({
+    @Body() FilmFilmothequeRequestModel? body,
+    @Header('Content-Type') String? contentType,
+    @Header('Accept') String? accept,
+  });
 }
