@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -42,15 +44,23 @@ class _DetailMovieState extends State<DetailMovie> {
                 children: [
                 if(authProvider.isLoggedIn)
                   ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AddMovie(movie: widget.movie);
-                      },
+                  onPressed: () async {
+                    final result = await showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AddMovie(movie: widget.movie);
+                    },
+                  );
+                  if (result != null && result) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("La filmothèque a été mise à jour"),
+                        backgroundColor: Colors.green,
+                      ),
                     );
+                  }
                   },
-                  child: const Text("Ajouter à une bibliothèque"),
+                  child: const Text("Ajouter à une filmothèque"),
                 ),
                   const SizedBox(height: 10),
                   Row(
