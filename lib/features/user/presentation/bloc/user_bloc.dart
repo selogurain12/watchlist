@@ -25,6 +25,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         prenom: event.prenom,
         mail: event.mail,
         mdp: event.mdp,
+        username: event.username,
       ),
     );
 
@@ -40,7 +41,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   void login(LoginEvent event, Emitter<UserState> emit) async {
     final data = await loginUseCase(
       params: LoginUserRequestEntity(
-        mail: event.mail,
+        username: event.username,
         mdp: event.mdp,
       ),
     );

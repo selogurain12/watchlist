@@ -43,12 +43,14 @@ class UserProvider with ChangeNotifier {
   String? userPrenom;
   String? userNom;
   String? userMail;
+  String? userUsername;
 
-  void setUser({String? id, String? prenom, String? nom, String? mail}) {
+  void setUser({String? id, String? prenom, String? nom, String? mail, String? username}) {
     userId = id;
     userPrenom = prenom;
     userNom = nom;
     userMail = mail;
+    userUsername = username;
     notifyListeners();
   }
 }

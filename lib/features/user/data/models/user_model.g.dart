@@ -9,14 +9,14 @@ part of 'user_model.dart';
 LoginUserRequestModel _$LoginUserRequestModelFromJson(
         Map<String, dynamic> json) =>
     LoginUserRequestModel(
-      mail: json['mail'] as String?,
+      username: json['username'] as String?,
       mdp: json['mdp'] as String?,
     );
 
 Map<String, dynamic> _$LoginUserRequestModelToJson(
         LoginUserRequestModel instance) =>
     <String, dynamic>{
-      'mail': instance.mail,
+      'username': instance.username,
       'mdp': instance.mdp,
     };
 
@@ -27,6 +27,7 @@ LoginUserResponseModel _$LoginUserResponseModelFromJson(
       nom: json['nom'] as String?,
       mail: json['mail'] as String?,
       prenom: json['prenom'] as String?,
+      username: json['username'] as String?,
     );
 
 Map<String, dynamic> _$LoginUserResponseModelToJson(
@@ -36,6 +37,7 @@ Map<String, dynamic> _$LoginUserResponseModelToJson(
       'nom': instance.nom,
       'mail': instance.mail,
       'prenom': instance.prenom,
+      'username': instance.username,
     };
 
 RegisterUserRequestModel _$RegisterUserRequestModelFromJson(
@@ -45,6 +47,7 @@ RegisterUserRequestModel _$RegisterUserRequestModelFromJson(
       prenom: json['prenom'] as String?,
       mail: json['mail'] as String?,
       mdp: json['mdp'] as String?,
+      username: json['username'] as String?,
     );
 
 Map<String, dynamic> _$RegisterUserRequestModelToJson(
@@ -54,6 +57,7 @@ Map<String, dynamic> _$RegisterUserRequestModelToJson(
       'prenom': instance.prenom,
       'mail': instance.mail,
       'mdp': instance.mdp,
+      'username': instance.username,
     };
 
 RegisterUserResponseModel _$RegisterUserResponseModelFromJson(
@@ -62,7 +66,7 @@ RegisterUserResponseModel _$RegisterUserResponseModelFromJson(
       nom: json['nom'] as String?,
       prenom: json['prenom'] as String?,
       mail: json['mail'] as String?,
-      mdp: json['mdp'] as String?,
+      username: json['username'] as String?,
     );
 
 Map<String, dynamic> _$RegisterUserResponseModelToJson(
@@ -71,5 +75,5 @@ Map<String, dynamic> _$RegisterUserResponseModelToJson(
       'nom': instance.nom,
       'prenom': instance.prenom,
       'mail': instance.mail,
-      'mdp': instance.mdp,
+      'username': instance.username,
     };

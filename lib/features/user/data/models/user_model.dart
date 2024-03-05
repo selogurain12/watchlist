@@ -7,14 +7,14 @@ part 'user_model.g.dart';
 
 @JsonSerializable()
 class LoginUserRequestModel extends LoginUserRequestEntity {
-  final String? mail;
+  final String? username;
   final String? mdp;
 
   const LoginUserRequestModel({
-    this.mail,
+    this.username,
     this.mdp,
 }): super(
-    mail: mail,
+    username: username,
     mdp: mdp,
   );
 
@@ -24,7 +24,7 @@ class LoginUserRequestModel extends LoginUserRequestEntity {
 
   factory LoginUserRequestModel.fromEntity(LoginUserRequestEntity entity) {
     return LoginUserRequestModel(
-      mail: entity.mail,
+      username: entity.username,
       mdp: entity.mdp,
     );
   }
@@ -37,17 +37,20 @@ class LoginUserResponseModel extends LoginUserResponseEntity {
   final String? nom;
   final String? mail;
   final String? prenom;
+  final String? username;
 
   const LoginUserResponseModel({
     this.id,
     this.nom,
     this.mail,
     this.prenom,
+    this.username,
 }): super(
     id: id,
     nom: nom,
     mail: mail,
     prenom: prenom,
+    username: username,
   );
 
   factory LoginUserResponseModel.fromJson(Map<String, dynamic> json) =>
@@ -60,6 +63,7 @@ class LoginUserResponseModel extends LoginUserResponseEntity {
       nom: entity.nom,
       mail: entity.mail,
       prenom: entity.prenom,
+      username: entity.username,
     );
   }
 }
@@ -70,6 +74,7 @@ class RegisterUserRequestModel extends RegisterUserRequestEntity {
   final String? prenom;
   final String? mail;
   final String? mdp;
+  final String? username;
   
   
   const RegisterUserRequestModel({
@@ -77,11 +82,13 @@ class RegisterUserRequestModel extends RegisterUserRequestEntity {
     this.prenom,
     this.mail,
     this.mdp,
+    this.username,
   }): super(
     nom: nom,
     prenom: prenom,
     mail: mail,
     mdp: mdp,
+    username: username,
   );
 
   factory RegisterUserRequestModel.fromJson(Map<String, dynamic> json) =>
@@ -94,6 +101,7 @@ class RegisterUserRequestModel extends RegisterUserRequestEntity {
       prenom: entity.prenom,
       mail: entity.mail,
       mdp: entity.mdp,
+      username: entity.username,
     );
   }
 }
@@ -104,19 +112,19 @@ class RegisterUserResponseModel extends RegisterUserResponseEntity {
   final String? nom;
   final String? prenom;
   final String? mail;
-  final String? mdp;
+  final String? username;
 
 
   const RegisterUserResponseModel({
     this.nom,
     this.prenom,
     this.mail,
-    this.mdp,
+    this.username,
 }) : super(
     nom: nom,
     prenom: prenom,
     mail: mail,
-    mdp: mdp,
+    username: username,
   );
 
     factory RegisterUserResponseModel.fromJson(Map<String, dynamic> json) =>
@@ -128,7 +136,7 @@ class RegisterUserResponseModel extends RegisterUserResponseEntity {
       nom: entity.nom,
       prenom: entity.prenom,
       mail: entity.mail,
-      mdp: entity.mdp,
+      username: entity.username,
     );
   }
 }
