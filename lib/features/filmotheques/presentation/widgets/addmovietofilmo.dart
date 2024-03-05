@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -134,12 +136,21 @@ Widget build(BuildContext context) {
                 ElevatedButton(
                   onPressed: () {
                     if (showCreateForm) {
-                      filmothequesBloc.add(
-                        AddFilmothequeEvent(
-                          nom: nom.text,
-                          id_user: userProvider.userId,
-                        ),
-                      );
+                      if (nom.text.trim().isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Veuillez entrer un nom pour la filmothèque"),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      } else {
+                        filmothequesBloc.add(
+                          AddFilmothequeEvent(
+                            nom: nom.text,
+                            id_user: userProvider.userId,
+                          ),
+                        );
+                      }
                     }
                     filmothequesBloc.add(
                       FilmFilmothequeEvent(
