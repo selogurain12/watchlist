@@ -149,7 +149,10 @@ Widget build(BuildContext context) {
                     );
                     if (state is FilmothequesLoaded) {
                       WidgetsBinding.instance.addPostFrameCallback((_) async {
-                        Navigator.of(context).pop(true);
+                        if (state is! FilmFilmothequeError && state is! FilmothequesError) {
+                          await Future.delayed(const Duration(seconds: 2));
+                          Navigator.of(context).pop(true);
+                        }
                       });
                     }
                   },
