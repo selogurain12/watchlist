@@ -17,6 +17,7 @@ class _RegisterFormState extends State<RegisterForm> {
   late UserBloc userBloc;
   late TextEditingController nom;
   late TextEditingController prenom;
+  late TextEditingController username;
   late TextEditingController mail;
   late TextEditingController mdp;
   final _formKey = GlobalKey<State>();
@@ -28,6 +29,7 @@ class _RegisterFormState extends State<RegisterForm> {
     userBloc = sl<UserBloc>();
     nom = TextEditingController();
     prenom = TextEditingController();
+    username = TextEditingController();
     mail = TextEditingController();
     mdp = TextEditingController();
   }
@@ -38,6 +40,7 @@ class _RegisterFormState extends State<RegisterForm> {
     userBloc.close();
     nom.dispose();
     prenom.dispose();
+    username.dispose();
     mail.dispose();
     mdp.dispose();
   }
@@ -95,6 +98,27 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
               const SizedBox(height: 15),
               const Text(
+                'Pseudo :',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  icon: Icon(
+                    Icons.person,
+                  ),
+                  hintText: 'Entrer votre pseudo',
+                  hintStyle: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+                controller: username,
+              ),
+              const SizedBox(height: 16.0),
+              const Text(
                 'Mail :',
                 style: TextStyle(
                   color: Colors.black,
@@ -150,6 +174,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         RegisterEvent(
                           nom: nom.text,
                           prenom: prenom.text,
+                          username: username.text,
                           mail: mail.text,
                           mdp: mdp.text,
                         ),

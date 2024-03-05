@@ -16,7 +16,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   late UserBloc userBloc;
-  late TextEditingController mail;
+  late TextEditingController username;
   late TextEditingController mdp;
   final _formKey = GlobalKey<State>();
 
@@ -24,7 +24,7 @@ class _LoginFormState extends State<LoginForm> {
   void initState() {
     super.initState();
     userBloc = sl<UserBloc>();
-    mail = TextEditingController();
+    username = TextEditingController();
     mdp = TextEditingController();
   }
 
@@ -32,7 +32,7 @@ class _LoginFormState extends State<LoginForm> {
   void dispose() {
     super.dispose();
     userBloc.close();
-    mail.dispose();
+    username.dispose();
     mdp.dispose();
   }
 
@@ -44,7 +44,7 @@ class _LoginFormState extends State<LoginForm> {
         if (state is UserError) {
       String errorMessage;
       if (state.error?.response?.statusCode == 401) {
-        errorMessage = 'Non autorisé (le mail ou le mot de passe sont peut-être faux)';
+        errorMessage = 'Non autorisé (le pseudo ou le mot de passe sont peut-être faux)';
       } else if (state.error?.response?.statusCode == 404) {
         errorMessage = 'Utilisateur non trouvé';
       } else {
@@ -64,7 +64,7 @@ class _LoginFormState extends State<LoginForm> {
         id: state.login?.id,
         prenom: state.login?.prenom,
         nom: state.login?.nom,
-        mail: state.login?.mail,
+        username: state.login?.username,
       );
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
       authProvider.login();
@@ -80,7 +80,7 @@ class _LoginFormState extends State<LoginForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Adresse mail :',
+                  'Pseudo :',
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -88,15 +88,15 @@ class _LoginFormState extends State<LoginForm> {
                 TextFormField(
                   decoration: const InputDecoration(
                     icon: Icon(
-                      Icons.mail,
+                      Icons.person,
                       color: Color.fromRGBO(0, 0, 0, 1),
                     ),
-                    hintText: 'Entrer votre adresse e-mail',
+                    hintText: 'Entrer votre adresse pseudo',
                     hintStyle: TextStyle(
                       color: Colors.black,
                     ),
                   ),
-                  controller: mail,
+                  controller: username,
                 ),
                 const SizedBox(height: 15),
                 const Text(
@@ -128,7 +128,7 @@ class _LoginFormState extends State<LoginForm> {
                     onPressed: () {
                       userBloc.add(
                         LoginEvent(
-                          mail: mail.text,
+                          username: username.text,
                           mdp: mdp.text,
                         ),
                       );
