@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:whashlist/features/book/domain/entities/book_entity.dart'; // Assurez-vous que le chemin est correct
+import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques_bloc.dart';
+import 'package:whashlist/features/bibliotheques/presentation/widgets/addbooktobiblio.dart';
+import 'package:whashlist/features/book/domain/entities/book_entity.dart';
+import 'package:whashlist/injection_container.dart'; // Assurez-vous que le chemin est correct
 
 class DetailBook extends StatefulWidget {
   final ApiBookResponseEntity book;
@@ -37,8 +40,21 @@ Widget build(BuildContext context) {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 ElevatedButton(
-                  onPressed: (){
-
+                  onPressed: () async {
+                    final result = await showDialog(
+                      context: context, 
+                      builder: (BuildContext context) {
+                        return AddBook(book: widget.book);
+                      }
+                    );
+                    if (result != null && result) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("La bibliothèque a été mise à jour"),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  }
                   }, 
                   child: const Text("Ajouter à une bibliothèque")
                   ),
