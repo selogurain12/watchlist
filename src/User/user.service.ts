@@ -13,7 +13,18 @@ export class UserService {
   ) {}
 
   async register(user: User): Promise<[User, Statuser]> {
-    try {
+    const existingUsername = await this.userRepository.findOne({
+      where: { username: user.username },
+    });
+    const existingMail = await this.userRepository.findOne({
+      where: { mail: user.mail },
+    });
+    if(existingUsername){
+      throw new ConflictException('User with the same username already exists.');
+    }
+    if(existingMail){
+      throw new ConflictException('User with the same username already exists.');
+    }
       const newUser = this.userRepository.create(user);
       const saveuser = await this.userRepository.save(newUser);
       const stat = {
@@ -28,12 +39,6 @@ export class UserService {
       const userwithoutpassword = {...saveuser};
     delete userwithoutpassword.mdp;
       return [userwithoutpassword, saved]
-    } catch (error) {
-      if (error instanceof QueryFailedError && error.message.includes('duplicate key')) {
-        throw new ConflictException('User with the same email already exists.');
-      }
-      throw error;
-    }
   }
 
   async login(login: LoginDto): Promise<User> {
