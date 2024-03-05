@@ -1,4 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:whashlist/features/bibliotheques/data/datasource/remote/bibliotheques_remote_datasource.dart';
+import 'package:whashlist/features/bibliotheques/data/repositories/bibliotheques_repository_impl.dart';
+import 'package:whashlist/features/bibliotheques/domain/repositories/bibliotheques_repository.dart';
+import 'package:whashlist/features/bibliotheques/domain/usecases/addbibliotheque.dart';
+import 'package:whashlist/features/bibliotheques/domain/usecases/addbook.dart';
+import 'package:whashlist/features/bibliotheques/domain/usecases/bibliotheques.dart';
+import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques_bloc.dart';
 import 'package:whashlist/features/book/data/datasource/remote/book_remote_datasource.dart';
 import 'package:whashlist/features/book/data/repositories/book_repository_impl.dart';
 import 'package:whashlist/features/book/domain/repositories/book_repository.dart';
@@ -43,6 +50,9 @@ Future<void> initializeDependencies() async {
   //Filmotheques
   sl.registerSingleton<FilmothequesService>(FilmothequesService(sl()));
   sl.registerSingleton<FilmothequesRepository>(FilmothequesRepositoryImpl(sl()));
+  //Bibliotheque
+  sl.registerSingleton<BibliothequesService>(BibliothequesService(sl()));
+  sl.registerSingleton<BibliothequesRepository>(BibliothequesRepositoryImpl(sl()));
 
   /////////////////////////// USECASE ////////////////////////////////////////////
   // User
@@ -56,6 +66,10 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<FilmothequesUseCase>(FilmothequesUseCase(sl()));
   sl.registerSingleton<AddFilmothequeUseCase>(AddFilmothequeUseCase(sl()));
   sl.registerSingleton<FilmFilmothequeUseCase>(FilmFilmothequeUseCase(sl()));
+  //Bibliotheques
+  sl.registerSingleton<BibliothequesUseCase>(BibliothequesUseCase(sl()));
+  sl.registerSingleton<AddBibliothequeUseCase>(AddBibliothequeUseCase(sl()));
+  sl.registerSingleton<LivreBibliothequeUseCase>(LivreBibliothequeUseCase(sl()));
 
   /////////////////////////// BLOC ///////////////////////////////////////////////
   // User
@@ -66,4 +80,6 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<SearchMovieBloc>(() => SearchMovieBloc(sl()));
   //Filmotheques
   sl.registerFactory<FilmothequesBloc>(() => FilmothequesBloc(sl(), sl(), sl()));
+  //Bibliotheques
+  sl.registerFactory<BibliothequesBloc>(() => BibliothequesBloc(sl(), sl(), sl()));
 }
