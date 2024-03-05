@@ -14,7 +14,7 @@ export class Bibliotheque {
 }
 
 @Entity()
-@Unique(["id_book"])
+@Unique(["id_livre"])
 export class LivreBibliotheque {
     @PrimaryGeneratedColumn("uuid")
     id: string;
@@ -23,7 +23,7 @@ export class LivreBibliotheque {
     id_bibliotheque: string;
 
     @Column()
-    id_book: string;
+    id_livre: string;
 }
 
 export class searchbiblioDto {

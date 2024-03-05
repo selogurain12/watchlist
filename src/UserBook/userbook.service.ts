@@ -53,7 +53,7 @@ export class UserBookService {
       
         const livreDetails: Promise<[LivreBibliotheque, Book][]> = Promise.all(
           livres.map(async (livre) => {
-            const book = await this.bookService.getBook(livre.id_book);
+            const book = await this.bookService.getBook(livre.id_livre);
             return [livre, book];
           })
         );

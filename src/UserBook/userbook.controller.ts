@@ -12,13 +12,14 @@ export class UserBookController {
         return await this.userbookService.createbibliotheque(biblio);
     }
 
-    @Post("bibliotheque")
+    @Post("bibliotheques")
     async bibliotheque(@Body() id: searchbiblioDto): Promise<Bibliotheque[]> {
         return await this.userbookService.bibliotheque(id);
     }
 
     @Post("bibliotheque/addbook")
     async addbook(@Body() book: LivreBibliotheque): Promise<LivreBibliotheque> {
+        console.log(book)
         return await this.userbookService.addbook(book);
     }
 
