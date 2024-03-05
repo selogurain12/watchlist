@@ -18,7 +18,7 @@ class ConnectedBody extends StatelessWidget {
 
       return Center(
         child: Text(
-          'Bon retour ${userProvider.userNom}',
+          'Bon retour ${userProvider.userPrenom}',
           style: Theme.of(context).textTheme.titleLarge,
         ),
       );
