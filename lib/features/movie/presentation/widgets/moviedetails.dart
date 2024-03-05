@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whashlist/features/movie/domain/entities/searchmovie_entity.dart';
@@ -40,28 +41,39 @@ class _DetailMovieState extends State<DetailMovie> {
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                if(authProvider.isLoggedIn)
-                  ElevatedButton(
-                  onPressed: () async {
-                    final result = await showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AddMovie(movie: widget.movie);
-                    },
-                  );
-                  if (result != null && result) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("La filmothèque a été mise à jour"),
-                        backgroundColor: Colors.green,
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          context.go("/addmovie");
+                        },
+                        child: const Icon(Icons.arrow_back_rounded),
                       ),
-                    );
-                  }
-                  },
-                  child: const Text("Ajouter à une filmothèque"),
-                ),
+                      const Spacer(), // Ajout de cet espace pour pousser le bouton à l'extrémité droite
+                      if (authProvider.isLoggedIn)
+                        ElevatedButton(
+                          onPressed: () async {
+                            final result = await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AddMovie(movie: widget.movie);
+                              },
+                            );
+                            if (result != null && result) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("La filmothèque a été mise à jour"),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            }
+                          },
+                          child: const Text("Ajouter à une filmothèque"),
+                        ),
+                    ],
+                  ),
                   const SizedBox(height: 10),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
