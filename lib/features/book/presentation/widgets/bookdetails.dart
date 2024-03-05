@@ -1,9 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:whashlist/features/bibliotheques/presentation/widgets/addbooktobiblio.dart';
 import 'package:whashlist/features/book/domain/entities/book_entity.dart';
-import 'package:whashlist/injection_container.dart'; // Assurez-vous que le chemin est correct
+import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 
 class DetailBook extends StatefulWidget {
   final ApiBookResponseEntity book;
@@ -16,6 +19,7 @@ class DetailBook extends StatefulWidget {
 class _DetailBookState extends State<DetailBook> {
  @override
 Widget build(BuildContext context) {
+  final authProvider = Provider.of<AuthProvider>(context);
   return Scaffold(
     body: Stack(
       children: [
@@ -37,26 +41,38 @@ Widget build(BuildContext context) {
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    final result = await showDialog(
-                      context: context, 
-                      builder: (BuildContext context) {
-                        return AddBook(book: widget.book);
-                      }
-                    );
-                    if (result != null && result) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("La bibliothèque a été mise à jour"),
-                        backgroundColor: Colors.green,
+                Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          context.go("/addmovie");
+                        },
+                        child: const Icon(Icons.arrow_back_rounded),
                       ),
-                    );
-                  }
-                  }, 
-                  child: const Text("Ajouter à une bibliothèque")
+                      const Spacer(),
+                      if (authProvider.isLoggedIn)
+                        ElevatedButton(
+                          onPressed: () async {
+                            final result = await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AddBook(book: widget.book);
+                              },
+                            );
+                            if (result != null && result) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("La filmothèque a été mise à jour"),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            }
+                          },
+                          child: const Text("Ajouter à une filmothèque"),
+                        ),
+                    ],
                   ),
                   const SizedBox(height: 10),
                 Row(
