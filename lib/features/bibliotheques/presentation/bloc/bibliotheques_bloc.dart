@@ -49,7 +49,7 @@ class BibliothequesBloc extends Bloc<BibliothequeEvent, BibliothequesState> {
     );
 
     if (data is DataSuccess) {
-      emit(BibliothequesLoaded(addbibliotheque: data.data));
+      emit(AddBibliothequeLoaded(addbibliotheque: data.data));
     }
 
     if (data is DataFailure) {
@@ -67,7 +67,7 @@ class BibliothequesBloc extends Bloc<BibliothequeEvent, BibliothequesState> {
     );
 
     if (data is DataSuccess) {
-      emit(BibliothequesLoaded(addbook: data.data));
+      emit(LivreBibliothequeLoaded(addbook: data.data));
     }
 
     if (data is DataFailure) {

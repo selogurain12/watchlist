@@ -20,7 +20,15 @@ class BibliothequesLoading extends BibliothequesState {
 }
 
 class BibliothequesLoaded extends BibliothequesState {
-  const BibliothequesLoaded({List<BibliothequesResponseEntity>? bibliotheques, BibliothequesResponseEntity? addbibliotheque, LivreBibliothequeResponseEntity? addbook}) : super(bibliotheques: bibliotheques, addbibliotheque: addbibliotheque, addbook: addbook);
+  const BibliothequesLoaded({List<BibliothequesResponseEntity>? bibliotheques }) : super(bibliotheques: bibliotheques );
+}
+
+class LivreBibliothequeLoaded extends BibliothequesState {
+  const LivreBibliothequeLoaded({LivreBibliothequeResponseEntity? addbook}) : super(addbook: addbook);
+}
+
+class AddBibliothequeLoaded extends BibliothequesState {
+  const AddBibliothequeLoaded({BibliothequesResponseEntity? addbibliotheque}) : super(addbibliotheque: addbibliotheque);
 }
 
 class BibliothequesError extends BibliothequesState {
