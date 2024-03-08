@@ -33,4 +33,9 @@ export class UserController {
     async statsuser(@Body() user: MeDto): Promise<Statuser> {
       return await this.userService.statsuser(user);
     }
+
+    @Post('me/updatestats')
+    async updatestats(@Body() stats: Statuser): Promise<Statuser> {
+      return await this.userService.updatestat(stats);
+    }
 }

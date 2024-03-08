@@ -106,4 +106,20 @@ export class UserService {
   }
   return statUser
   }
+
+  async updatestat(stat: Statuser): Promise<Statuser> {
+    const statUser = await this.statRepository.findOne({
+      where:{
+        iduser: stat.iduser,
+      }
+    })
+    statUser.filmsvu = statUser.filmsvu + stat.filmsvu;
+    statUser.tempsvu = statUser.tempsvu + stat.tempsvu;
+    statUser.livreslu = statUser.livreslu + stat.livreslu;
+    statUser.pageslu = statUser.pageslu + stat.pageslu;
+
+    const updatedStatUser = await this.statRepository.save(statUser);
+
+    return updatedStatUser;
+  }
 }
