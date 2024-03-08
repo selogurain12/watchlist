@@ -23,6 +23,11 @@ import 'package:whashlist/features/movie/data/repositories/searchmovie_repositor
 import 'package:whashlist/features/movie/domain/repositories/searchmovie_repository.dart';
 import 'package:whashlist/features/movie/domain/usecases/searchmovie.dart';
 import 'package:whashlist/features/movie/presentation/bloc/searchmovie_bloc.dart';
+import 'package:whashlist/features/stats/data/datasource/remote/stats_remote_datasource.dart';
+import 'package:whashlist/features/stats/data/repositories/stats_repository_impl.dart';
+import 'package:whashlist/features/stats/domain/repositories/stats_repository.dart';
+import 'package:whashlist/features/stats/domain/usecases/updatestats.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_bloc.dart';
 import 'package:whashlist/features/user/data/datasources/remote/user_remote_datasource.dart';
 import 'package:whashlist/features/user/data/repositories/user_repository_impl.dart';
 import 'package:whashlist/features/user/domain/repositories/user_repository.dart';
@@ -53,6 +58,9 @@ Future<void> initializeDependencies() async {
   //Bibliotheque
   sl.registerSingleton<BibliothequesService>(BibliothequesService(sl()));
   sl.registerSingleton<BibliothequesRepository>(BibliothequesRepositoryImpl(sl()));
+  //Stats
+  sl.registerSingleton<StatsService>(StatsService(sl()));
+  sl.registerSingleton<StatsRepository>(StatsRepositoryImpl(sl()));
 
   /////////////////////////// USECASE ////////////////////////////////////////////
   // User
@@ -70,6 +78,8 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<BibliothequesUseCase>(BibliothequesUseCase(sl()));
   sl.registerSingleton<AddBibliothequeUseCase>(AddBibliothequeUseCase(sl()));
   sl.registerSingleton<LivreBibliothequeUseCase>(LivreBibliothequeUseCase(sl()));
+  //Stats
+  sl.registerSingleton<UpdateStatsUseCase>(UpdateStatsUseCase(sl()));
 
   /////////////////////////// BLOC ///////////////////////////////////////////////
   // User
@@ -82,4 +92,6 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<FilmothequesBloc>(() => FilmothequesBloc(sl(), sl(), sl()));
   //Bibliotheques
   sl.registerFactory<BibliothequesBloc>(() => BibliothequesBloc(sl(), sl(), sl()));
+  //Stats
+  sl.registerFactory<StatsBloc>(() => StatsBloc(sl()));
 }
