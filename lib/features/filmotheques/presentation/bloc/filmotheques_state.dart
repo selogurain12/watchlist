@@ -20,7 +20,15 @@ class FilmothequesLoading extends FilmothequesState {
 }
 
 class FilmothequesLoaded extends FilmothequesState {
-  const FilmothequesLoaded({List<FilmothequesResponseEntity>? filmotheques, FilmothequesResponseEntity? addfilmotheque, FilmFilmothequeResponseEntity? addmovie}) : super(filmotheques: filmotheques, addfilmotheque: addfilmotheque, addmovie: addmovie);
+  const FilmothequesLoaded({List<FilmothequesResponseEntity>? filmotheques }) : super(filmotheques: filmotheques);
+}
+
+class FilmFilmothequeLoaded extends FilmothequesState {
+  const FilmFilmothequeLoaded({FilmFilmothequeResponseEntity? addmovie}) : super(addmovie: addmovie);
+}
+
+class AddFilmothequeLoaded extends FilmothequesState {
+  const AddFilmothequeLoaded({FilmothequesResponseEntity? addfilmotheque}) : super(addfilmotheque: addfilmotheque);
 }
 
 class FilmothequesError extends FilmothequesState {

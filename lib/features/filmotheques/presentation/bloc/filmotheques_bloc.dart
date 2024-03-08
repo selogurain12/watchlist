@@ -49,7 +49,7 @@ class FilmothequesBloc extends Bloc<FilmothequeEvent, FilmothequesState> {
     );
 
     if (data is DataSuccess) {
-      emit(FilmothequesLoaded(addfilmotheque: data.data));
+      emit(AddFilmothequeLoaded(addfilmotheque: data.data));
     }
 
     if (data is DataFailure) {
@@ -67,7 +67,7 @@ class FilmothequesBloc extends Bloc<FilmothequeEvent, FilmothequesState> {
     );
 
     if (data is DataSuccess) {
-      emit(FilmothequesLoaded(addmovie: data.data));
+      emit(FilmFilmothequeLoaded(addmovie: data.data));
     }
 
     if (data is DataFailure) {
