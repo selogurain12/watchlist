@@ -17,16 +17,9 @@ export class UserMovieService {
     private readonly movieService: MovieService,
   ) {}
     async createfilmotheque(filmo: Filmotheque): Promise<Filmotheque> {
-        try {
         const newFilmotheque = this.filmothequeRepository.create(filmo);
       const filmotheque = await this.filmothequeRepository.save(newFilmotheque);
       return filmotheque;
-    } catch (error) {
-        if (error instanceof QueryFailedError && error.message.includes('duplicate key')) {
-          throw new ConflictException('Il y a déjà une filmothèque avec ce nom');
-        }
-        throw error;
-      }
     }
 
     async filmotheque(id: searchfilmoDto): Promise<Filmotheque[]> {
