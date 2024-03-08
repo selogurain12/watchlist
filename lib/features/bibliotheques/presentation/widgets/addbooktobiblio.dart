@@ -6,7 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques_bloc.dart';
 import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques_event.dart';
 import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques_state.dart';
+import 'package:whashlist/features/bibliotheques/presentation/widgets/createbibliotheque.dart';
 import 'package:whashlist/features/book/domain/entities/book_entity.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_bloc.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
 
@@ -21,8 +23,10 @@ class AddBook extends StatefulWidget {
 
 class _AddBookState extends State<AddBook> {
   late BibliothequesBloc bibliothequesBloc;
+  late StatsBloc statsBloc;
   late TextEditingController nom;
   String? selectedValue;
+  int? pageslu;
   bool showCreateForm = false;
   String? selectedBookId;
   String? selectedBibliothequeId;
@@ -31,9 +35,11 @@ class _AddBookState extends State<AddBook> {
   void initState() {
     super.initState();
     bibliothequesBloc = sl<BibliothequesBloc>();
+    statsBloc = sl<StatsBloc>();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     nom = TextEditingController();
     selectedBookId = widget.book.id;
+    pageslu = widget.book.pageCount;
     bibliothequesBloc.add(BibliothequesEvent(id: userProvider.userId));
   }
 
@@ -42,6 +48,7 @@ class _AddBookState extends State<AddBook> {
     super.dispose();
     nom.dispose();
     bibliothequesBloc.close();
+    statsBloc.close(); 
   }
 
   @override
@@ -55,16 +62,6 @@ Widget build(BuildContext context) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text("Le livre a déjà été ajouté à cette bibliothèque"),
-              backgroundColor: Colors.red,
-            ),
-          );
-          Navigator.of(context).pop();
-        });
-      } else if (state is BibliothequesError) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("La bibliothèque existe déjà"),
               backgroundColor: Colors.red,
             ),
           );
@@ -108,59 +105,45 @@ Widget build(BuildContext context) {
                     hint: const Text('Sélectionnez un élément'),
                   ),
                 const SizedBox(height: 16.0),
-                if (!showCreateForm)
                   ElevatedButton(
                     onPressed: () {
-                      setState(() {
-                        showCreateForm = true;
-                      });
+                      showDialog(
+                        context: context, 
+                        builder: (BuildContext context) {
+                          return AddBibliotheque(
+                            onBibliothequeAdded: () {
+            // Cette fonction sera appelée lorsque la bibliothèque est ajoutée avec succès
+            bibliothequesBloc.add(BibliothequesEvent(id: userProvider.userId));
+          },
+                          );
+                        }
+                        );
                     },
                     child: const Text("Créer une bibliothèque"),
                   ),
-                if (showCreateForm)
-                  const Text("Créer une bibliothèque"),
-                const SizedBox(height: 16.0),
-                if (showCreateForm)
-                  SizedBox(
-                    width: 250,
-                    child: TextField(
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Nom de la bibliothèque',
-                      ),
-                      controller: nom,
-                    ),
-                  ),
                 const SizedBox(height: 16.0),
                 ElevatedButton(
-                  onPressed: () {
-                    if (showCreateForm) {
-                      if (nom.text.trim().isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Veuillez entrer un nom pour la bibliothèque"),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
-                      }else{
-                      bibliothequesBloc.add(
-                        AddBibliothequeEvent(
-                          nom: nom.text,
-                          id_user: userProvider.userId,
-                        ),
-                      );
-                      }
-                    }
+                  onPressed: () async {
                     bibliothequesBloc.add(
                       LivreBibliothequeEvent(
                         id_bibliotheque: selectedBibliothequeId,
                         id_livre: selectedBookId,
                       ),
                     );
+                     if (selectedBibliothequeId == null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Pas de bibliothèque sélectionné"),
+              backgroundColor: Colors.red,
+            ),
+          );
+          Navigator.of(context).pop();
+        });
+      }
                     if (state is BibliothequesLoaded) {
                       WidgetsBinding.instance.addPostFrameCallback((_) async {
-                        if(state is! LivreBibliothequeError && state is! BibliothequesError){
+                        if(state is! LivreBibliothequeError && state is! BibliothequesError && selectedBibliothequeId != null){
                           await Future.delayed(const Duration(seconds: 2));
                           Navigator.of(context).pop(true);
                         }
