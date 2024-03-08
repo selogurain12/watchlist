@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_bloc.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_event.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_state.dart';
+import 'package:whashlist/features/filmotheques/presentation/widgets/createfilmotheque.dart';
 import 'package:whashlist/features/movie/domain/entities/searchmovie_entity.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
@@ -60,16 +61,6 @@ Widget build(BuildContext context) {
           );
           Navigator.of(context).pop();
         });
-      } else if (state is FilmothequesError) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("La filmothèque existe déjà"),
-              backgroundColor: Colors.red,
-            ),
-          );
-          Navigator.of(context).pop();
-        });
       }
       if (state.filmotheques != null) {
         List<DropdownMenuItem<String>> dropdownItems = state.filmotheques!
@@ -108,56 +99,41 @@ Widget build(BuildContext context) {
                     hint: const Text('Sélectionnez un élément'),
                   ),
                 const SizedBox(height: 16.0),
-                if (!showCreateForm)
                   ElevatedButton(
                     onPressed: () {
-                      setState(() {
-                        showCreateForm = true;
-                      });
+                       showDialog(
+                        context: context, 
+                        builder: (BuildContext context) {
+                          return AddFilmotheque(
+                            onFilmothequeAdded: () {
+            filmothequesBloc.add(FilmothequesEvent(id: userProvider.userId));
+          },
+                          );
+                        }
+                        );
                     },
                     child: const Text("Créer une filmothèque"),
-                  ),
-                if (showCreateForm)
-                  const Text("Créer une filmothèque"),
-                const SizedBox(height: 16.0),
-                if (showCreateForm)
-                  SizedBox(
-                    width: 250,
-                    child: TextField(
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Nom de la filmothèque',
-                      ),
-                      controller: nom,
-                    ),
                   ),
                 const SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () {
-                    if (showCreateForm) {
-                      if (nom.text.trim().isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Veuillez entrer un nom pour la filmothèque"),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
-                      } else {
-                        filmothequesBloc.add(
-                          AddFilmothequeEvent(
-                            nom: nom.text,
-                            id_user: userProvider.userId,
-                          ),
-                        );
-                      }
-                    }
                     filmothequesBloc.add(
                       FilmFilmothequeEvent(
                         id_filmotheque: selectedFilmothequeId ?? "",
                         id_film: selectedMovieId ?? "",
                       ),
                     );
+                    if (selectedFilmothequeId == null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Pas de filmothèque sélectionné"),
+              backgroundColor: Colors.red,
+            ),
+          );
+          Navigator.of(context).pop();
+        });
+      }
                     if (state is FilmothequesLoaded) {
                       WidgetsBinding.instance.addPostFrameCallback((_) async {
                         if (state is! FilmFilmothequeError && state is! FilmothequesError) {

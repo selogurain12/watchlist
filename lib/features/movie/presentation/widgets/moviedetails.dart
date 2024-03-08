@@ -6,7 +6,10 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whashlist/features/movie/domain/entities/searchmovie_entity.dart';
 import 'package:whashlist/features/filmotheques/presentation/widgets/addmovietofilmo.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_bloc.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_event.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
+import 'package:whashlist/injection_container.dart';
 
 class DetailMovie extends StatefulWidget {
   final SearchMovieResponseEntity movie;
@@ -18,9 +21,26 @@ class DetailMovie extends StatefulWidget {
 }
 
 class _DetailMovieState extends State<DetailMovie> {
+  late StatsBloc statsBloc;
+  int? tempsvu;
+
+  @override
+  void initState() {
+    super.initState();
+    statsBloc = sl<StatsBloc>();
+    tempsvu = widget.movie.runtime;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    statsBloc.close();
+  }
+
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       body: Stack(
         children: [
@@ -62,6 +82,15 @@ class _DetailMovieState extends State<DetailMovie> {
                               },
                             );
                             if (result != null && result) {
+                              statsBloc.add(
+                                UpdateStatEvent(
+                                iduser: userProvider.userId,
+                                filmsvu: 1,
+                                tempsvu: tempsvu,
+                                livreslu: 0,
+                                pageslu: 0,
+                              )
+                              );
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text("La filmothèque a été mise à jour"),
