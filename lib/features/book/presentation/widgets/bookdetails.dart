@@ -6,7 +6,10 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whashlist/features/bibliotheques/presentation/widgets/addbooktobiblio.dart';
 import 'package:whashlist/features/book/domain/entities/book_entity.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_bloc.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_event.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
+import 'package:whashlist/injection_container.dart';
 
 class DetailBook extends StatefulWidget {
   final ApiBookResponseEntity book;
@@ -17,8 +20,25 @@ class DetailBook extends StatefulWidget {
 }
 
 class _DetailBookState extends State<DetailBook> {
+late StatsBloc statsBloc;
+int? pageslu;
+
+ @override
+  void initState() {
+    super.initState();
+    statsBloc = sl<StatsBloc>();
+    pageslu = widget.book.pageCount;
+  }
+
+@override
+void dispose() {
+  super.dispose();
+  statsBloc.close();
+}
+
  @override
 Widget build(BuildContext context) {
+  final userProvider = Provider.of<UserProvider>(context, listen: false);
   final authProvider = Provider.of<AuthProvider>(context);
   return Scaffold(
     body: Stack(
@@ -47,7 +67,7 @@ Widget build(BuildContext context) {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          context.go("/addmovie");
+                          context.go("/addbook");
                         },
                         child: const Icon(Icons.arrow_back_rounded),
                       ),
@@ -62,6 +82,15 @@ Widget build(BuildContext context) {
                               },
                             );
                             if (result != null && result) {
+                          statsBloc.add(
+                      UpdateStatEvent(
+                        iduser: userProvider.userId,
+                        filmsvu: 0,
+                        tempsvu: 0,
+                        livreslu: 1,
+                        pageslu: pageslu,
+                      )
+                    );
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text("La filmothèque a été mise à jour"),
@@ -70,7 +99,7 @@ Widget build(BuildContext context) {
                               );
                             }
                           },
-                          child: const Text("Ajouter à une filmothèque"),
+                          child: const Text("Ajouter à une bibliothèque"),
                         ),
                     ],
                   ),
