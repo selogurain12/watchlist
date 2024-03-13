@@ -1,57 +1,108 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class HomeBody extends StatelessWidget{
-  const HomeBody({super.key});
+class HomeBody extends StatelessWidget {
+  const HomeBody({Key? key});
 
   @override
   Widget build(BuildContext context) {
+    double buttonWidth = MediaQuery.of(context).size.width;
+    double buttonHeight = 170.0; // Ajustez cette valeur selon vos préférences de hauteur
+
     return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0), // Espacement autour de la première paire de boutons
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ElevatedButton(
+              onPressed: () {
+                context.go('/addmovie');
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                fixedSize: Size(buttonWidth, buttonHeight),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Stack(
                   children: [
-                    SizedBox(
-                      width: 180.0,
-                      height: 180.0,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          context.go('/addmovie');
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(color: Colors.blue),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0), // ajustez la valeur selon votre préférence
-                            ),
+                    Ink(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: const AssetImage('movie.jpg'),
+                          fit: BoxFit.fill,
+                          colorFilter: ColorFilter.mode(
+                            Colors.black.withOpacity(0.2),
+                            BlendMode.dstATop,
+                          ),
                         ),
-                        child: const Text(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      width: buttonWidth,
+                      height: buttonHeight,
+                    ),
+                    SizedBox(
+                      width: buttonWidth,
+                      height: buttonHeight,
+                      child: const Center(
+                        child: Text(
                           'Ajouter un film',
                           style: TextStyle(color: Colors.black),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 10.0),
-                    SizedBox(
-                      width: 180.0,
-                      height: 180.0,
-                      child: ElevatedButton(
-                        onPressed: (){
-                          context.go('/addbook');
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(color: Colors.blue),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0), // ajustez la valeur selon votre préférence
-                            ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ElevatedButton(
+              onPressed: () {
+                context.go('/addbook');
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                fixedSize: Size(buttonWidth, buttonHeight),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Stack(
+                  children: [
+                    Ink(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: const AssetImage('book.jpg'),
+                          fit: BoxFit.fill,
+                          colorFilter: ColorFilter.mode(
+                            Colors.black.withOpacity(0.2),
+                            BlendMode.dstATop,
+                          ),
                         ),
-                        child: const Text(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      width: buttonWidth,
+                      height: buttonHeight,
+                    ),
+                    SizedBox(
+                      width: buttonWidth,
+                      height: buttonHeight,
+                      child: const Center(
+                        child: Text(
                           'Ajouter un livre',
                           style: TextStyle(color: Colors.black),
                         ),
@@ -61,55 +112,47 @@ class HomeBody extends StatelessWidget{
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0), // Espacement autour de la deuxième paire de boutons
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ElevatedButton(
+              onPressed: () {
+                //context.go('/addmovie');
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                fixedSize: Size(buttonWidth, buttonHeight),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Stack(
                   children: [
-                    SizedBox(
-                      width: 180.0,
-                      height: 180.0,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => Movielist()),
-                          // );
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(color: Colors.blue),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0), // ajustez la valeur selon votre préférence
-                            ),
-                            ),
-                        child: const Text(
-                          'Ma Movielist',
-                          style: TextStyle(color: Colors.black),
+                    Ink(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: const AssetImage('filmotheque.jpg'),
+                          fit: BoxFit.fill,
+                          colorFilter: ColorFilter.mode(
+                            Colors.black.withOpacity(0.2),
+                            BlendMode.dstATop,
+                          ),
                         ),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
+                      width: buttonWidth,
+                      height: buttonHeight,
                     ),
-                    const SizedBox(width: 10.0),
                     SizedBox(
-                      width: 180.0,
-                      height: 180.0,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => BookList()),
-                          // );
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(color: Colors.blue),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0), // ajustez la valeur selon votre préférence
-                            ),
-                            ),
-                        child: const Text(
-                          'Ma Booklist',
+                      width: buttonWidth,
+                      height: buttonHeight,
+                      child: const Center(
+                        child: Text(
+                          'Mes Filmothèques',
                           style: TextStyle(color: Colors.black),
                         ),
                       ),
@@ -118,54 +161,46 @@ class HomeBody extends StatelessWidget{
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0), // Espacement autour de la deuxième paire de boutons
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ElevatedButton(
+              onPressed: () {
+                // context.go('/addmovie');
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                fixedSize: Size(buttonWidth, buttonHeight),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Stack(
                   children: [
-                    SizedBox(
-                      width: 180.0,
-                      height: 180.0,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => Movielist()),
-                          // );
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(color: Colors.blue),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0), // ajustez la valeur selon votre préférence
-                            ),
-                            ),
-                        child: const Text(
-                          'Mes filmothèques',
-                          style: TextStyle(color: Colors.black),
+                    Ink(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: const AssetImage('bibliotheque.jpg'),
+                          fit: BoxFit.fill,
+                          colorFilter: ColorFilter.mode(
+                            Colors.black.withOpacity(0.2),
+                            BlendMode.dstATop,
+                          ),
                         ),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
+                      width: buttonWidth,
+                      height: buttonHeight,
                     ),
-                    const SizedBox(width: 10.0),
                     SizedBox(
-                      width: 180.0,
-                      height: 180.0,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => BookList()),
-                          // );
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(color: Colors.blue),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0), // ajustez la valeur selon votre préférence
-                            ),
-                            ),
-                        child: const Text(
+                      width: buttonWidth,
+                      height: buttonHeight,
+                      child: const Center(
+                        child: Text(
                           'Mes bibliothèques',
                           style: TextStyle(color: Colors.black),
                         ),
@@ -175,8 +210,9 @@ class HomeBody extends StatelessWidget{
                 ),
               ),
             ),
-          ],
-        ),
-      );
+          ),
+        ],
+      ),
+    );
   }
 }
