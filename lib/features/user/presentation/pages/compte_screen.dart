@@ -1,29 +1,38 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
-import 'package:whashlist/features/user/presentation/widgets/home_body.dart';
+import 'package:whashlist/features/user/presentation/widgets/compte_body.dart';
 import 'package:go_router/go_router.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class CompteScreen extends StatelessWidget {
+  const CompteScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
-   return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFCE5CB),
         leading: Padding(
           padding: const EdgeInsets.only(left: 8.0),
-          child: Image.asset(
+          child: GestureDetector(
+                onTap: () {
+                  context.go('/');
+                },
+                child: Image.asset(
             '../images/home.png',
             width: 30.0,
           ),
         ),
-        title: const Center(
-          child: Text('HOME'),
         ),
-       actions: [
+        title: GestureDetector(
+          child: const Center(
+            child: Text('COMPTES'),
+          ),
+        ),
+        actions: [
           authProvider.isLoggedIn
               ? GestureDetector(
                   onTap: () {
@@ -51,7 +60,7 @@ class HomeScreen extends StatelessWidget {
                 )
         ],
       ),
-      body: const HomeBody()
-   );
+      body: const CompteBody(),
+    );
   }
 }
