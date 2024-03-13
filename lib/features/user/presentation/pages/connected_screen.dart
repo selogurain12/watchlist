@@ -14,15 +14,17 @@ class ConnectedScreen extends StatelessWidget {
         backgroundColor: const Color(0xFFFCE5CB),
         leading: Padding(
           padding: const EdgeInsets.only(left: 8.0),
-          child: Image.asset(
+          child: GestureDetector(
+                onTap: () {
+                  context.go('/');
+                },
+                child: Image.asset(
             '../images/home.png',
             width: 30.0,
           ),
         ),
+        ),
         title: GestureDetector(
-          onTap: () {
-            context.go("/");
-          },
           child: const Center(
             child: Text('HOME'),
           ),
