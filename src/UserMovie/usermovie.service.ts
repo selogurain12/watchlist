@@ -13,7 +13,6 @@ export class UserMovieService {
     @InjectRepository(FilmFilmotheque)
     private readonly filmfilmothequeRepository: Repository<FilmFilmotheque>,
     @InjectRepository(Movie)
-    private readonly movieRepository: Repository<Movie>,
     private readonly movieService: MovieService,
   ) {}
     async createfilmotheque(filmo: Filmotheque): Promise<Filmotheque> {

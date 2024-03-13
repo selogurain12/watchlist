@@ -9,6 +9,8 @@ import { UserMovieModule } from './UserMovie/usermovie.module';
 import { FilmFilmotheque, Filmotheque } from './UserMovie/usermovie.entity';
 import { Bibliotheque, LivreBibliotheque } from './UserBook/userbook.entity';
 import { UserBookModule } from './UserBook/userbook.module';
+import { Friendlist } from './Friendlist/friendlist.entity';
+import { FriendlistModule } from './Friendlist/friendlist.module';
 
 @Module({
   imports: [
@@ -22,7 +24,7 @@ import { UserBookModule } from './UserBook/userbook.module';
         username: configService.get<string>('DATABASE_USERNAME', 'lora'),
         password: configService.get<string>('DATABASE_PASSWORD', 'Juemlochda2003!'),
         database: configService.get<string>('DATABASE_NAME', 'watchlist'),
-        entities: [User, Statuser, Filmotheque, FilmFilmotheque, Bibliotheque, LivreBibliotheque],
+        entities: [User, Statuser, Filmotheque, FilmFilmotheque, Bibliotheque, LivreBibliotheque, Friendlist],
         synchronize: true,
       }),
       inject: [ConfigService],
@@ -31,7 +33,8 @@ import { UserBookModule } from './UserBook/userbook.module';
     BookModule,
     MovieModule,
     UserMovieModule,
-    UserBookModule
+    UserBookModule,
+    FriendlistModule
   ],
   providers: [ConfigService],
 })
