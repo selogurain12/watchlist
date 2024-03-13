@@ -12,13 +12,13 @@ class ConnectedBody extends StatelessWidget {
     final userProvider = Provider.of<UserProvider>(context);
 
     if (authProvider.isLoggedIn) {
-      Future.delayed(const Duration(seconds: 7), () {
+      Future.delayed(const Duration(seconds: 5), () {
         context.go('/');
       });
 
       return Center(
         child: Text(
-          'Bon retour ${userProvider.userPrenom}',
+          'Bon retour ${userProvider.userUsername}',
           style: Theme.of(context).textTheme.titleLarge,
         ),
       );
