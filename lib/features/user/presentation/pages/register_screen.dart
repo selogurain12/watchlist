@@ -52,7 +52,7 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        context.go('/');
+                        context.go('/login');
                       },
                       child: const Text(
                         "Se connecter",

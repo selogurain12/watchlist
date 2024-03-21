@@ -59,7 +59,7 @@ class LoginScreen extends StatelessWidget {
                         child: const Text(
                           "S'inscrire",
                           style: TextStyle(
-                            color: Color.fromRGBO(155, 155, 155, 1),
+                            color: Color.fromRGBO(255, 204, 1, 1),
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),

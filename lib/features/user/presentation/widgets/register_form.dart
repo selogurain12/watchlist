@@ -164,10 +164,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 Center(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      elevation: 5,
-                      shadowColor: Colors.blue,
-                      backgroundColor: const Color.fromRGBO(50, 100, 176, 1),
-                      fixedSize: const Size(150,40),
+                      backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
                     ),
                     onPressed: () {
                       userBloc.add(
@@ -184,6 +181,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   child: const Text(
                     "S'inscrire",
                     style: TextStyle(
+                      color: Color.fromRGBO(0, 0, 0, 1),
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
