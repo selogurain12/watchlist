@@ -18,6 +18,13 @@ import 'package:whashlist/features/filmotheques/domain/usecases/addfilmotheque.d
 import 'package:whashlist/features/filmotheques/domain/usecases/addmovie.dart';
 import 'package:whashlist/features/filmotheques/domain/usecases/filmotheques.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_bloc.dart';
+import 'package:whashlist/features/friendlist/data/datasource/remote/friendlist_remote_datasource.dart';
+import 'package:whashlist/features/friendlist/data/repositories/friendlist_repository_impl.dart';
+import 'package:whashlist/features/friendlist/domain/repositories/friendlist_repository.dart';
+import 'package:whashlist/features/friendlist/domain/usecases/addfriend.dart';
+import 'package:whashlist/features/friendlist/domain/usecases/listfriend.dart';
+import 'package:whashlist/features/friendlist/domain/usecases/searchfriend.dart';
+import 'package:whashlist/features/friendlist/presentation/bloc/friendlist_bloc.dart';
 import 'package:whashlist/features/movie/data/datasource/remote/searchmovie_remote_datasource.dart';
 import 'package:whashlist/features/movie/data/repositories/searchmovie_repository_impl.dart';
 import 'package:whashlist/features/movie/domain/repositories/searchmovie_repository.dart';
@@ -61,6 +68,9 @@ Future<void> initializeDependencies() async {
   //Stats
   sl.registerSingleton<StatsService>(StatsService(sl()));
   sl.registerSingleton<StatsRepository>(StatsRepositoryImpl(sl()));
+  //Friendlist
+  sl.registerSingleton<FriendlistService>(FriendlistService(sl()));
+  sl.registerSingleton<FriendlistRepository>(FriendlistRepositoryImpl(sl()));
 
   /////////////////////////// USECASE ////////////////////////////////////////////
   // User
@@ -80,6 +90,10 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<LivreBibliothequeUseCase>(LivreBibliothequeUseCase(sl()));
   //Stats
   sl.registerSingleton<UpdateStatsUseCase>(UpdateStatsUseCase(sl()));
+  //Friendlist
+  sl.registerSingleton<AddFriendUseCase>(AddFriendUseCase(sl()));
+  sl.registerSingleton<ListFriendUseCase>(ListFriendUseCase(sl()));
+  sl.registerSingleton<SearchFriendUseCase>(SearchFriendUseCase(sl()));
 
   /////////////////////////// BLOC ///////////////////////////////////////////////
   // User
@@ -94,4 +108,6 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<BibliothequesBloc>(() => BibliothequesBloc(sl(), sl(), sl()));
   //Stats
   sl.registerFactory<StatsBloc>(() => StatsBloc(sl()));
+  //Friendlist
+  sl.registerFactory<FriendlistBloc>(() => FriendlistBloc(sl(), sl(), sl()));
 }
