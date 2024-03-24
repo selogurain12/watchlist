@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
               router.go('/');
             },
           child: Image.asset(
-            '../images/home.png',
+            'assets/home.png',
             width: 30.0,
           ),
         ),

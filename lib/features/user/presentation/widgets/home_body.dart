@@ -37,7 +37,7 @@ class HomeBody extends StatelessWidget {
                     Ink(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: const AssetImage('movie.jpg'),
+                          image: const AssetImage('assets/movie.jpg'),
                           fit: BoxFit.fill,
                           colorFilter: ColorFilter.mode(
                             Colors.black.withOpacity(0.2),
@@ -86,7 +86,7 @@ class HomeBody extends StatelessWidget {
                     Ink(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: const AssetImage('book.jpg'),
+                          image: const AssetImage('assets/book.jpg'),
                           fit: BoxFit.fill,
                           colorFilter: ColorFilter.mode(
                             Colors.black.withOpacity(0.2),
@@ -135,7 +135,7 @@ class HomeBody extends StatelessWidget {
                     Ink(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: const AssetImage('filmotheque.jpg'),
+                          image: const AssetImage('assets/filmotheque.jpg'),
                           fit: BoxFit.fill,
                           colorFilter: ColorFilter.mode(
                             Colors.black.withOpacity(0.2),
@@ -184,7 +184,7 @@ class HomeBody extends StatelessWidget {
                     Ink(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: const AssetImage('bibliotheque.jpg'),
+                          image: const AssetImage('assets/bibliotheque.jpg'),
                           fit: BoxFit.fill,
                           colorFilter: ColorFilter.mode(
                             Colors.black.withOpacity(0.2),
