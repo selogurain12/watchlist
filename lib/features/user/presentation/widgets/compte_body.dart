@@ -24,7 +24,8 @@ class _CompteBodyState extends State<CompteBody> {
     super.initState();
     friendlistBloc = sl<FriendlistBloc>();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    friendlistBloc.add(ListFriendEvent(userprincipal: userProvider.userUsername));
+    friendlistBloc
+        .add(ListFriendEvent(userprincipal: userProvider.userUsername));
   }
 
   @override
@@ -36,6 +37,7 @@ class _CompteBodyState extends State<CompteBody> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
+    final authProvider = Provider.of<AuthProvider>(context);
 
     return BlocBuilder<FriendlistBloc, FriendlistState>(
       bloc: friendlistBloc,
@@ -46,13 +48,24 @@ class _CompteBodyState extends State<CompteBody> {
           return SingleChildScrollView(
             child: Column(
               children: [
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        context.go("/");
+                      },
+                      child: const Icon(Icons.arrow_back_rounded),
+                    ),
+                  ],
+                ),
                 Center(
-                 child: Text(
-                  '${userProvider.userUsername}',
-                  style: Theme.of(context).textTheme.headlineLarge,
+                  child: Text(
+                    '${userProvider.userUsername}',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
                 ),
-                ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 ClipRRect(
                   child: ElevatedButton(
                     onPressed: () {
@@ -78,28 +91,26 @@ class _CompteBodyState extends State<CompteBody> {
                   'Mes amis',
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
-               ElevatedButton(
-  onPressed: () async {
-    final result = await showDialog<String>(
-      context: context,
-      builder: (BuildContext context)  {
-        return AddFriend(
-          onFriendAdded: (String friendName) {
-            // Réactualiser la liste d'amis
-            setState(() {
-              friendlistBloc.add(ListFriendEvent(userprincipal: userProvider.userUsername));
-            });
-          },
-        );
-      }
-    );
-  },
-  child: const Text("Ajouter un ami"),
-),
+                ElevatedButton(
+                  onPressed: () async {
+                    // ignore: unused_local_variable
+                    final result = await showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AddFriend(
+                            onFriendAdded: () {
+                              friendlistBloc.add(ListFriendEvent(
+                                  userprincipal: userProvider.userUsername));
+                            },
+                          );
+                        });
+                  },
+                  child: const Text("Ajouter un ami"),
+                ),
                 const SizedBox(height: 20),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.9,
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.4,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.black,
@@ -112,40 +123,60 @@ class _CompteBodyState extends State<CompteBody> {
                           child: Text("Aucun ami trouvé"),
                         )
                       : GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10, // Espacement horizontal entre les éléments
-                      mainAxisSpacing: 10, // Espacement vertical entre les éléments
-                      childAspectRatio: 3 / 1, // Ratio largeur/hauteur des éléments de la grille
-                    ),
-                    itemCount: friends.length,
-                    itemBuilder: (context, index) {
-                      final friend = friends[index];
-                      return Container(
-                        padding: const EdgeInsets.all(10),
-                        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xFFFCE5CB).withOpacity(0.7),
-                              spreadRadius: 5,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            friend.user2!,
-                            style: const TextStyle(color: Colors.black),
-                            textAlign: TextAlign.center,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing:
+                                10, // Espacement horizontal entre les éléments
+                            mainAxisSpacing:
+                                10, // Espacement vertical entre les éléments
+                            childAspectRatio: 3 /
+                                1, // Ratio largeur/hauteur des éléments de la grille
                           ),
+                          itemCount: friends.length,
+                          itemBuilder: (context, index) {
+                            final friend = friends[index];
+                            return Container(
+                              padding: const EdgeInsets.all(10),
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: const Color(0xFFFCE5CB)
+                                        .withOpacity(0.7),
+                                    spreadRadius: 5,
+                                    blurRadius: 5,
+                                    offset: const Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: Center(
+                                child: Text(
+                                  friend.user2!,
+                                  style: const TextStyle(color: Colors.black),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
                 ),
+                const SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () {
+                    authProvider.logout();
+                    context.go("/");
+                  },
+                  style: TextButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
+                      textStyle: const TextStyle(fontSize: 20.0),
+                      padding: const EdgeInsets.all(30.0)),
+                  child: const Text("Déconnexion"),
+                )
               ],
             ),
           );
