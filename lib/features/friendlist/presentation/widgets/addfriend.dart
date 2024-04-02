@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:whashlist/features/friendlist/presentation/bloc/friendlist_bloc.dart';
 import 'package:whashlist/features/friendlist/presentation/bloc/friendlist_event.dart';
@@ -11,9 +10,9 @@ import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
 
 class AddFriend extends StatefulWidget {
-  final Function(String)? onFriendAdded; // Déclaration de la fonction de rappel
+  final VoidCallback onFriendAdded;
 
-  const AddFriend({Key? key, this.onFriendAdded}) : super(key: key);
+  const AddFriend({Key? key, required this.onFriendAdded}) : super(key: key);
 
   @override
   State<AddFriend> createState() => _AddFriend();
@@ -45,15 +44,30 @@ class _AddFriend extends State<AddFriend> {
       bloc: friendlistBloc,
       builder: (context, state) {
         if (state is AddFriendError) {
+          String errorMessage;
+          if (state.error?.response?.statusCode == 409) {
+            errorMessage =
+                'Vous êtes déjà amis';
+          } else if (state.error?.response?.statusCode == 404) {
+            errorMessage = 'Utilisateur non trouvé';
+          } else {
+            errorMessage = 'Une erreur s\'est produite';
+          }
           WidgetsBinding.instance.addPostFrameCallback((_) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("L'utilisateur n'existe pas"),
+              SnackBar(
+                content: Text(errorMessage),
                 backgroundColor: Colors.red,
               ),
             );
             Navigator.of(context).pop();
           });
+        }
+        Future.delayed(const Duration(seconds: 5));
+        if (state is AddFriendLoaded) {
+          Future.delayed(const Duration(seconds: 2));
+          widget.onFriendAdded();
+          Navigator.pop(context);
         }
         return Dialog(
           shape: RoundedRectangleBorder(
@@ -68,7 +82,6 @@ class _AddFriend extends State<AddFriend> {
                   'Ajouter un ami',
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 16.0),
                 const SizedBox(height: 16.0),
                 SizedBox(
                   width: 250,
@@ -89,16 +102,21 @@ class _AddFriend extends State<AddFriend> {
           backgroundColor: Colors.red,
         ),
       );
-    } else {
-      final friendName = user2.text; // Nom de l'ami ajouté
+    } if(user2.text == userProvider.userUsername) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Vous ne pouvez pas vous ajouter comme ami"),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+    else {
       friendlistBloc.add(
         AddFriendEvent(
           userprincipal: userProvider.userUsername,
-          user2: friendName,
+          user2: user2.text,
         ),
       );
-      Navigator.of(context).pop(); // Fermer la modale
-      widget.onFriendAdded?.call(friendName); // Appeler la fonction de rappel
     }
   },
   child: const Text('Valider'),
