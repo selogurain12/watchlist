@@ -18,13 +18,13 @@ class RegisterScreen extends StatelessWidget {
               router.go('/');
             },
           child: Image.asset(
-            '../images/home.png',
+            'assets/home.png',
             width: 30.0,
           ),
         ),
         ),
         title: const Center(
-          child: Text('HOME'),
+          child: Text('INSCRIPTION'),
         ),
       ),
       body: SingleChildScrollView(

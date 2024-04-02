@@ -20,7 +20,7 @@ class SearchbookScreen extends StatelessWidget {
                   context.go('/');
                 },
                 child: Image.asset(
-            '../images/home.png',
+            'home.png',
             width: 30.0,
           ),
         ),
@@ -37,7 +37,7 @@ class SearchbookScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(right: 5.0),
                     child: Image.asset(
-                      '../images/2815428.png',
+                      '2815428.png',
                       width: 80.0,
                     ),
                   ),
@@ -49,7 +49,7 @@ class SearchbookScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(right: 5.0),
                     child: Image.asset(
-                      '../images/2815428.png',
+                      '2815428.png',
                       width: 80.0,
                     ),
                   ),
