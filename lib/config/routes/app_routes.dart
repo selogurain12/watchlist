@@ -1,9 +1,11 @@
 import 'package:whashlist/features/book/domain/entities/book_entity.dart';
 import 'package:whashlist/features/book/presentation/pages/detailsbook_screen.dart';
 import 'package:whashlist/features/book/presentation/pages/searchbook_screen.dart';
+import 'package:whashlist/features/filmotheques/presentation/pages/viewfilmo_screen.dart';
 import 'package:whashlist/features/movie/domain/entities/searchmovie_entity.dart';
 import 'package:whashlist/features/movie/presentation/pages/searchmovie_screen.dart';
 import 'package:whashlist/features/movie/presentation/pages/detailsmovie_screen.dart';
+import 'package:whashlist/features/stats/presentation/pages/stats_screen.dart';
 import 'package:whashlist/features/user/presentation/pages/compte_screen.dart';
 import 'package:whashlist/features/user/presentation/pages/connected_screen.dart';
 import 'package:whashlist/features/user/presentation/pages/login_screen.dart';
@@ -54,6 +56,14 @@ final router = GoRouter(
     GoRoute(
       path: '/compte',
       builder: (context, state) => const CompteScreen(),
+    ),
+    GoRoute(
+      path: '/stats',
+      builder: (context, state) => const StatsScreen(),
+    ),
+    GoRoute(
+      path: '/filmotheque',
+      builder: (context, state) => const ViewfilmoScreen(),
     ),
   ],
 );
