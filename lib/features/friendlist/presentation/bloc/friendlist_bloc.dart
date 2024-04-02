@@ -36,7 +36,7 @@ class FriendlistBloc extends Bloc<FriendlistEvent, FriendlistState> {
     }
 
     if (data is DataFailure) {
-      emit(AddFriendError(data.error));
+      emit(AddFriendError(error: data.error));
     }
   }
 

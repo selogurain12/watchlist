@@ -20,19 +20,35 @@ class FriendlistLoading extends FriendlistState {
 }
 
 class AddFriendLoaded extends FriendlistState {
-  const AddFriendLoaded({FriendlistResponseEntity? addfriend }) : super(addfriend: addfriend);
+  const AddFriendLoaded({FriendlistResponseEntity? addfriend})
+      : super(addfriend: addfriend);
 }
 
 class ListFriendLoaded extends FriendlistState {
-  const ListFriendLoaded({List<FriendlistResponseEntity>? listfriend}) : super(listfriend: listfriend);
+  const ListFriendLoaded({List<FriendlistResponseEntity>? listfriend})
+      : super(listfriend: listfriend);
 }
 
 class SearchFriendLoaded extends FriendlistState {
-  const SearchFriendLoaded({FriendlistResponseEntity? searchfriend}) : super(searchfriend: searchfriend);
+  const SearchFriendLoaded({FriendlistResponseEntity? searchfriend})
+      : super(searchfriend: searchfriend);
 }
 
 class AddFriendError extends FriendlistState {
-  const AddFriendError(DioException? error) : super(error: error);
+  final int? statusCode; // Include the status code in UserError
+  const AddFriendError({DioException? error, this.statusCode})
+      : super(error: error);
+
+  // Getter for error message based on status code
+  String get errorMessage {
+    if (statusCode == 409) {
+      return 'Conflict, friend is already added';
+    } else if (statusCode == 404) {
+      return 'Not Found: User not found';
+    } else {
+      return 'An error occurred';
+    }
+  }
 }
 
 class ListFriendError extends FriendlistState {
