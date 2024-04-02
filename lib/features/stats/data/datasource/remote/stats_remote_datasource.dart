@@ -15,4 +15,11 @@ abstract class StatsService {
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });
+
+  @POST("/user/me/stats")
+  Future<HttpResponse<StatsResponseModel>> stats ({
+    @Body() StatsRequestModel? body,
+    @Header('Content-Type') String? contentType,
+    @Header('Accept') String? accept,
+  });
 }

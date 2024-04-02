@@ -17,3 +17,17 @@ class UpdateStatEvent extends StatEvent {
     this.pageslu,
   });
 }
+
+class StatsEvent extends StatEvent {
+  final String? id;
+  final String? nom;
+  final String? prenom;
+  final String? username;
+
+  const StatsEvent({
+    this.id,
+    this.nom,
+    this.prenom,
+    this.username,
+  });
+}

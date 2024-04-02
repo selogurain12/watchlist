@@ -5,4 +5,8 @@ abstract class StatsRepository {
   Future<DataState<UpdateStatsResponseEntity>> updatestats({
     UpdateStatsRequestEntity? body,
   });
+
+  Future<DataState<StatsResponseEntity>> stats({
+    StatsRequestEntity? body,
+  });
 }
