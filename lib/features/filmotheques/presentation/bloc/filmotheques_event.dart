@@ -31,3 +31,12 @@ class FilmFilmothequeEvent extends FilmothequeEvent {
     this.id_filmotheque,
   });
 }
+
+
+class ListFilmFilmothequeEvent extends FilmothequeEvent {
+  final String? id_filmotheque;
+
+  const ListFilmFilmothequeEvent({
+    this.id_filmotheque,
+  });
+}

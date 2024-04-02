@@ -84,3 +84,17 @@ class FilmFilmothequeResponseEntity extends Equatable {
     id_filmotheque
   ];
 }
+
+class ListFilmFilmothequeRequestEntity extends Equatable {
+  final String? id_filmotheque;
+
+  const ListFilmFilmothequeRequestEntity({
+    this.id_filmotheque,
+  });
+
+  @override
+  List<Object?> get props => [
+    id_filmotheque
+  ];
+}
+

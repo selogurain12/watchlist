@@ -77,3 +77,15 @@ Map<String, dynamic> _$FilmFilmothequeResponseModelToJson(
       'id_film': instance.id_film,
       'id_filmotheque': instance.id_filmotheque,
     };
+
+ListFilmFilmothequeRequestModel _$ListFilmFilmothequeRequestModelFromJson(
+        Map<String, dynamic> json) =>
+    ListFilmFilmothequeRequestModel(
+      id_filmotheque: json['id_filmotheque'] as String?,
+    );
+
+Map<String, dynamic> _$ListFilmFilmothequeRequestModelToJson(
+        ListFilmFilmothequeRequestModel instance) =>
+    <String, dynamic>{
+      'id_filmotheque': instance.id_filmotheque,
+    };
