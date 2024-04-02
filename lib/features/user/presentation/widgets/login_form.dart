@@ -42,34 +42,36 @@ class _LoginFormState extends State<LoginForm> {
       bloc: userBloc,
       listener: (context, state) {
         if (state is UserError) {
-      String errorMessage;
-      if (state.error?.response?.statusCode == 401) {
-        errorMessage = 'Non autorisé (le pseudo ou le mot de passe sont peut-être faux)';
-      } else if (state.error?.response?.statusCode == 404) {
-        errorMessage = 'Utilisateur non trouvé';
-      } else {
-        errorMessage = 'Une erreur s\'est produite';
-      }
+          String errorMessage;
+          if (state.error?.response?.statusCode == 401) {
+            errorMessage =
+                'Non autorisé (le pseudo ou le mot de passe sont peut-être faux)';
+          } else if (state.error?.response?.statusCode == 404) {
+            errorMessage = 'Utilisateur non trouvé';
+          } else {
+            errorMessage = 'Une erreur s\'est produite';
+          }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(errorMessage),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
-    else if (state is UserLoaded) {
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
-      userProvider.setUser(
-        id: state.login?.id,
-        prenom: state.login?.prenom,
-        nom: state.login?.nom,
-        username: state.login?.username,
-      );
-      final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      authProvider.login();
-      context.go("/connected");
-    }
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(errorMessage),
+              backgroundColor: Colors.red,
+            ),
+          );
+        } else if (state is UserLoaded) {
+          final userProvider =
+              Provider.of<UserProvider>(context, listen: false);
+          userProvider.setUser(
+            id: state.login?.id,
+            prenom: state.login?.prenom,
+            nom: state.login?.nom,
+            username: state.login?.username,
+          );
+          final authProvider =
+              Provider.of<AuthProvider>(context, listen: false);
+          authProvider.login();
+          context.go("/connected");
+        }
       },
       child: BlocBuilder<UserBloc, UserState>(
         bloc: userBloc,
