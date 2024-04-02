@@ -12,7 +12,6 @@ export class UserMovieService {
     private readonly filmothequeRepository: Repository<Filmotheque>,
     @InjectRepository(FilmFilmotheque)
     private readonly filmfilmothequeRepository: Repository<FilmFilmotheque>,
-    @InjectRepository(Movie)
     private readonly movieService: MovieService,
   ) {}
     async createfilmotheque(filmo: Filmotheque): Promise<Filmotheque> {
@@ -34,21 +33,18 @@ export class UserMovieService {
 
     // Assuming 'id' is of type 'number' in both FilmFilmotheque and Movie entities
 
-    async listmovie(filmotheque: searchfilmoDto): Promise<[FilmFilmotheque, Movie][]> {
-        const films = await this.filmfilmothequeRepository.find({ where: { id_filmotheque: filmotheque.id } });
-      
-        if (!films || films.length === 0) {
-          throw new NotFoundException('No films found for the given filmotheque ID');
-        }
-      
-        const movieDetails: Promise<[FilmFilmotheque, Movie][]> = Promise.all(
-          films.map(async (film) => {
-            const movie = await this.movieService.getMovie(film.id_film); // Use getMovie from MovieService
-            return [film, movie];
-          })
-        );
-      
-        return movieDetails;
+    async listmovie(filmotheque: searchfilmoDto): Promise<Movie[]> {
+      const films = await this.filmfilmothequeRepository.find({ where: { id_filmotheque: filmotheque.id } });
+    
+      if (!films || films.length === 0) {
+        throw new NotFoundException('No films found for the given filmotheque ID');
       }
-      
+    
+      const movieIds = films.map((film) => film.id_film);
+      // Use Promise.all to concurrently fetch all movies
+      const movies = await Promise.all(movieIds.map(id => this.movieService.getMovie(id)));
+      console.log(movies)
+      return movies;
+    }
+    
   }

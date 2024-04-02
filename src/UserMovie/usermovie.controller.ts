@@ -23,7 +23,7 @@ export class UserMovieController {
     }
 
     @Post("filmotheque/movies")
-    async listmovie(@Body() filmotheque: searchfilmoDto): Promise<[FilmFilmotheque, Movie][]> {
+    async listmovie(@Body() filmotheque: searchfilmoDto): Promise<Movie[]> {
         return await this.usermovieService.listmovie(filmotheque)
     }
 }
