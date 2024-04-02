@@ -124,16 +124,16 @@ Widget build(BuildContext context) {
                       ),
                     );
                     if (selectedFilmothequeId == null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Pas de filmothèque sélectionné"),
-              backgroundColor: Colors.red,
-            ),
-          );
-          Navigator.of(context).pop();
-        });
-      }
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Pas de filmothèque sélectionné"),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                        Navigator.of(context).pop();
+                      });
+                    }
                     if (state is FilmothequesLoaded) {
                       WidgetsBinding.instance.addPostFrameCallback((_) async {
                         if (state is! FilmFilmothequeError && state is! FilmothequesError) {

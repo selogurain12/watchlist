@@ -58,7 +58,7 @@ Widget build(BuildContext context) {
     if (state is AddFilmothequeLoaded) {
         Future.delayed(const Duration(seconds: 2));
         widget.onFilmothequeAdded();
-        Navigator.pop(context); // Fermer la modale et revenir à la modale précédente
+        Navigator.pop(context);
       }
         return Dialog(
           shape: RoundedRectangleBorder(
