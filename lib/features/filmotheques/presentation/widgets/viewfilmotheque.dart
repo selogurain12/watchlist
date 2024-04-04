@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_bloc.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_event.dart';
@@ -56,48 +57,53 @@ class _ViewFilmothequeState extends State<ViewFilmotheque> {
                     GridMovie(filmothequeId: filmotheque?.id);
                 Future.delayed(const Duration(seconds: 5));
 
-                return Column(
-                  children: [
-                    Expanded(
-                        child:
-                            gridMovieWidget), // Affiche les images de GridMovie
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
+                return InkWell(
+                  onTap: () {
+                    context.go("/listefilms", extra: filmotheque?.id);
+                  },
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: gridMovieWidget,
                       ),
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              width: double.infinity,
-                              color: Colors.black.withOpacity(0.5),
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                filmotheque!.nom!,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Stack(
+                          children: [
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                width: double.infinity,
+                                color: Colors.black.withOpacity(0.5),
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  filmotheque!.nom!,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               });
         } else {
