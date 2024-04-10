@@ -46,7 +46,7 @@ class _GridMovieState extends State<GridMovie> {
                 crossAxisSpacing: 0, // Espace entre les colonnes
                 mainAxisSpacing: 0, // Espace entre les lignes
               ),
-              itemCount: listfilmotheques?.length ?? 0,
+              itemCount: (listfilmotheques?.length ?? 0) > 4 ? 4 : (listfilmotheques?.length ?? 0),
               itemBuilder: (context, index) {
                 final filmotheque = listfilmotheques![index];
                 return Image.network(
