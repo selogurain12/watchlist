@@ -31,7 +31,7 @@ export class UserBookService {
       }
     }
 
-    async bibliotheque(id: searchbiblioDto): Promise<Bibliotheque[]> {
+    async listbibliotheque(id: searchbiblioDto): Promise<Bibliotheque[]> {
     return await this.bibliothequeRepository.find({where: {
             id_user: id.id
     }})

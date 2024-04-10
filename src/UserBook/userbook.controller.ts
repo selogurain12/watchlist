@@ -12,9 +12,9 @@ export class UserBookController {
         return await this.userbookService.createbibliotheque(biblio);
     }
 
-    @Post("bibliotheques")
+    @Post("listbibliotheques")
     async bibliotheque(@Body() id: searchbiblioDto): Promise<Bibliotheque[]> {
-        return await this.userbookService.bibliotheque(id);
+        return await this.userbookService.listbibliotheque(id);
     }
 
     @Post("bibliotheque/addbook")
@@ -23,7 +23,7 @@ export class UserBookController {
         return await this.userbookService.addbook(book);
     }
 
-    @Post("bibliotheque/book")
+    @Post("bibliotheque/listbook")
     async listbook(@Body() bibliotheque: searchbiblioDto): Promise<[LivreBibliotheque, Book][]> {
         return await this.userbookService.listbook(bibliotheque)
     }
