@@ -6,6 +6,7 @@ import 'package:whashlist/features/friendlist/presentation/bloc/friendlist_bloc.
 import 'package:whashlist/features/friendlist/presentation/bloc/friendlist_event.dart';
 import 'package:whashlist/features/friendlist/presentation/bloc/friendlist_state.dart';
 import 'package:whashlist/features/friendlist/presentation/widgets/addfriend.dart';
+import 'package:whashlist/features/friendlist/presentation/widgets/deletefriend.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
 
@@ -78,7 +79,7 @@ class _CompteBodyState extends State<CompteBody> {
                       ),
                     ),
                     child: Container(
-                      padding: const EdgeInsets.all(50.0),
+                      padding: const EdgeInsets.all(45.0),
                       child: const Text(
                         'Voir les statistiques',
                         style: TextStyle(fontSize: 25.0, color: Colors.black),
@@ -91,6 +92,10 @@ class _CompteBodyState extends State<CompteBody> {
                   'Mes amis',
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                 ElevatedButton(
                   onPressed: () async {
                     // ignore: unused_local_variable
@@ -106,6 +111,25 @@ class _CompteBodyState extends State<CompteBody> {
                         });
                   },
                   child: const Text("Ajouter un ami"),
+                ),
+                const SizedBox(width: 30),
+                ElevatedButton(
+                  onPressed: () async {
+                    // ignore: unused_local_variable
+                    final result = await showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return DeleteFriend(
+                            onFriendDelete: () {
+                              friendlistBloc.add(ListFriendEvent(
+                                  userprincipal: userProvider.userUsername));
+                            },
+                          );
+                        });
+                  },
+                  child: const Text("Supprimer un ami"),
+                ),
+                  ]
                 ),
                 const SizedBox(height: 20),
                 Container(
