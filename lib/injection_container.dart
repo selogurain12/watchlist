@@ -16,13 +16,17 @@ import 'package:whashlist/features/filmotheques/data/repositories/filmotheques_r
 import 'package:whashlist/features/filmotheques/domain/repositories/filmotheques_repository.dart';
 import 'package:whashlist/features/filmotheques/domain/usecases/addfilmotheque.dart';
 import 'package:whashlist/features/filmotheques/domain/usecases/addmovie.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/deletefilmotheque.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/deletemoviefilmotheque.dart';
 import 'package:whashlist/features/filmotheques/domain/usecases/filmotheques.dart';
 import 'package:whashlist/features/filmotheques/domain/usecases/listfilmothequemovie.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/renamefilmotheque.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_bloc.dart';
 import 'package:whashlist/features/friendlist/data/datasource/remote/friendlist_remote_datasource.dart';
 import 'package:whashlist/features/friendlist/data/repositories/friendlist_repository_impl.dart';
 import 'package:whashlist/features/friendlist/domain/repositories/friendlist_repository.dart';
 import 'package:whashlist/features/friendlist/domain/usecases/addfriend.dart';
+import 'package:whashlist/features/friendlist/domain/usecases/deletefriend.dart';
 import 'package:whashlist/features/friendlist/domain/usecases/listfriend.dart';
 import 'package:whashlist/features/friendlist/domain/usecases/searchfriend.dart';
 import 'package:whashlist/features/friendlist/presentation/bloc/friendlist_bloc.dart';
@@ -87,6 +91,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<AddFilmothequeUseCase>(AddFilmothequeUseCase(sl()));
   sl.registerSingleton<FilmFilmothequeUseCase>(FilmFilmothequeUseCase(sl()));
   sl.registerSingleton<ListFilmFilmothequeUseCase>(ListFilmFilmothequeUseCase(sl()));
+  sl.registerSingleton<RenameFilmothequeUseCase>(RenameFilmothequeUseCase(sl()));
+  sl.registerSingleton<DeleteFilmothequeUseCase>(DeleteFilmothequeUseCase(sl()));
+  sl.registerSingleton<DeleteMovieFilmothequeUseCase>(DeleteMovieFilmothequeUseCase(sl()));
   //Bibliotheques
   sl.registerSingleton<BibliothequesUseCase>(BibliothequesUseCase(sl()));
   sl.registerSingleton<AddBibliothequeUseCase>(AddBibliothequeUseCase(sl()));
@@ -98,6 +105,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<AddFriendUseCase>(AddFriendUseCase(sl()));
   sl.registerSingleton<ListFriendUseCase>(ListFriendUseCase(sl()));
   sl.registerSingleton<SearchFriendUseCase>(SearchFriendUseCase(sl()));
+  sl.registerSingleton<DeleteFriendUseCase>(DeleteFriendUseCase(sl()));
 
   /////////////////////////// BLOC ///////////////////////////////////////////////
   // User
@@ -107,11 +115,11 @@ Future<void> initializeDependencies() async {
   //Movie
   sl.registerFactory<SearchMovieBloc>(() => SearchMovieBloc(sl()));
   //Filmotheques
-  sl.registerFactory<FilmothequesBloc>(() => FilmothequesBloc(sl(), sl(), sl(), sl()));
+  sl.registerFactory<FilmothequesBloc>(() => FilmothequesBloc(sl(), sl(), sl(), sl(), sl(), sl(), sl()));
   //Bibliotheques
   sl.registerFactory<BibliothequesBloc>(() => BibliothequesBloc(sl(), sl(), sl()));
   //Stats
   sl.registerFactory<StatsBloc>(() => StatsBloc(sl(), sl()));
   //Friendlist
-  sl.registerFactory<FriendlistBloc>(() => FriendlistBloc(sl(), sl(), sl()));
+  sl.registerFactory<FriendlistBloc>(() => FriendlistBloc(sl(), sl(), sl(), sl()));
 }
