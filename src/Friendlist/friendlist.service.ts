@@ -65,4 +65,23 @@ export class FriendlistService {
       }});
     return friend
   }
+
+  async deletefriend(userfriend: userfriendDto): Promise<void> {
+    const friend = await this.friendlistRepository.findOne({
+      where: {
+        userprincipal: userfriend.userprincipal,
+        user2: userfriend.user2,
+      },
+    });
+  
+    if (!friend) {
+      throw new NotFoundException('Friend relation not found.');
+    }
+  
+    const result = await this.friendlistRepository.delete(friend.id); 
+  
+    if (result.affected === 0) {
+      throw new NotFoundException('Failed to delete the friend relation.');
+    }
+  }
 }
