@@ -1,7 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: unused_element
-
 part of 'bibliotheques_remote_datasource.dart';
 
 // **************************************************************************
@@ -47,7 +45,7 @@ class _BibliothequesService implements BibliothequesService {
     )
             .compose(
               _dio.options,
-              '/user/me/bibliotheques',
+              '/user/me/listbibliotheques',
               queryParameters: queryParameters,
               data: _data,
             )
