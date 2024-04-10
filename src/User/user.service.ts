@@ -57,10 +57,6 @@ export class UserService {
     return utilisateurSansMdp;
   }
 
-  async findAll(): Promise<User[]> {
-    return await this.userRepository.find();
-  }
-
   async me(user: MeDto): Promise<[User, Statuser]> {
     const userFind = await this.userRepository.findOne({ where:{
         nom: user.nom,

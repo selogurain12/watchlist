@@ -13,11 +13,6 @@ export class UserController {
     async login(@Body()  login: LoginDto): Promise<User> {
       return await this.userService.login(login);
     }
-  
-    @Get()
-    async getUsers(): Promise<User[]>{
-       return this.userService.findAll();
-    }
 
     @Post('me')
     async me(@Body() user: MeDto): Promise<[User, Statuser]> {
