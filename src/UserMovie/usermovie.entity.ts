@@ -29,3 +29,7 @@ export class FilmFilmotheque {
 export class searchfilmoDto {
     id: string;
 }
+
+export class filmoDto {
+    id_filmotheque: string;
+}

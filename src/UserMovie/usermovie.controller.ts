@@ -1,5 +1,5 @@
-import { Body, Controller, Post } from "@nestjs/common";
-import { FilmFilmotheque, Filmotheque, searchfilmoDto } from "./usermovie.entity";
+import { Body, Controller, Delete, Post } from "@nestjs/common";
+import { FilmFilmotheque, Filmotheque, filmoDto, searchfilmoDto } from "./usermovie.entity";
 import { UserMovieService } from "./usermovie.service";
 import { Movie } from "../Movie/movie.entity";
 
@@ -12,9 +12,9 @@ export class UserMovieController {
         return await this.usermovieService.createfilmotheque(filmo);
     }
 
-    @Post("filmotheques")
+    @Post("listfilmotheques")
     async filmotheque(@Body() id: searchfilmoDto): Promise<Filmotheque[]> {
-        return await this.usermovieService.filmotheque(id);
+        return await this.usermovieService.listfilmotheque(id);
     }
 
     @Post("filmotheque/addmovie")
@@ -22,8 +22,24 @@ export class UserMovieController {
         return await this.usermovieService.addmovie(movie);
     }
 
-    @Post("filmotheque/movies")
-    async listmovie(@Body() filmotheque: searchfilmoDto): Promise<Movie[]> {
+    @Post("filmotheque/listmovies")
+    async listmovie(@Body() filmotheque: filmoDto): Promise<Movie[]> {
         return await this.usermovieService.listmovie(filmotheque)
+    }
+
+    @Post("/renamefilmotheques")
+    async renamefilmotheque(@Body() filmotheque: Filmotheque): Promise<Filmotheque> {
+        return await this.usermovieService.renamefilmotheque(filmotheque);
+    }
+
+    @Delete('filmotheque')
+    async deletefilmotheque(@Body() filmotheque: filmoDto): Promise<void> {
+        console.log(filmotheque);
+      return await this.usermovieService.deletefilmotheque(filmotheque);
+    }
+
+    @Delete('filmotheque/movie')
+    async deletemovie(@Body() movie: FilmFilmotheque): Promise<void> {
+      return await this.usermovieService.deletemovie(movie);
     }
 }
