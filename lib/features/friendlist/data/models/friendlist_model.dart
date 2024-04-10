@@ -104,3 +104,24 @@ class UserFriendRequestModel extends UserFriendRequestEntity {
     );
   }
 }
+
+@JsonSerializable()
+class DeleteResponseModel extends DeleteResponseEntity {
+  final String? message;
+
+  const DeleteResponseModel({
+    this.message,
+}): super(
+    message: message,
+  );
+
+  factory DeleteResponseModel.fromJson(Map<String, dynamic> json) =>
+    _$DeleteResponseModelFromJson(json);
+  Map<String, dynamic> toJson() => _$DeleteResponseModelToJson(this);
+
+  factory DeleteResponseModel.fromEntity(DeleteResponseEntity entity) {
+    return DeleteResponseModel(
+      message: entity.message,
+    );
+  }
+}

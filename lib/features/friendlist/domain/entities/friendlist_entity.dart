@@ -65,3 +65,16 @@ class UserFriendRequestEntity extends Equatable {
     user2
   ];
 }
+
+class DeleteResponseEntity extends Equatable {
+  final String? message;
+
+  const DeleteResponseEntity({
+    this.message,
+  });
+
+  @override
+  List<Object?> get props => [
+    message,
+  ];
+}

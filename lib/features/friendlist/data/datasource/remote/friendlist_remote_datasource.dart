@@ -9,22 +9,29 @@ part 'friendlist_remote_datasource.g.dart';
 abstract class FriendlistService {
   factory FriendlistService(Dio dio) = _FriendlistService;
 
-  @POST("/friendlist")
+  @POST("/friendlist/addfriend")
   Future<HttpResponse<FriendlistResponseModel>> addfriend ({
     @Body() FriendlistRequestModel? body,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });
 
-  @POST("/friendlist/userprincipal")
+  @POST("/friendlist/listmyfriend")
   Future<HttpResponse<List<FriendlistResponseModel>>> listfriend ({
     @Body() UserPrincipalRequestModel? body,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });
 
-  @POST("/friendlist/userprincipal/user")
+  @POST("/friendlist/listmyfriend/searchfriend")
   Future<HttpResponse<FriendlistResponseModel>> searchfriend ({
+    @Body() UserFriendRequestModel? body,
+    @Header('Content-Type') String? contentType,
+    @Header('Accept') String? accept,
+  });
+
+  @DELETE("/friendlist/listmyfriend/deletefriend")
+  Future<HttpResponse<void>> deletefriend ({
     @Body() UserFriendRequestModel? body,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,

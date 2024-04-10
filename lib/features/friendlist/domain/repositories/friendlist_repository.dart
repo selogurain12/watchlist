@@ -13,4 +13,8 @@ abstract class FriendlistRepository {
   Future<DataState<FriendlistResponseEntity>> searchfriend({
     UserFriendRequestEntity? body,
   });
+
+  Future<DataState<void>> deletefriend({
+    UserFriendRequestEntity? body,
+  });
 }

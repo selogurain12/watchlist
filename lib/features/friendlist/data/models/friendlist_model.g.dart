@@ -61,3 +61,14 @@ Map<String, dynamic> _$UserFriendRequestModelToJson(
       'userprincipal': instance.userprincipal,
       'user2': instance.user2,
     };
+
+DeleteResponseModel _$DeleteResponseModelFromJson(Map<String, dynamic> json) =>
+    DeleteResponseModel(
+      message: json['message'] as String?,
+    );
+
+Map<String, dynamic> _$DeleteResponseModelToJson(
+        DeleteResponseModel instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+    };

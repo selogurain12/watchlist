@@ -31,3 +31,13 @@ class SearchFriendEvent extends FriendlistEvent {
     this.user2,
   });
 }
+
+class DeleteFriendEvent extends FriendlistEvent {
+  final String? userprincipal;
+  final String? user2;
+
+  const DeleteFriendEvent({
+    this.userprincipal,
+    this.user2,
+  });
+}

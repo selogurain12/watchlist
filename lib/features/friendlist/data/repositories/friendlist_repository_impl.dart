@@ -89,4 +89,31 @@ class FriendlistRepositoryImpl implements FriendlistRepository {
       return DataFailure(e);
     }
   }
+
+  @override
+  Future<DataState<void>> deletefriend (
+      {UserFriendRequestEntity? body}) async {
+    try {
+      final response = await apiService.deletefriend(
+        body: UserFriendRequestModel.fromEntity(body!),
+        accept: "application/json",
+        contentType: "application/json",
+      );
+      if (response.response.statusCode == 200) {
+        // await _getAndSaveToken();
+        return DataSuccess(response.data);
+      } else {
+        return DataFailure(
+          DioException(
+            requestOptions: response.response.requestOptions,
+            error: response.response.statusMessage,
+            response: response.response,
+            type: DioExceptionType.badResponse,
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return DataFailure(e);
+    }
+  }
 }

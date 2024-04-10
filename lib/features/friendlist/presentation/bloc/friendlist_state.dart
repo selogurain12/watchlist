@@ -5,6 +5,7 @@ abstract class FriendlistState {
   final FriendlistResponseEntity? addfriend;
   final List<FriendlistResponseEntity>? listfriend;
   final FriendlistResponseEntity? searchfriend;
+  final void deletefriend;
   final DioException? error;
 
   const FriendlistState({
@@ -12,6 +13,7 @@ abstract class FriendlistState {
     this.addfriend,
     this.listfriend,
     this.searchfriend,
+    this.deletefriend,
   });
 }
 
@@ -33,6 +35,11 @@ class SearchFriendLoaded extends FriendlistState {
   const SearchFriendLoaded({FriendlistResponseEntity? searchfriend})
       : super(searchfriend: searchfriend);
 }
+
+class DeleteFriendLoaded extends FriendlistState {
+  const DeleteFriendLoaded() : super();
+}
+
 
 class AddFriendError extends FriendlistState {
   final int? statusCode; // Include the status code in UserError
@@ -57,4 +64,8 @@ class ListFriendError extends FriendlistState {
 
 class SearchFriendError extends FriendlistState {
   const SearchFriendError(DioException? error) : super(error: error);
+}
+
+class DeleteFriendError extends FriendlistState {
+  const DeleteFriendError(DioException? error) : super(error: error);
 }

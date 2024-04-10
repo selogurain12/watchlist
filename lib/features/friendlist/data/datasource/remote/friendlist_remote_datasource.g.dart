@@ -1,7 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: unused_element
-
 part of 'friendlist_remote_datasource.dart';
 
 // **************************************************************************
@@ -47,7 +45,7 @@ class _FriendlistService implements FriendlistService {
     )
             .compose(
               _dio.options,
-              '/friendlist',
+              '/friendlist/addfriend',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -86,7 +84,7 @@ class _FriendlistService implements FriendlistService {
     )
             .compose(
               _dio.options,
-              '/friendlist/userprincipal',
+              '/friendlist/listmyfriend',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -128,7 +126,7 @@ class _FriendlistService implements FriendlistService {
     )
             .compose(
               _dio.options,
-              '/friendlist/userprincipal/user',
+              '/friendlist/listmyfriend/searchfriend',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -139,6 +137,44 @@ class _FriendlistService implements FriendlistService {
             ))));
     final value = FriendlistResponseModel.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<void>> deletefriend({
+    UserFriendRequestModel? body,
+    String? contentType,
+    String? accept,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{
+      r'Content-Type': contentType,
+      r'Accept': accept,
+    };
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(body?.toJson() ?? <String, dynamic>{});
+    final _result =
+        await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
+      method: 'DELETE',
+      headers: _headers,
+      extra: _extra,
+      contentType: contentType,
+    )
+            .compose(
+              _dio.options,
+              '/friendlist/listmyfriend/deletefriend',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final httpResponse = HttpResponse(null, _result);
     return httpResponse;
   }
 
