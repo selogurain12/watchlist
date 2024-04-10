@@ -30,6 +30,36 @@ class FilmothequesRequestModel extends FilmothequesRequestEntity {
 }
 
 @JsonSerializable()
+class FilmothequeRequestModel extends FilmothequeRequestEntity {
+  final String? id;
+  final String? nom;
+  final String? id_user;
+
+  const FilmothequeRequestModel({
+    this.id,
+    this.nom,
+    this.id_user,
+  }) : super(
+          id: id,
+          nom: nom,
+          id_user: id_user,
+        );
+
+  factory FilmothequeRequestModel.fromJson(Map<String, dynamic> json) =>
+      _$FilmothequeRequestModelFromJson(json);
+  Map<String, dynamic> toJson() => _$FilmothequeRequestModelToJson(this);
+
+  factory FilmothequeRequestModel.fromEntity(
+      FilmothequeRequestEntity entity) {
+    return FilmothequeRequestModel(
+      id: entity.id,
+      nom: entity.nom,
+      id_user: entity.id_user,
+    );
+  }
+}
+
+@JsonSerializable()
 class FilmothequesResponseModel extends FilmothequesResponseEntity {
   final String? id;
   final String? nom;

@@ -18,6 +18,22 @@ Map<String, dynamic> _$FilmothequesRequestModelToJson(
       'id': instance.id,
     };
 
+FilmothequeRequestModel _$FilmothequeRequestModelFromJson(
+        Map<String, dynamic> json) =>
+    FilmothequeRequestModel(
+      id: json['id'] as String?,
+      nom: json['nom'] as String?,
+      id_user: json['id_user'] as String?,
+    );
+
+Map<String, dynamic> _$FilmothequeRequestModelToJson(
+        FilmothequeRequestModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'nom': instance.nom,
+      'id_user': instance.id_user,
+    };
+
 FilmothequesResponseModel _$FilmothequesResponseModelFromJson(
         Map<String, dynamic> json) =>
     FilmothequesResponseModel(

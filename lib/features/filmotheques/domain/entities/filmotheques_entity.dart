@@ -15,6 +15,25 @@ class FilmothequesRequestEntity extends Equatable {
   ];
 }
 
+class FilmothequeRequestEntity extends Equatable {
+  final String? id;
+  final String? nom;
+  final String? id_user;
+
+  const FilmothequeRequestEntity({
+    this.id,
+    this.nom,
+    this.id_user
+  });
+
+  @override
+  List<Object?> get props => [
+    id,
+    nom,
+    id_user
+  ];
+}
+
 class FilmothequesResponseEntity extends Equatable {
   final String? id;
   final String? nom;

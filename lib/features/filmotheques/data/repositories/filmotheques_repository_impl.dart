@@ -117,4 +117,85 @@ class FilmothequesRepositoryImpl implements FilmothequesRepository {
       return DataFailure(e);
     }
   }
+
+  @override
+  Future<DataState<FilmothequesResponseModel>> renamefilmotheque(
+      {FilmothequeRequestEntity? body}) async {
+    try {
+      final response = await apiService.renamefilmotheque(
+        body: FilmothequeRequestModel.fromEntity(body!),
+        accept: "application/json",
+        contentType: "application/json",
+      );
+      if (response.response.statusCode == 201) {
+        // await _getAndSaveToken();
+        return DataSuccess(response.data);
+      } else {
+        return DataFailure(
+          DioException(
+            requestOptions: response.response.requestOptions,
+            error: response.response.statusMessage,
+            response: response.response,
+            type: DioExceptionType.badResponse,
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return DataFailure(e);
+    }
+  }
+
+  @override
+  Future<DataState<void>> deletefilmotheque(
+      {ListFilmFilmothequeRequestEntity? body}) async {
+    try {
+      final response = await apiService.deletefilmotheque(
+        body: ListFilmFilmothequeRequestModel.fromEntity(body!),
+        accept: "application/json",
+        contentType: "application/json",
+      );
+      if (response.response.statusCode == 200) {
+        // await _getAndSaveToken();
+        return DataSuccess(response.data);
+      } else {
+        return DataFailure(
+          DioException(
+            requestOptions: response.response.requestOptions,
+            error: response.response.statusMessage,
+            response: response.response,
+            type: DioExceptionType.badResponse,
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return DataFailure(e);
+    }
+  }
+
+   @override
+  Future<DataState<void>> deletemoviefilmotheque(
+      {FilmFilmothequeRequestEntity? body}) async {
+    try {
+      final response = await apiService.deletemoviefilmotheque(
+        body: FilmFilmothequeRequestModel.fromEntity(body!),
+        accept: "application/json",
+        contentType: "application/json",
+      );
+      if (response.response.statusCode == 200) {
+        // await _getAndSaveToken();
+        return DataSuccess(response.data);
+      } else {
+        return DataFailure(
+          DioException(
+            requestOptions: response.response.requestOptions,
+            error: response.response.statusMessage,
+            response: response.response,
+            type: DioExceptionType.badResponse,
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return DataFailure(e);
+    }
+  }
 }

@@ -1,7 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: unused_element
-
 part of 'filmotheques_remote_datasource.dart';
 
 // **************************************************************************
@@ -47,7 +45,7 @@ class _FilmothequesService implements FilmothequesService {
     )
             .compose(
               _dio.options,
-              '/user/me/filmotheques',
+              '/user/me/listfilmotheques',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -167,7 +165,7 @@ class _FilmothequesService implements FilmothequesService {
     )
             .compose(
               _dio.options,
-              '/user/me/filmotheque/movies',
+              '/user/me/filmotheque/listmovies',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -181,6 +179,121 @@ class _FilmothequesService implements FilmothequesService {
             SearchMovieResponseModel.fromJson(i as Map<String, dynamic>))
         .toList();
     final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<FilmothequesResponseModel>> renamefilmotheque({
+    FilmothequeRequestModel? body,
+    String? contentType,
+    String? accept,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{
+      r'Content-Type': contentType,
+      r'Accept': accept,
+    };
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(body?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<FilmothequesResponseModel>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+      contentType: contentType,
+    )
+            .compose(
+              _dio.options,
+              '/user/me/renamefilmotheques',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = FilmothequesResponseModel.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<void>> deletefilmotheque({
+    ListFilmFilmothequeRequestModel? body,
+    String? contentType,
+    String? accept,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{
+      r'Content-Type': contentType,
+      r'Accept': accept,
+    };
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(body?.toJson() ?? <String, dynamic>{});
+    final _result =
+        await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
+      method: 'DELETE',
+      headers: _headers,
+      extra: _extra,
+      contentType: contentType,
+    )
+            .compose(
+              _dio.options,
+              '/user/me/filmotheque',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final httpResponse = HttpResponse(null, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<void>> deletemoviefilmotheque({
+    FilmFilmothequeRequestModel? body,
+    String? contentType,
+    String? accept,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{
+      r'Content-Type': contentType,
+      r'Accept': accept,
+    };
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(body?.toJson() ?? <String, dynamic>{});
+    final _result =
+        await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
+      method: 'DELETE',
+      headers: _headers,
+      extra: _extra,
+      contentType: contentType,
+    )
+            .compose(
+              _dio.options,
+              '/user/me/filmotheque/movie',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final httpResponse = HttpResponse(null, _result);
     return httpResponse;
   }
 

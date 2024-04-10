@@ -10,7 +10,7 @@ part 'filmotheques_remote_datasource.g.dart';
 abstract class FilmothequesService {
   factory FilmothequesService(Dio dio) = _FilmothequesService;
 
-  @POST("/user/me/filmotheques")
+  @POST("/user/me/listfilmotheques")
   Future<HttpResponse<List<FilmothequesResponseModel>>> filmotheques({
     @Body() FilmothequesRequestModel? body,
     @Header('Content-Type') String? contentType,
@@ -31,10 +31,34 @@ abstract class FilmothequesService {
     @Header('Accept') String? accept,
   });
 
-  @POST("/user/me/filmotheque/movies")
+  @POST("/user/me/filmotheque/listmovies")
   Future<HttpResponse<List<SearchMovieResponseModel>>>
       filmothequemovie({
     @Body() ListFilmFilmothequeRequestModel? body,
+    @Header('Content-Type') String? contentType,
+    @Header('Accept') String? accept,
+  });
+
+  @POST("/user/me/renamefilmotheques")
+  Future<HttpResponse<FilmothequesResponseModel>>
+      renamefilmotheque({
+    @Body() FilmothequeRequestModel? body,
+    @Header('Content-Type') String? contentType,
+    @Header('Accept') String? accept,
+  });
+
+  @DELETE("/user/me/filmotheque")
+  Future<HttpResponse<void>>
+      deletefilmotheque({
+    @Body() ListFilmFilmothequeRequestModel? body,
+    @Header('Content-Type') String? contentType,
+    @Header('Accept') String? accept,
+  });
+
+  @DELETE("/user/me/filmotheque/movie")
+  Future<HttpResponse<void>>
+      deletemoviefilmotheque({
+    @Body() FilmFilmothequeRequestModel? body,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });

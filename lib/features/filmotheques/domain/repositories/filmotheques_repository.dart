@@ -19,4 +19,20 @@ abstract class FilmothequesRepository {
       filmothequemovie({
     ListFilmFilmothequeRequestEntity? body,
   });
+
+  Future<DataState<FilmothequesResponseEntity>>
+      renamefilmotheque({
+    FilmothequeRequestEntity? body,
+  });
+
+  Future<DataState<void>>
+      deletefilmotheque({
+    ListFilmFilmothequeRequestEntity? body,
+  });
+
+  Future<DataState<void>>
+      deletemoviefilmotheque({
+    FilmFilmothequeRequestEntity? body,
+  });
+  
 }
