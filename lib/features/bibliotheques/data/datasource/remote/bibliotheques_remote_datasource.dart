@@ -9,7 +9,7 @@ part 'bibliotheques_remote_datasource.g.dart';
 abstract class BibliothequesService {
   factory BibliothequesService(Dio dio) = _BibliothequesService;
 
-  @POST("/user/me/bibliotheques")
+  @POST("/user/me/listbibliotheques")
   Future<HttpResponse<List<BibliothequesResponseModel>>> bibliotheques ({
     @Body() BibliothequesRequestModel? body,
     @Header('Content-Type') String? contentType,
