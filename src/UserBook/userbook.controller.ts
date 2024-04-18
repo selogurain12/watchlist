@@ -1,5 +1,5 @@
-import { Body, Controller, Post } from "@nestjs/common";
-import { Bibliotheque, LivreBibliotheque, searchbiblioDto } from "./userbook.entity";
+import { Body, Controller, Delete, Post } from "@nestjs/common";
+import { Bibliotheque, LivreBibliotheque, biblioDto, searchbiblioDto } from "./userbook.entity";
 import { Book } from "../Book/book.entity";
 import { UserBookService } from "./userbook.service";
 
@@ -24,7 +24,22 @@ export class UserBookController {
     }
 
     @Post("bibliotheque/listbook")
-    async listbook(@Body() bibliotheque: searchbiblioDto): Promise<[LivreBibliotheque, Book][]> {
+    async listbook(@Body() bibliotheque: biblioDto): Promise<Book[]> {
         return await this.userbookService.listbook(bibliotheque)
+    }
+
+    @Post("/renamebibliotheque")
+    async renamebibliotheque(@Body() bibliotheque: Bibliotheque): Promise<Bibliotheque> {
+        return await this.userbookService.renamebibliotheque(bibliotheque);
+    }
+
+    @Delete('bibliotheque')
+    async deletebibliotheque(@Body() bibliotheque: biblioDto): Promise<void> {
+      return await this.userbookService.deletebibliotheque(bibliotheque);
+    }
+
+    @Delete('bibliotheque/book')
+    async deletebook(@Body() book: LivreBibliotheque): Promise<void> {
+      return await this.userbookService.deletebook(book);
     }
 }

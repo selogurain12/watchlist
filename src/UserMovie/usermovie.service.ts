@@ -15,9 +15,16 @@ export class UserMovieService {
     private readonly movieService: MovieService,
   ) {}
     async createfilmotheque(filmo: Filmotheque): Promise<Filmotheque> {
+      try {
         const newFilmotheque = this.filmothequeRepository.create(filmo);
       const filmotheque = await this.filmothequeRepository.save(newFilmotheque);
       return filmotheque;
+    } catch (error) {
+        if (error instanceof QueryFailedError && error.message.includes('duplicate key')) {
+          throw new ConflictException('Il y a déjà une filmothèque avec ce nom');
+        }
+        throw error;
+      }
     }
 
     async listfilmotheque(id: searchfilmoDto): Promise<Filmotheque[]> {
@@ -31,14 +38,9 @@ export class UserMovieService {
         return await this.filmfilmothequeRepository.save(newmovie);
     }
 
-    // Assuming 'id' is of type 'number' in both FilmFilmotheque and Movie entities
-
     async listmovie(filmotheque: filmoDto): Promise<Movie[]> {
-      console.log(filmotheque.id_filmotheque);
       const films = await this.filmfilmothequeRepository.find({ where: { id_filmotheque: filmotheque.id_filmotheque } });
-      console.log(films)
       const movieIds = films.map((film) => film.id_film);
-      // Use Promise.all to concurrently fetch all movies
       const movies = await Promise.all(movieIds.map(id => this.movieService.getMovie(id)));
       return movies;
     }

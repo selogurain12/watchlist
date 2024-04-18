@@ -29,3 +29,7 @@ export class LivreBibliotheque {
 export class searchbiblioDto {
     id: string;
 }
+
+export class biblioDto {
+    id_bibliotheque: string;
+}

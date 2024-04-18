@@ -34,7 +34,6 @@ export class UserMovieController {
 
     @Delete('filmotheque')
     async deletefilmotheque(@Body() filmotheque: filmoDto): Promise<void> {
-        console.log(filmotheque);
       return await this.usermovieService.deletefilmotheque(filmotheque);
     }
 

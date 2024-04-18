@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { In, QueryFailedError, Repository } from "typeorm";
 import { Movie } from "../Movie/movie.entity";
 import { MovieService } from "../Movie/movie.service";
-import { Bibliotheque, LivreBibliotheque, searchbiblioDto } from "./userbook.entity";
+import { Bibliotheque, LivreBibliotheque, biblioDto, searchbiblioDto } from "./userbook.entity";
 import { Book } from "../Book/book.entity";
 import { BookService } from "../Book/book.service";
 
@@ -14,8 +14,6 @@ export class UserBookService {
     private readonly bibliothequeRepository: Repository<Bibliotheque>,
     @InjectRepository(LivreBibliotheque)
     private readonly livrebibliothequeRepository: Repository<LivreBibliotheque>,
-    @InjectRepository(Book)
-    private readonly bookRepository: Repository<Book>,
     private readonly bookService: BookService,
   ) {}
     async createbibliotheque(biblio: Bibliotheque): Promise<Bibliotheque> {
@@ -25,7 +23,7 @@ export class UserBookService {
       return bibliotheque;
     } catch (error) {
         if (error instanceof QueryFailedError && error.message.includes('duplicate key')) {
-          throw new ConflictException('Il y a déjà une filmothèque avec ce nom');
+          throw new ConflictException('Il y a déjà une bibliotheque avec ce nom');
         }
         throw error;
       }
@@ -42,23 +40,68 @@ export class UserBookService {
         return await this.livrebibliothequeRepository.save(newbook);
     }
 
-    // Assuming 'id' is of type 'number' in both FilmFilmotheque and Movie entities
-
-    async listbook(bibliotheque: searchbiblioDto): Promise<[LivreBibliotheque, Book][]> {
-        const livres = await this.livrebibliothequeRepository.find({ where: { id_bibliotheque: bibliotheque.id } });
-      
-        if (!livres || livres.length === 0) {
-          throw new NotFoundException('No books found for the given filmotheque ID');
-        }
-      
-        const livreDetails: Promise<[LivreBibliotheque, Book][]> = Promise.all(
-          livres.map(async (livre) => {
-            const book = await this.bookService.getBook(livre.id_livre);
-            return [livre, book];
-          })
-        );
-      
-        return livreDetails;
+    async listbook(bibliotheque: biblioDto): Promise<Book[]> {
+      //console.log(bibliotheque)
+      const livres = await this.livrebibliothequeRepository.find({ where: { id_bibliotheque: bibliotheque.id_bibliotheque } });
+      console.log(livres)
+      const bookIds = livres.map((livre) => livre.id_livre);
+      //console.log(bookIds)
+      const books = await Promise.all(bookIds.map(id => this.bookService.getBook(id)));
+      //console.log(books)
+      return books;
       }
       
+      async renamebibliotheque(bibliotheque: Bibliotheque): Promise<Bibliotheque> {
+        const existingBibliotheque = await this.bibliothequeRepository.findOne({ where: { id: bibliotheque.id, id_user: bibliotheque.id_user } });
+        if (!existingBibliotheque) {
+          throw new Error('Bibliotheque not found');
+        }
+        existingBibliotheque.nom = bibliotheque.nom;
+        const newBibliotheque = await this.bibliothequeRepository.save(existingBibliotheque);
+        return newBibliotheque;
+      }
+
+      async deletebibliotheque(idbibliotheque: biblioDto): Promise<void> {
+        const bibliotheque = await this.bibliothequeRepository.findOne({
+          where: {
+            id: idbibliotheque.id_bibliotheque,
+          },
+        });
+  
+        const books = await this.livrebibliothequeRepository.find({
+          where:{
+            id_bibliotheque: idbibliotheque.id_bibliotheque,
+          }
+        })
+      
+        if (!bibliotheque) {
+          throw new NotFoundException('Bibliotheque relation not found.');
+        }
+      
+        const result = await this.bibliothequeRepository.delete(bibliotheque.id); 
+  
+        books.map((book) => this.livrebibliothequeRepository.delete(book.id))
+      
+        if (result.affected === 0) {
+          throw new NotFoundException('Failed to delete the bibliotheque relation.');
+        }
+      }
+  
+      async deletebook(bibliothequebook: LivreBibliotheque): Promise<void> {
+        const book = await this.livrebibliothequeRepository.findOne({
+          where: {
+            id: bibliothequebook.id,
+          },
+        });
+      
+        if (!book) {
+          throw new NotFoundException('Book relation not found.');
+        }
+      
+        const result = await this.livrebibliothequeRepository.delete(book.id); 
+  
+        if (result.affected === 0) {
+          throw new NotFoundException('Failed to delete the book relation.');
+        }
+      }
   }
