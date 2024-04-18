@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -48,7 +46,6 @@ Widget build(BuildContext context) {
       print(state);
       if (state is ListFilmFilmothequeLoaded) {
         final listfilmotheques = state.filmothequemovie;
-        final itemCount = min(listfilmotheques?.length ?? 0, 4);
         return Column(
           children: [
             const SizedBox(height: 16),
@@ -76,7 +73,7 @@ Widget build(BuildContext context) {
                   crossAxisSpacing: 2, // Espace entre les colonnes
                   mainAxisSpacing: 2, // Espace entre les lignes
                 ),
-                itemCount: itemCount,
+                itemCount: listfilmotheques?.length ?? 0,
                 itemBuilder: (context, index) {
                   final filmotheque = listfilmotheques![index];
                   return Card(
