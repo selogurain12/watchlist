@@ -1,3 +1,6 @@
+import 'package:whashlist/features/bibliotheques/domain/entities/bibliotheques_entity.dart';
+import 'package:whashlist/features/bibliotheques/presentation/pages/listbook_screen.dart';
+import 'package:whashlist/features/bibliotheques/presentation/pages/viewfilmo_screen.dart';
 import 'package:whashlist/features/book/domain/entities/book_entity.dart';
 import 'package:whashlist/features/book/presentation/pages/detailsbook_screen.dart';
 import 'package:whashlist/features/book/presentation/pages/searchbook_screen.dart';
@@ -72,6 +75,17 @@ final router = GoRouter(
       builder: ((context, state) {
         final filmotheques = state.extra as FilmothequesResponseEntity;
         return ListmovieScreen(filmotheque: filmotheques);
+      }) 
+    ),
+    GoRoute(
+      path: '/bibliotheque',
+      builder: (context, state) => const ViewbiblioScreen(),
+    ),
+    GoRoute(
+      path: '/listebooks',
+      builder: ((context, state) {
+        final bibliotheque = state.extra as BibliothequesResponseEntity;
+        return ListbookScreen(bibliotheque: bibliotheque);
       }) 
     ),
   ],
