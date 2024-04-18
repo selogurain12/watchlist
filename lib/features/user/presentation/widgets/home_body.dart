@@ -166,7 +166,7 @@ class HomeBody extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: ElevatedButton(
               onPressed: () {
-                // context.go('/addmovie');
+                context.go('/bibliotheque');
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.zero,
