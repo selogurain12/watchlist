@@ -43,7 +43,6 @@ Widget build(BuildContext context) {
   return BlocBuilder<FilmothequesBloc, FilmothequesState>(
     bloc: filmothequesBloc,
     builder: (context, state) {
-      print(state);
       if (state is ListFilmFilmothequeLoaded) {
         final listfilmotheques = state.filmothequemovie;
         return Column(

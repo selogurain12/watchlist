@@ -6,10 +6,6 @@ import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques
 import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques_event.dart';
 import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques_state.dart';
 import 'package:whashlist/features/bibliotheques/presentation/widgets/deletebookbibliotheque.dart';
-import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_bloc.dart';
-import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_event.dart';
-import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_state.dart';
-import 'package:whashlist/features/filmotheques/presentation/widgets/deletemoviefilmotheque.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
 
@@ -47,7 +43,6 @@ Widget build(BuildContext context) {
   return BlocBuilder<BibliothequesBloc, BibliothequesState>(
     bloc: bibliothequesBloc,
     builder: (context, state) {
-      print(state);
       if (state is ListLivreBibliothequeLoaded) {
         final listbibliotheque = state.bibliothequebook;
         return Column(

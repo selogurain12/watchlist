@@ -1,14 +1,12 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_bloc.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_event.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_state.dart';
-import 'package:whashlist/features/filmotheques/presentation/widgets/addmovietofilmo.dart';
 import 'package:whashlist/features/filmotheques/presentation/widgets/createfilmotheque.dart';
 import 'package:whashlist/features/filmotheques/presentation/widgets/deletefilmotheque.dart';
 import 'package:whashlist/features/filmotheques/presentation/widgets/renamefilmotheque.dart';
@@ -54,7 +52,7 @@ class _ViewFilmothequeState extends State<ViewFilmotheque> {
       bloc: filmothequesBloc,
       builder: (context, state) {
         if (!authProvider.isLoggedIn) {
-      return Scaffold(
+      return const Scaffold(
         body: Center(
           child: Text("Veuillez vous connecter"),
         ),
@@ -95,6 +93,7 @@ class _ViewFilmothequeState extends State<ViewFilmotheque> {
                           },
                         );
                         if (result != null && result) {
+                          // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text("La filmothèque a été créée"),

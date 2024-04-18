@@ -3,7 +3,6 @@ import 'package:whashlist/core/constants/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:whashlist/features/bibliotheques/data/models/bibliotheques_model.dart';
 import 'package:whashlist/features/book/data/models/book_model.dart';
-import 'package:whashlist/features/book/domain/entities/book_entity.dart';
 
 part 'bibliotheques_remote_datasource.g.dart';
 

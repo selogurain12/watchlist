@@ -5,7 +5,6 @@ import 'package:whashlist/features/bibliotheques/data/models/bibliotheques_model
 import 'package:whashlist/features/bibliotheques/domain/entities/bibliotheques_entity.dart';
 import 'package:whashlist/features/bibliotheques/domain/repositories/bibliotheques_repository.dart';
 import 'package:whashlist/features/book/data/models/book_model.dart';
-import 'package:whashlist/features/book/domain/entities/book_entity.dart';
 
 class BibliothequesRepositoryImpl implements BibliothequesRepository {
   final BibliothequesService apiService;

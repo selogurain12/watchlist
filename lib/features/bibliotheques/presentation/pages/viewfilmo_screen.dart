@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:whashlist/features/bibliotheques/presentation/widgets/viewbibliotheque.dart';
-import 'package:whashlist/features/filmotheques/presentation/widgets/viewfilmotheque.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 
 class ViewbiblioScreen extends StatelessWidget {

@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +51,7 @@ class _ViewBibliotheque extends State<ViewBibliotheque> {
       bloc: bibliothequesBloc,
       builder: (context, state) {
         if (!authProvider.isLoggedIn) {
-      return Scaffold(
+      return const Scaffold(
         body: Center(
           child: Text("Veuillez vous connecter"),
         ),

@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:whashlist/features/filmotheques/domain/entities/filmotheques_entity.dart';
 import 'package:whashlist/features/filmotheques/presentation/widgets/listmoviefilmo.dart';
-import 'package:whashlist/features/filmotheques/presentation/widgets/viewfilmotheque.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 
 class ListmovieScreen extends StatelessWidget {
