@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whashlist/features/filmotheques/domain/entities/filmotheques_entity.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_bloc.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_event.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_state.dart';
@@ -52,7 +51,7 @@ class _DeleteMovieFilmotheque extends State<DeleteMovieFilmotheque> {
           return AlertDialog(
             title: const Text('Confirmer la suppression'),
             content: const Text(
-                'Êtes-vous sûr de vouloir ce film de la filmothèque?'),
+                'Êtes-vous sûr de vouloir supprimer ce film de la filmothèque?'),
             actions: <Widget>[
               TextButton(
                 child: const Text('Annuler'),
