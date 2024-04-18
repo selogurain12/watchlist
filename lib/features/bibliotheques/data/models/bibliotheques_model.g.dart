@@ -34,6 +34,22 @@ Map<String, dynamic> _$BibliothequesResponseModelToJson(
       'id_user': instance.id_user,
     };
 
+BibliothequeRequestModel _$BibliothequeRequestModelFromJson(
+        Map<String, dynamic> json) =>
+    BibliothequeRequestModel(
+      id: json['id'] as String?,
+      nom: json['nom'] as String?,
+      id_user: json['id_user'] as String?,
+    );
+
+Map<String, dynamic> _$BibliothequeRequestModelToJson(
+        BibliothequeRequestModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'nom': instance.nom,
+      'id_user': instance.id_user,
+    };
+
 AddBibliothequeRequestModel _$AddBibliothequeRequestModelFromJson(
         Map<String, dynamic> json) =>
     AddBibliothequeRequestModel(
@@ -75,5 +91,17 @@ Map<String, dynamic> _$LivreBibliothequeResponseModelToJson(
     <String, dynamic>{
       'id': instance.id,
       'id_livre': instance.id_livre,
+      'id_bibliotheque': instance.id_bibliotheque,
+    };
+
+ListLivreBibliothequeRequestModel _$ListLivreBibliothequeRequestModelFromJson(
+        Map<String, dynamic> json) =>
+    ListLivreBibliothequeRequestModel(
+      id_bibliotheque: json['id_bibliotheque'] as String?,
+    );
+
+Map<String, dynamic> _$ListLivreBibliothequeRequestModelToJson(
+        ListLivreBibliothequeRequestModel instance) =>
+    <String, dynamic>{
       'id_bibliotheque': instance.id_bibliotheque,
     };

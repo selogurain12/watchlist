@@ -15,6 +15,25 @@ class BibliothequesRequestEntity extends Equatable {
   ];
 }
 
+class BibliothequeRequestEntity extends Equatable {
+  final String? id;
+  final String? nom;
+  final String? id_user;
+
+  const BibliothequeRequestEntity({
+    this.id,
+    this.nom,
+    this.id_user
+  });
+
+  @override
+  List<Object?> get props => [
+    id,
+    nom,
+    id_user
+  ];
+}
+
 class BibliothequesResponseEntity extends Equatable {
   final String? id;
   final String? nom;
@@ -81,6 +100,19 @@ class LivreBibliothequeResponseEntity extends Equatable {
   List<Object?> get props => [
     id,
     id_livre,
+    id_bibliotheque
+  ];
+}
+
+class ListLivreBibliothequeRequestEntity extends Equatable {
+  final String? id_bibliotheque;
+
+  const ListLivreBibliothequeRequestEntity({
+    this.id_bibliotheque,
+  });
+
+  @override
+  List<Object?> get props => [
     id_bibliotheque
   ];
 }

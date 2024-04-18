@@ -5,6 +5,10 @@ import 'package:whashlist/features/bibliotheques/domain/repositories/bibliothequ
 import 'package:whashlist/features/bibliotheques/domain/usecases/addbibliotheque.dart';
 import 'package:whashlist/features/bibliotheques/domain/usecases/addbook.dart';
 import 'package:whashlist/features/bibliotheques/domain/usecases/bibliotheques.dart';
+import 'package:whashlist/features/bibliotheques/domain/usecases/deletebibliotheque.dart';
+import 'package:whashlist/features/bibliotheques/domain/usecases/deletebookbibliotheque.dart';
+import 'package:whashlist/features/bibliotheques/domain/usecases/listbibliothequebook.dart';
+import 'package:whashlist/features/bibliotheques/domain/usecases/renamebibliotheque.dart';
 import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques_bloc.dart';
 import 'package:whashlist/features/book/data/datasource/remote/book_remote_datasource.dart';
 import 'package:whashlist/features/book/data/repositories/book_repository_impl.dart';
@@ -98,6 +102,10 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<BibliothequesUseCase>(BibliothequesUseCase(sl()));
   sl.registerSingleton<AddBibliothequeUseCase>(AddBibliothequeUseCase(sl()));
   sl.registerSingleton<LivreBibliothequeUseCase>(LivreBibliothequeUseCase(sl()));
+  sl.registerSingleton<ListLivreBibliothequeUseCase>(ListLivreBibliothequeUseCase(sl()));
+  sl.registerSingleton<RenameBibliothequeUseCase>(RenameBibliothequeUseCase(sl()));
+  sl.registerSingleton<DeleteBibliothequeUseCase>(DeleteBibliothequeUseCase(sl()));
+  sl.registerSingleton<DeleteBookBibliothequeUseCase>(DeleteBookBibliothequeUseCase(sl()));
   //Stats
   sl.registerSingleton<UpdateStatsUseCase>(UpdateStatsUseCase(sl()));
   sl.registerSingleton<StatsUseCase>(StatsUseCase(sl()));
@@ -117,7 +125,7 @@ Future<void> initializeDependencies() async {
   //Filmotheques
   sl.registerFactory<FilmothequesBloc>(() => FilmothequesBloc(sl(), sl(), sl(), sl(), sl(), sl(), sl()));
   //Bibliotheques
-  sl.registerFactory<BibliothequesBloc>(() => BibliothequesBloc(sl(), sl(), sl()));
+  sl.registerFactory<BibliothequesBloc>(() => BibliothequesBloc(sl(), sl(), sl(), sl(), sl(), sl(), sl()));
   //Stats
   sl.registerFactory<StatsBloc>(() => StatsBloc(sl(), sl()));
   //Friendlist

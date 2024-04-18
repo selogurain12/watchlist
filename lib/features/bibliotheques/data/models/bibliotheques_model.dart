@@ -56,6 +56,29 @@ class BibliothequesResponseModel extends BibliothequesResponseEntity {
 }
 
 @JsonSerializable()
+class BibliothequeRequestModel extends BibliothequeRequestEntity {
+  final String? id;
+  final String? nom;
+  final String? id_user;
+
+  const BibliothequeRequestModel({this.id, this.nom, this.id_user})
+      : super(id: id, nom: nom, id_user: id_user);
+
+  factory BibliothequeRequestModel.fromJson(Map<String, dynamic> json) =>
+      _$BibliothequeRequestModelFromJson(json);
+  Map<String, dynamic> toJson() => _$BibliothequeRequestModelToJson(this);
+
+  factory BibliothequeRequestModel.fromEntity(
+      BibliothequeRequestEntity entity) {
+    return BibliothequeRequestModel(
+      id: entity.id,
+      nom: entity.nom,
+      id_user: entity.id_user,
+    );
+  }
+}
+
+@JsonSerializable()
 class AddBibliothequeRequestModel extends AddBibliothequeRequestEntity {
   final String? id_user;
   final String? nom;
@@ -129,6 +152,29 @@ class LivreBibliothequeResponseModel extends LivreBibliothequeResponseEntity {
     return LivreBibliothequeResponseModel(
       id: entity.id,
       id_livre: entity.id_livre,
+      id_bibliotheque: entity.id_bibliotheque,
+    );
+  }
+}
+
+@JsonSerializable()
+class ListLivreBibliothequeRequestModel extends ListLivreBibliothequeRequestEntity {
+  final String? id_bibliotheque;
+
+  const ListLivreBibliothequeRequestModel({
+    this.id_bibliotheque,
+  }) : super(
+          id_bibliotheque: id_bibliotheque,
+        );
+
+  factory ListLivreBibliothequeRequestModel.fromJson(Map<String, dynamic> json) =>
+      _$ListLivreBibliothequeRequestModelFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$ListLivreBibliothequeRequestModelToJson(this);
+
+  factory ListLivreBibliothequeRequestModel.fromEntity(
+      ListLivreBibliothequeRequestEntity entity) {
+    return ListLivreBibliothequeRequestModel(
       id_bibliotheque: entity.id_bibliotheque,
     );
   }
