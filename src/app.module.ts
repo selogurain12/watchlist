@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
-import { Statuser, User } from './user/user.entity';
+import { Statuser } from './user/user.entity';
 import { BookModule } from './Book/book.module';
 import { MovieModule } from './Movie/movie.module';
 import { UserMovieModule } from './UserMovie/usermovie.module';
@@ -11,6 +11,8 @@ import { Bibliotheque, LivreBibliotheque } from './UserBook/userbook.entity';
 import { UserBookModule } from './UserBook/userbook.module';
 import { Friendlist } from './Friendlist/friendlist.entity';
 import { FriendlistModule } from './Friendlist/friendlist.module';
+import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
 
 @Module({
   imports: [
@@ -29,12 +31,12 @@ import { FriendlistModule } from './Friendlist/friendlist.module';
       }),
       inject: [ConfigService],
     }),
-    UserModule,
     BookModule,
     MovieModule,
     UserMovieModule,
     UserBookModule,
-    FriendlistModule
+    FriendlistModule,
+    UsersModule
   ],
   providers: [ConfigService],
 })
