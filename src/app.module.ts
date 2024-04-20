@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UserModule } from './user/user.module';
 import { Statuser } from './user/user.entity';
 import { BookModule } from './Book/book.module';
 import { MovieModule } from './Movie/movie.module';
@@ -11,8 +10,10 @@ import { Bibliotheque, LivreBibliotheque } from './UserBook/userbook.entity';
 import { UserBookModule } from './UserBook/userbook.module';
 import { Friendlist } from './Friendlist/friendlist.entity';
 import { FriendlistModule } from './Friendlist/friendlist.module';
-import { UsersModule } from './users/users.module';
+import { UserModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
+import { MeModule } from './me/me.module';
+import { Stats } from './me/entities/me.entity';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { User } from './users/entities/user.entity';
         username: configService.get<string>('DATABASE_USERNAME', 'lora'),
         password: configService.get<string>('DATABASE_PASSWORD', 'Juemlochda2003!'),
         database: configService.get<string>('DATABASE_NAME', 'watchlist'),
-        entities: [User, Statuser, Filmotheque, FilmFilmotheque, Bibliotheque, LivreBibliotheque, Friendlist],
+        entities: [User, Stats, Statuser, Filmotheque, FilmFilmotheque, Bibliotheque, LivreBibliotheque, Friendlist],
         synchronize: true,
       }),
       inject: [ConfigService],
@@ -36,7 +37,8 @@ import { User } from './users/entities/user.entity';
     UserMovieModule,
     UserBookModule,
     FriendlistModule,
-    UsersModule
+    UserModule,
+    MeModule
   ],
   providers: [ConfigService],
 })

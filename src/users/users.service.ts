@@ -5,12 +5,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { LoginUserDto } from './dto/login-user.dto';
+import { MeService } from '../me/me.service';
+import { CreateMeDto } from '../me/dto/create-me.dto';
 
 @Injectable()
-export class UsersService {
+export class UserService {
   constructor(
     @InjectRepository(User)
     public readonly userRepository: Repository<User>,
+    public readonly meService: MeService,
   ){}
 
   async create(createUserDto: CreateUserDto) {
@@ -38,7 +41,11 @@ export class UsersService {
       throw new ConflictException('User with the same email already exists.');
     }
     const newUser = this.userRepository.create(createUserDto);
-    const user = this.userRepository.save(newUser)
+    const user = await this.userRepository.save(newUser);
+    const createMeDto: CreateMeDto = {
+      user: user
+    };
+    await this.meService.create(createMeDto);
     delete (await user).mdp;
     return user;
   }
@@ -85,6 +92,7 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException("This user dosen't exist");
     }
+    const stats = await this.meService.remove(id)
     this.userRepository.delete(user.id);
     return `This action removes a #${id} user`;
   }

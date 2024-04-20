@@ -1,8 +1,5 @@
-//create-user.dto.ts
 import {
     IsString,
-    IsOptional,
-    IsEnum,
     IsEmail,
     IsNotEmpty,
     MinLength,
