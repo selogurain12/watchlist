@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, Unique } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, Unique, ManyToMany } from "typeorm";
+import { Friendslist } from "../../friendslist/entities/friendslist.entity";
 
 @Entity()
 @Unique(["mail"])
@@ -21,4 +22,7 @@ export class User {
 
   @Column({select: false})
   mdp: string;
+
+  @ManyToMany(() => Friendslist, friendslist => friendslist.friends)
+  friends: Friendslist[];
 }

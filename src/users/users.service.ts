@@ -7,6 +7,8 @@ import { Repository } from 'typeorm';
 import { LoginUserDto } from './dto/login-user.dto';
 import { MeService } from '../me/me.service';
 import { CreateMeDto } from '../me/dto/create-me.dto';
+import { FriendslistService } from '../friendslist/friendslist.service';
+import { CreateFriendslistDto } from '../friendslist/dto/create-friendslist.dto';
 
 @Injectable()
 export class UserService {
@@ -14,6 +16,7 @@ export class UserService {
     @InjectRepository(User)
     public readonly userRepository: Repository<User>,
     public readonly meService: MeService,
+    public readonly friendslistService: FriendslistService,
   ){}
 
   async create(createUserDto: CreateUserDto) {
@@ -46,6 +49,10 @@ export class UserService {
       user: user
     };
     await this.meService.create(createMeDto);
+    const createFriendlistDto: CreateFriendslistDto = {
+      user: user,
+    };
+    await this.friendslistService.create(createFriendlistDto)
     delete (await user).mdp;
     return user;
   }
