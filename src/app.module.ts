@@ -14,6 +14,13 @@ import { FilmothequeModule } from './filmotheque/filmotheque.module';
 import { Filmotheque } from './filmotheque/entities/filmotheque.entity';
 import { Bibliotheque } from './bibliotheque/entities/bibliotheque.entity';
 import { FilmsencoursModule } from './filmsencours/filmsencours.module';
+import { FilmstermineModule } from './filmstermine/filmstermine.module';
+import { Filmsencours } from './filmsencours/entities/filmsencours.entity';
+import { Filmstermine } from './filmstermine/entities/filmstermine.entity';
+import { LivresencoursModule } from './livresencours/livresencours.module';
+import { LivrestermineModule } from './livrestermine/livrestermine.module';
+import { Livresencours } from './livresencours/entities/livresencours.entity';
+import { Livrestermine } from './livrestermine/entities/livrestermine.entity';
 
 @Module({
   imports: [
@@ -27,7 +34,7 @@ import { FilmsencoursModule } from './filmsencours/filmsencours.module';
         username: configService.get<string>('DATABASE_USERNAME', 'lora'),
         password: configService.get<string>('DATABASE_PASSWORD', 'Juemlochda2003!'),
         database: configService.get<string>('DATABASE_NAME', 'watchlist'),
-        entities: [User, Stats, Bibliotheque, Friendslist, Filmotheque],
+        entities: [User, Stats, Bibliotheque, Friendslist, Filmotheque, Filmsencours, Filmstermine, Livresencours, Livrestermine],
         synchronize: true,
       }),
       inject: [ConfigService],
@@ -40,6 +47,9 @@ import { FilmsencoursModule } from './filmsencours/filmsencours.module';
     BibliothequeModule,
     FilmothequeModule,
     FilmsencoursModule,
+    FilmstermineModule,
+    LivresencoursModule,
+    LivrestermineModule,
   ],
   providers: [ConfigService],
 })
