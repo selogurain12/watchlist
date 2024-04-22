@@ -29,7 +29,11 @@ export class FriendslistService {
   }
 
   async findAll(user: User) {
-    const friends = await this.friendslistRepository.find({where: {user}, relations: ['friends']})
+    const friends = await this.friendslistRepository.find({where: {
+      user: {
+        id: user.id
+      }
+    }, relations: ['friends']})
     return friends;
   }
 
