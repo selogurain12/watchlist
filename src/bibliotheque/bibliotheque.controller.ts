@@ -17,10 +17,20 @@ export class BibliothequeController {
   findAll(@Body() user: User) {
     return this.bibliothequeService.findAll(user);
   }
+  
+  @Get(':id')
+  listLivreinBibliotheque(@Param('id') id:string) {
+    return this.bibliothequeService.listBookinBibliotheque(id);
+  }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBibliothequeDto: UpdateBibliothequeDto) {
     return this.bibliothequeService.update(id, updateBibliothequeDto);
+  }
+
+  @Patch('livre/:id')
+  removeLivresFromBibliotheque(@Param('id') id: string, @Body('livreIds') livreIds: string[]) {
+    return this.bibliothequeService.removeLivreFromBibliotheque(id, livreIds);
   }
 
   @Delete('user/:id')

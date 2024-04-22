@@ -9,4 +9,7 @@ export class UpdateBibliothequeDto extends PartialType(CreateBibliothequeDto) {
 
     @IsOptional()
     users?: User[];
+
+    @IsOptional()
+    id_livres?: string[];
 }

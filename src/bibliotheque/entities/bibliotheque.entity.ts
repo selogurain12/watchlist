@@ -9,6 +9,9 @@ export class Bibliotheque {
     @Column()
     nom: string;
 
+    @Column("text", { array: true, default: [] })
+    id_livres: string[];
+
     @ManyToMany(() => User, user => user.bibliotheques)
     @JoinTable()
     users: User[];
