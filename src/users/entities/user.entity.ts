@@ -1,5 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, Unique, ManyToMany } from "typeorm";
 import { Friendslist } from "../../friendslist/entities/friendslist.entity";
+import { Filmotheque } from "../../filmotheque/entities/filmotheque.entity";
+import { Bibliotheque } from "../../bibliotheque/entities/bibliotheque.entity";
 
 @Entity()
 @Unique(["mail"])
@@ -25,4 +27,10 @@ export class User {
 
   @ManyToMany(() => Friendslist, friendslist => friendslist.friends)
   friends: Friendslist[];
+
+  @ManyToMany(() => Filmotheque, filmotheque => filmotheque.users)
+  filmotheques: Filmotheque[];
+
+  @ManyToMany(() => Bibliotheque, bibliotheque => bibliotheque.users)
+  bibliotheques: Bibliotheque[];
 }
