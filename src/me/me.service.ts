@@ -3,7 +3,7 @@ import { CreateMeDto } from './dto/create-me.dto';
 import { UpdateMeDto } from './dto/update-me.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Stats } from './entities/me.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class MeService {
   async create(createMeDto: CreateMeDto) {
     const existingStats = await this.meRepository.findOne({
       where: {
-        user: createMeDto.user
+        user: { id: createMeDto.user.id }
       }
     })
     if(existingStats){
@@ -48,7 +48,7 @@ export class MeService {
     }
     const existingStats = await this.meRepository.findOne({
       where: {
-        user: user,
+        user: {id: user.id},
       }
     })
     if(!existingStats){
@@ -60,7 +60,7 @@ export class MeService {
   async stats(user: User) {
     const existingStats = await this.meRepository.findOne({
       where: {
-        user: user,
+        user: {id: user.id},
       }
     })
     if(!existingStats){
@@ -69,10 +69,10 @@ export class MeService {
     return existingStats;
   }
 
-  async update(id: string, updateMeDto: UpdateMeDto) {
+  async update(userid: string, updateMeDto: UpdateMeDto) {
     const existingStats = await this.meRepository.findOne({
       where: {
-        id
+        user: {id: userid}
       }
     });
 
