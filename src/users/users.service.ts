@@ -101,6 +101,5 @@ export class UserService {
     }
     const stats = await this.meService.remove(id)
     this.userRepository.delete(user.id);
-    return `This action removes a #${id} user`;
   }
 }
