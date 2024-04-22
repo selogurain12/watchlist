@@ -1,4 +1,4 @@
-import { ArrayNotEmpty, IsArray, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { ArrayNotEmpty, IsArray, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator";
 import { User } from "../../users/entities/user.entity";
 
 export class CreateFilmothequeDto {
@@ -10,4 +10,8 @@ export class CreateFilmothequeDto {
     @IsArray()
     @ArrayNotEmpty()
     users!: User[];
+
+    @IsOptional()
+    @IsArray()
+    id_films: string[];
 }

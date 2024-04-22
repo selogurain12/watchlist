@@ -9,4 +9,7 @@ export class UpdateFilmothequeDto extends PartialType(CreateFilmothequeDto) {
 
     @IsOptional()
     users?: User[];
+
+    @IsOptional()
+    id_films?: string[];
 }

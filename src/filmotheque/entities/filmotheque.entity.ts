@@ -1,4 +1,4 @@
-import { Entity, Unique, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from "typeorm";
 import { User } from "../../users/entities/user.entity";
 
 @Entity()
@@ -9,7 +9,10 @@ export class Filmotheque {
     @Column()
     nom: string;
 
-    @ManyToMany(() => User, user => user.filmotheques)
+    @Column("text", { array: true, default: [] })
+    id_films: string[];
+
+    @ManyToMany(() => User, user => user.filmotheques, {cascade: true})
     @JoinTable()
     users: User[];
 }

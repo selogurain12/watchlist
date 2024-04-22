@@ -18,9 +18,19 @@ export class FilmothequeController {
     return this.filmothequeService.findAll(user);
   }
 
+  @Get(':id')
+  listFilminFilmotheque(@Param('id') id:string) {
+    return this.filmothequeService.listFilminFilmotheque(id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateFilmothequeDto: UpdateFilmothequeDto) {
     return this.filmothequeService.update(id, updateFilmothequeDto);
+  }
+  
+  @Patch('film/:id')
+  removeFilmsFromFilmotheque(@Param('id') id: string, @Body('filmIds') filmIds: string[]) {
+    return this.filmothequeService.removeFilmFromFilmotheque(id, filmIds);
   }
 
   @Delete('user/:id')
