@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { FilmsencoursService } from './filmsencours.service';
 import { CreateFilmsencoursDto } from './dto/create-filmsencours.dto';
 import { UpdateFilmsencoursDto } from './dto/update-filmsencours.dto';
+import { User } from '../users/entities/user.entity';
 
 @Controller('user/me/filmsencours')
 export class FilmsencoursController {
@@ -13,8 +14,8 @@ export class FilmsencoursController {
   }
 
   @Get()
-  findAll() {
-    return this.filmsencoursService.findAll();
+  findAll(@Body() user: User) {
+    return this.filmsencoursService.findAll(user);
   }
 
   @Get(':id')
