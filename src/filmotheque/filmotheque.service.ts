@@ -104,11 +104,13 @@ export class FilmothequeService {
     const updatedUsers = filmotheque.users.filter(finduser => finduser.id !== user.id);
     filmotheque.users = updatedUsers;
     await this.filmothequeRepository.save(filmotheque);
+    return filmotheque;
 }
 
 async removeFilmFromFilmotheque(id: string, filmIdsToRemove: string[]): Promise<Filmotheque> {
   const filmotheque = await this.filmothequeRepository.findOne({
-    where: { id }
+    where: { id },
+    relations: ["users"]
   });
 
   if (!filmotheque) {
