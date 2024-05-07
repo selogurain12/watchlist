@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whashlist/features/bibliotheques/domain/entities/bibliotheques_entity.dart';
 import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques_bloc.dart';
 import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques_event.dart';
 import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques_state.dart';
@@ -40,10 +41,10 @@ class _DeleteBookBibliotheque extends State<DeleteBookBibliotheque> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BibliothequesBloc, BibliothequesState>(
+    return BlocBuilder<BibliothequesBloc, BibliothequeState>(
         bloc: bibliothequesBloc,
         builder: (context, state) {
-          if (state is DeleteBookBibliothequeLoaded) {
+          if (state is DeleteBookLoaded) {
             Future.delayed(const Duration(seconds: 2));
             widget.onBookBibliothequeDelete();
             Navigator.pop(context);
@@ -62,9 +63,12 @@ class _DeleteBookBibliotheque extends State<DeleteBookBibliotheque> {
               TextButton(
                 child: const Text('Supprimer'),
                 onPressed: () {
-                  bibliothequesBloc.add(DeleteBookBibliothequeEvent(
-                      id_bibliotheque: widget.bibliothequeId,
-                      id_book: widget.bookId.toString()));
+                  final deleteRequest = DeleteLivreRequestEntity(
+                    livreIds: widget.bookId != null ? [widget.bookId!] : null,
+                  );
+                  bibliothequesBloc.add(DeleteBookEvent(
+                      id: widget.bibliothequeId,
+                      livreIds: deleteRequest));
                 },
               ),
             ],

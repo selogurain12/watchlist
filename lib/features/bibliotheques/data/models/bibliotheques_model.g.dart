@@ -6,102 +6,58 @@ part of 'bibliotheques_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BibliothequesRequestModel _$BibliothequesRequestModelFromJson(
+BibliothequeResponseModel _$BibliothequeResponseModelFromJson(
         Map<String, dynamic> json) =>
-    BibliothequesRequestModel(
-      id: json['id'] as String?,
-    );
-
-Map<String, dynamic> _$BibliothequesRequestModelToJson(
-        BibliothequesRequestModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-    };
-
-BibliothequesResponseModel _$BibliothequesResponseModelFromJson(
-        Map<String, dynamic> json) =>
-    BibliothequesResponseModel(
+    BibliothequeResponseModel(
       id: json['id'] as String?,
       nom: json['nom'] as String?,
-      id_user: json['id_user'] as String?,
+      id_livres: (json['id_livres'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      users: (json['users'] as List<dynamic>?)
+          ?.map((e) => UserRequestModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$BibliothequesResponseModelToJson(
-        BibliothequesResponseModel instance) =>
+Map<String, dynamic> _$BibliothequeResponseModelToJson(
+        BibliothequeResponseModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'nom': instance.nom,
-      'id_user': instance.id_user,
+      'id_livres': instance.id_livres,
+      'users': instance.users,
     };
 
-BibliothequeRequestModel _$BibliothequeRequestModelFromJson(
+CreateBibliothequeRequestModel _$CreateBibliothequeRequestModelFromJson(
         Map<String, dynamic> json) =>
-    BibliothequeRequestModel(
-      id: json['id'] as String?,
+    CreateBibliothequeRequestModel(
       nom: json['nom'] as String?,
-      id_user: json['id_user'] as String?,
+      id_livres: (json['id_livres'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      users: (json['users'] as List<dynamic>?)
+          ?.map((e) => UserRequestModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$BibliothequeRequestModelToJson(
-        BibliothequeRequestModel instance) =>
+Map<String, dynamic> _$CreateBibliothequeRequestModelToJson(
+        CreateBibliothequeRequestModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'nom': instance.nom,
-      'id_user': instance.id_user,
+      'id_livres': instance.id_livres,
+      'users': instance.users,
     };
 
-AddBibliothequeRequestModel _$AddBibliothequeRequestModelFromJson(
+DeleteLivreRequestModel _$DeleteLivreRequestModelFromJson(
         Map<String, dynamic> json) =>
-    AddBibliothequeRequestModel(
-      nom: json['nom'] as String?,
-      id_user: json['id_user'] as String?,
+    DeleteLivreRequestModel(
+      livreIds: (json['livreIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
-Map<String, dynamic> _$AddBibliothequeRequestModelToJson(
-        AddBibliothequeRequestModel instance) =>
+Map<String, dynamic> _$DeleteLivreRequestModelToJson(
+        DeleteLivreRequestModel instance) =>
     <String, dynamic>{
-      'id_user': instance.id_user,
-      'nom': instance.nom,
-    };
-
-LivreBibliothequeRequestModel _$LivreBibliothequeRequestModelFromJson(
-        Map<String, dynamic> json) =>
-    LivreBibliothequeRequestModel(
-      id_livre: json['id_livre'] as String?,
-      id_bibliotheque: json['id_bibliotheque'] as String?,
-    );
-
-Map<String, dynamic> _$LivreBibliothequeRequestModelToJson(
-        LivreBibliothequeRequestModel instance) =>
-    <String, dynamic>{
-      'id_livre': instance.id_livre,
-      'id_bibliotheque': instance.id_bibliotheque,
-    };
-
-LivreBibliothequeResponseModel _$LivreBibliothequeResponseModelFromJson(
-        Map<String, dynamic> json) =>
-    LivreBibliothequeResponseModel(
-      id: json['id'] as String?,
-      id_livre: json['id_livre'] as String?,
-      id_bibliotheque: json['id_bibliotheque'] as String?,
-    );
-
-Map<String, dynamic> _$LivreBibliothequeResponseModelToJson(
-        LivreBibliothequeResponseModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'id_livre': instance.id_livre,
-      'id_bibliotheque': instance.id_bibliotheque,
-    };
-
-ListLivreBibliothequeRequestModel _$ListLivreBibliothequeRequestModelFromJson(
-        Map<String, dynamic> json) =>
-    ListLivreBibliothequeRequestModel(
-      id_bibliotheque: json['id_bibliotheque'] as String?,
-    );
-
-Map<String, dynamic> _$ListLivreBibliothequeRequestModelToJson(
-        ListLivreBibliothequeRequestModel instance) =>
-    <String, dynamic>{
-      'id_bibliotheque': instance.id_bibliotheque,
+      'livreIds': instance.livreIds,
     };

@@ -2,83 +2,90 @@ import 'package:dio/dio.dart';
 import 'package:whashlist/features/bibliotheques/domain/entities/bibliotheques_entity.dart';
 import 'package:whashlist/features/book/domain/entities/book_entity.dart';
 
-abstract class BibliothequesState {
-  final List<BibliothequesResponseEntity>? bibliotheques;
-  final BibliothequesResponseEntity? addbibliotheque;
-  final LivreBibliothequeResponseEntity? addbook;
-  final List<ApiBookResponseEntity>? bibliothequebook;
-  final BibliothequesResponseEntity? renamebibliotheque;
+abstract class BibliothequeState {
+  final BibliothequeResponseEntity? createbibliotheque;
+  final List<BibliothequeResponseEntity>? listbibliotheque;
+  final List<ApiBookResponseEntity>? listbook;
+  final BibliothequeResponseEntity? modifiebibliotheque;
+  final BibliothequeResponseEntity? deletebook;
+  final BibliothequeResponseEntity? deleteuserinbibliotheque;
   final void deletebibliotheque;
-  final void deletebookbibliotheque;
   final DioException? error;
 
-  const BibliothequesState({
+  const BibliothequeState({
     this.error,
-    this.bibliotheques,
-    this.addbibliotheque,
-    this.addbook,
-    this.bibliothequebook,
+    this.createbibliotheque,
+    this.listbibliotheque,
+    this.listbook,
+    this.modifiebibliotheque,
     this.deletebibliotheque,
-    this.deletebookbibliotheque,
-    this.renamebibliotheque,
+    this.deletebook,
+    this.deleteuserinbibliotheque,
   });
 }
 
-class BibliothequesLoading extends BibliothequesState {
+class BibliothequesLoading extends BibliothequeState {
   const BibliothequesLoading();
 }
 
-class BibliothequesLoaded extends BibliothequesState {
-  const BibliothequesLoaded({List<BibliothequesResponseEntity>? bibliotheques }) : super(bibliotheques: bibliotheques );
+class DeleteBookLoaded extends BibliothequeState {
+  const DeleteBookLoaded({BibliothequeResponseEntity? deletebook }) : super(deletebook: deletebook );
 }
 
-class LivreBibliothequeLoaded extends BibliothequesState {
-  const LivreBibliothequeLoaded({LivreBibliothequeResponseEntity? addbook}) : super(addbook: addbook);
+class CreateBibliothequeLoaded extends BibliothequeState {
+  const CreateBibliothequeLoaded({BibliothequeResponseEntity? createbibliotheque}) : super(createbibliotheque: createbibliotheque);
 }
 
-class AddBibliothequeLoaded extends BibliothequesState {
-  const AddBibliothequeLoaded({BibliothequesResponseEntity? addbibliotheque}) : super(addbibliotheque: addbibliotheque);
+class DeleteUserinBibliothequeLoaded extends BibliothequeState {
+  const DeleteUserinBibliothequeLoaded({BibliothequeResponseEntity? deleteuserinbibliotheque}) : super(deleteuserinbibliotheque: deleteuserinbibliotheque);
 }
 
-class RenameBibliothequeLoaded extends BibliothequesState {
-  const RenameBibliothequeLoaded({BibliothequesResponseEntity? renamebibliotheque})
-      : super(renamebibliotheque: renamebibliotheque);
-}
-
-class ListLivreBibliothequeLoaded extends BibliothequesState {
-  const ListLivreBibliothequeLoaded(
-      {List<ApiBookResponseEntity>? bibliothequebook})
-      : super(bibliothequebook: bibliothequebook);
-}
-
-class DeleteBibliothequeLoaded extends BibliothequesState {
+class DeleteBibliothequeLoaded extends BibliothequeState {
   const DeleteBibliothequeLoaded() : super();
 }
 
-class DeleteBookBibliothequeLoaded extends BibliothequesState {
-  const DeleteBookBibliothequeLoaded() : super();
+class ListBibliothequeLoaded extends BibliothequeState {
+  const ListBibliothequeLoaded(
+      {List<BibliothequeResponseEntity>? listbibliotheque})
+      : super(listbibliotheque: listbibliotheque);
 }
 
-class BibliothequesError extends BibliothequesState {
+class ListLivreLoaded extends BibliothequeState {
+  const ListLivreLoaded({List<ApiBookResponseEntity>? listbook}) : super(listbook: listbook);
+}
+
+class ModifieBibliothequeLoaded extends BibliothequeState {
+  const ModifieBibliothequeLoaded({BibliothequeResponseEntity? modifiebibliotheque}) : super(modifiebibliotheque: modifiebibliotheque);
+}
+
+class BibliothequesError extends BibliothequeState {
   const BibliothequesError(DioException? error) : super(error: error);
 }
 
-class LivreBibliothequeError extends BibliothequesState {
-  const LivreBibliothequeError(DioException? error) : super(error: error);
+class DeleteBookError extends BibliothequeState {
+  const DeleteBookError(DioException? error) : super(error: error);
 }
 
-class ListLivreBibliothequeError extends BibliothequesState {
-  const ListLivreBibliothequeError(DioException? error) : super(error: error);
+class CreateBibliothequeError extends BibliothequeState {
+  const CreateBibliothequeError(DioException? error) : super(error: error);
 }
 
-class RenameBibliothequeError extends BibliothequesState {
-  const RenameBibliothequeError(DioException? error) : super(error: error);
+class DeleteUserinBibliothequeError extends BibliothequeState {
+  const DeleteUserinBibliothequeError(DioException? error) : super(error: error);
 }
 
-class DeleteBibliothequeError extends BibliothequesState {
+class DeleteBibliothequeError extends BibliothequeState {
   const DeleteBibliothequeError(DioException? error) : super(error: error);
 }
 
-class DeleteBookBibliothequeError extends BibliothequesState {
-  const DeleteBookBibliothequeError(DioException? error) : super(error: error);
+class ListBibliothequeError extends BibliothequeState {
+  const ListBibliothequeError(DioException? error) : super(error: error);
+}
+
+class ListLivreError extends BibliothequeState {
+  const ListLivreError(DioException? error) : super(error: error);
+}
+
+class ModifieBibliothequeError extends BibliothequeState {
+  const ModifieBibliothequeError(DioException? error) : super(error: error);
 }

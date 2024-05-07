@@ -16,6 +16,56 @@ class LoginUserRequestEntity extends Equatable {
   ];
 }
 
+class UserRequestEntity extends Equatable {
+  final String? id;
+  final String? nom;
+  final String? prenom;
+  final String? mail;
+  final String? username;
+
+  const UserRequestEntity({
+    this.id,
+    this.nom,
+    this.prenom,
+    this.mail,
+    this.username,
+  });
+
+  @override
+  List<Object?> get props => [
+    id,
+    nom,
+    prenom,
+    mail,
+    username,
+  ];
+}
+
+class UserResponseEntity extends Equatable {
+  final String? id;
+  final String? nom;
+  final String? prenom;
+  final String? mail;
+  final String? username;
+
+  const UserResponseEntity({
+    this.id,
+    this.nom,
+    this.prenom,
+    this.mail,
+    this.username,
+  });
+
+  @override
+  List<Object?> get props => [
+    id,
+    nom,
+    prenom,
+    mail,
+    username,
+  ];
+}
+
 class LoginUserResponseEntity extends Equatable {
   final String? id;
   final String? nom;

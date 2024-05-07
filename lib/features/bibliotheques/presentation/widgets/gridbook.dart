@@ -21,7 +21,7 @@ class _GridBook extends State<GridBook> {
   void initState() {
     super.initState();
     bibliothequesBloc = sl<BibliothequesBloc>();
-    bibliothequesBloc.add(ListLivreBibliothequeEvent(
+    bibliothequesBloc.add(ListLivreEvent(
       id_bibliotheque: widget.bibliothequeId,
     ));
   }
@@ -34,11 +34,11 @@ class _GridBook extends State<GridBook> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BibliothequesBloc, BibliothequesState>(
+    return BlocBuilder<BibliothequesBloc, BibliothequeState>(
       bloc: bibliothequesBloc,
       builder: (context, state) {
-        if (state is ListLivreBibliothequeLoaded) {
-          final listbibliotheques = state.bibliothequebook;
+        if (state is ListLivreLoaded) {
+          final listbibliotheques = state.listbook;
           return GridView.builder(
               padding: EdgeInsets.zero, // Retirer tout padding
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

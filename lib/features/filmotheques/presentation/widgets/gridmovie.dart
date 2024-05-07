@@ -21,7 +21,7 @@ class _GridMovieState extends State<GridMovie> {
   void initState() {
     super.initState();
     filmothequesBloc = sl<FilmothequesBloc>();
-    filmothequesBloc.add(ListFilmFilmothequeEvent(
+    filmothequesBloc.add(ListFilmEvent(
       id_filmotheque: widget.filmothequeId,
     ));
   }
@@ -34,11 +34,11 @@ class _GridMovieState extends State<GridMovie> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FilmothequesBloc, FilmothequesState>(
+    return BlocBuilder<FilmothequesBloc, FilmothequeState>(
       bloc: filmothequesBloc,
       builder: (context, state) {
-        if (state is ListFilmFilmothequeLoaded) {
-          final listfilmotheques = state.filmothequemovie;
+        if (state is ListFilmLoaded) {
+          final listfilmotheques = state.listmovie;
           return GridView.builder(
               padding: EdgeInsets.zero, // Retirer tout padding
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

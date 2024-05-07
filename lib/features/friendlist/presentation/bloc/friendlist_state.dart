@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:whashlist/features/friendlist/domain/entities/friendlist_entity.dart';
+import 'package:whashlist/features/user/data/models/user_model.dart';
 
 abstract class FriendlistState {
   final FriendlistResponseEntity? addfriend;
   final List<FriendlistResponseEntity>? listfriend;
-  final FriendlistResponseEntity? searchfriend;
+  final UserResponseModel? searchuser;
   final void deletefriend;
   final DioException? error;
 
@@ -12,7 +13,7 @@ abstract class FriendlistState {
     this.error,
     this.addfriend,
     this.listfriend,
-    this.searchfriend,
+    this.searchuser,
     this.deletefriend,
   });
 }
@@ -31,18 +32,17 @@ class ListFriendLoaded extends FriendlistState {
       : super(listfriend: listfriend);
 }
 
-class SearchFriendLoaded extends FriendlistState {
-  const SearchFriendLoaded({FriendlistResponseEntity? searchfriend})
-      : super(searchfriend: searchfriend);
+class SearchUserLoaded extends FriendlistState {
+  const SearchUserLoaded({UserResponseModel? searchuser})
+      : super(searchuser: searchuser);
 }
 
 class DeleteFriendLoaded extends FriendlistState {
   const DeleteFriendLoaded() : super();
 }
 
-
 class AddFriendError extends FriendlistState {
-  final int? statusCode; // Include the status code in UserError
+  final int? statusCode;
   const AddFriendError({DioException? error, this.statusCode})
       : super(error: error);
 
@@ -62,8 +62,8 @@ class ListFriendError extends FriendlistState {
   const ListFriendError(DioException? error) : super(error: error);
 }
 
-class SearchFriendError extends FriendlistState {
-  const SearchFriendError(DioException? error) : super(error: error);
+class SearchUserError extends FriendlistState {
+  const SearchUserError(DioException? error) : super(error: error);
 }
 
 class DeleteFriendError extends FriendlistState {

@@ -22,6 +22,7 @@ class _FriendlistService implements FriendlistService {
 
   @override
   Future<HttpResponse<FriendlistResponseModel>> addfriend({
+    String? iduser,
     FriendlistRequestModel? body,
     String? contentType,
     String? accept,
@@ -38,14 +39,14 @@ class _FriendlistService implements FriendlistService {
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<FriendlistResponseModel>>(Options(
-      method: 'POST',
+      method: 'PATCH',
       headers: _headers,
       extra: _extra,
       contentType: contentType,
     )
             .compose(
               _dio.options,
-              '/friendlist/addfriend',
+              '/user/me/friendslist/${iduser}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -61,7 +62,7 @@ class _FriendlistService implements FriendlistService {
 
   @override
   Future<HttpResponse<List<FriendlistResponseModel>>> listfriend({
-    UserPrincipalRequestModel? body,
+    UserRequestModel? body,
     String? contentType,
     String? accept,
   }) async {
@@ -77,14 +78,14 @@ class _FriendlistService implements FriendlistService {
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<HttpResponse<List<FriendlistResponseModel>>>(Options(
-      method: 'POST',
+      method: 'GET',
       headers: _headers,
       extra: _extra,
       contentType: contentType,
     )
             .compose(
               _dio.options,
-              '/friendlist/listmyfriend',
+              '/user/me/friendslist',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -102,8 +103,8 @@ class _FriendlistService implements FriendlistService {
   }
 
   @override
-  Future<HttpResponse<FriendlistResponseModel>> searchfriend({
-    UserFriendRequestModel? body,
+  Future<HttpResponse<UserResponseModel>> searchuser({
+    String? username,
     String? contentType,
     String? accept,
   }) async {
@@ -115,18 +116,17 @@ class _FriendlistService implements FriendlistService {
       r'Accept': accept,
     };
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(body?.toJson() ?? <String, dynamic>{});
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<FriendlistResponseModel>>(Options(
-      method: 'POST',
+        _setStreamType<HttpResponse<UserResponseModel>>(Options(
+      method: 'GET',
       headers: _headers,
       extra: _extra,
       contentType: contentType,
     )
             .compose(
               _dio.options,
-              '/friendlist/listmyfriend/searchfriend',
+              '/user/${username}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -135,14 +135,14 @@ class _FriendlistService implements FriendlistService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = FriendlistResponseModel.fromJson(_result.data!);
+    final value = UserResponseModel.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
   @override
   Future<HttpResponse<void>> deletefriend({
-    UserFriendRequestModel? body,
+    String? idfriend,
     String? contentType,
     String? accept,
   }) async {
@@ -154,8 +154,7 @@ class _FriendlistService implements FriendlistService {
       r'Accept': accept,
     };
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(body?.toJson() ?? <String, dynamic>{});
+    const Map<String, dynamic>? _data = null;
     final _result =
         await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
       method: 'DELETE',
@@ -165,7 +164,7 @@ class _FriendlistService implements FriendlistService {
     )
             .compose(
               _dio.options,
-              '/friendlist/listmyfriend/deletefriend',
+              '/user/me/friendslist/${idfriend}',
               queryParameters: queryParameters,
               data: _data,
             )

@@ -66,6 +66,7 @@ class _LoginFormState extends State<LoginForm> {
             prenom: state.login?.prenom,
             nom: state.login?.nom,
             username: state.login?.username,
+            mail: state.login?.mail
           );
           final authProvider =
               Provider.of<AuthProvider>(context, listen: false);

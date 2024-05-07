@@ -3,6 +3,7 @@ import 'package:whashlist/core/constants/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:whashlist/features/bibliotheques/data/models/bibliotheques_model.dart';
 import 'package:whashlist/features/book/data/models/book_model.dart';
+import 'package:whashlist/features/user/data/models/user_model.dart';
 
 part 'bibliotheques_remote_datasource.g.dart';
 
@@ -10,55 +11,54 @@ part 'bibliotheques_remote_datasource.g.dart';
 abstract class BibliothequesService {
   factory BibliothequesService(Dio dio) = _BibliothequesService;
 
-  @POST("/user/me/listbibliotheques")
-  Future<HttpResponse<List<BibliothequesResponseModel>>> bibliotheques ({
-    @Body() BibliothequesRequestModel? body,
+  @POST("/user/me/bibliotheque")
+  Future<HttpResponse<BibliothequeResponseModel>> createbibliotheque({
+    @Body() CreateBibliothequeRequestModel? body,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });
 
-  @POST("/user/me/addbibliotheque")
-  Future<HttpResponse<BibliothequesResponseModel>> addbibliotheque ({
-    @Body() AddBibliothequeRequestModel? body,
+  @GET("/user/me/bibliotheque")
+  Future<HttpResponse<List<BibliothequeResponseModel>>> listbibliotheque({
+    @Body() UserRequestModel? body,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });
 
-  @POST("/user/me/bibliotheque/addbook")
-  Future<HttpResponse<LivreBibliothequeResponseModel>> addbook ({
-    @Body() LivreBibliothequeRequestModel? body,
+  @GET("/user/me/bibliotheque/{id}")
+  Future<HttpResponse<List<ApiBookResponseModel>>> listbook({
+    @Path('id') String? idbibliotheque,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });
 
-  @POST("/user/me/bibliotheque/listbook")
-  Future<HttpResponse<List<ApiBookResponseModel>>>
-      bibliothequebook({
-    @Body() ListLivreBibliothequeRequestModel? body,
+  @PATCH("/user/me/bibliotheque/{id}")
+  Future<HttpResponse<BibliothequeResponseModel>> modifiebibliotheque({
+    @Path('id') String? idbibliotheque,
+    @Body() CreateBibliothequeRequestModel? body,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });
 
-  @POST("/user/me/renamebibliotheque")
-  Future<HttpResponse<BibliothequesResponseModel>>
-      renamebibliotheque({
-    @Body() BibliothequeRequestModel? body,
+  @PATCH("/user/me/bibliotheque/livre/{id}")
+  Future<HttpResponse<BibliothequeResponseModel>> deletebook({
+    @Path('id') String? idbibliotheque,
+    @Body() DeleteLivreRequestModel? body,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });
 
-  @DELETE("/user/me/bibliotheque")
-  Future<HttpResponse<void>>
-      deletebibliotheque({
-    @Body() ListLivreBibliothequeRequestModel? body,
+  @DELETE("/user/me/bibliotheque/user/{id}")
+  Future<HttpResponse<BibliothequeResponseModel>> deleteuserinbibliotheque({
+    @Path('id') String? idbibliotheque,
+    @Body() UserRequestModel? body,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });
 
-  @DELETE("/user/me/bibliotheque/book")
-  Future<HttpResponse<void>>
-      deletebookbibliotheque({
-    @Body() LivreBibliothequeRequestModel? body,
+  @DELETE("/user/me/bibliotheque/{id}")
+  Future<HttpResponse<void>> deletebibliotheque({
+    @Path('id') String? idbibliotheque,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });

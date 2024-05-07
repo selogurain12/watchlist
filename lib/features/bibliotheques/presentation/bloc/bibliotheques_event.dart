@@ -1,55 +1,37 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:whashlist/features/bibliotheques/domain/entities/bibliotheques_entity.dart';
+import 'package:whashlist/features/user/data/models/user_model.dart';
+import 'package:whashlist/features/user/domain/entities/user_entity.dart';
+
 abstract class BibliothequeEvent {
   const BibliothequeEvent();
 }
 
-class BibliothequesEvent extends BibliothequeEvent {
+class DeleteBookEvent extends BibliothequeEvent {
   final String? id;
+  final DeleteLivreRequestEntity? livreIds;
 
-  const BibliothequesEvent({
-    this.id,
-  });
+  const DeleteBookEvent({this.id, this.livreIds});
 }
 
-class AddBibliothequeEvent extends BibliothequeEvent {
+class CreateBibliothequeEvent extends BibliothequeEvent {
   final String? nom;
-  final String? id_user;
+  final List<UserRequestModel>? users;
 
-  const AddBibliothequeEvent({
+  const CreateBibliothequeEvent({
     this.nom,
-    this.id_user,
+    this.users,
   });
 }
 
-class RenameBibliothequeEvent extends BibliothequeEvent {
-  final String? id;
-  final String? nom;
-  final String? id_user;
-
-  const RenameBibliothequeEvent({
-    this.id,
-    this.nom,
-    this.id_user,
-  });
-}
-
-class LivreBibliothequeEvent extends BibliothequeEvent {
-  final String? id_livre;
+class DeleteUserinBibliothequeEvent extends BibliothequeEvent {
   final String? id_bibliotheque;
+  final UserRequestEntity? user;
 
-  const LivreBibliothequeEvent({
-    this.id_livre,
-    this.id_bibliotheque,
-  });
-}
-
-class ListLivreBibliothequeEvent extends BibliothequeEvent {
-  final String? id_bibliotheque;
-
-  const ListLivreBibliothequeEvent({
-    this.id_bibliotheque,
-  });
+  const DeleteUserinBibliothequeEvent(
+      {this.id_bibliotheque,
+      this.user});
 }
 
 class DeleteBibliothequeEvent extends BibliothequeEvent {
@@ -60,12 +42,31 @@ class DeleteBibliothequeEvent extends BibliothequeEvent {
   });
 }
 
-class DeleteBookBibliothequeEvent extends BibliothequeEvent {
-  final String? id_bibliotheque;
-  final String? id_book;
+class ListBibliothequeEvent extends BibliothequeEvent {
+  final String? id;
+  final String? nom;
+  final String? prenom;
+  final String? mail;
+  final String? username;
 
-  const DeleteBookBibliothequeEvent({
+  const ListBibliothequeEvent(
+      {this.id, this.nom, this.mail, this.prenom, this.username});
+}
+
+class ListLivreEvent extends BibliothequeEvent {
+  final String? id_bibliotheque;
+
+  const ListLivreEvent({
     this.id_bibliotheque,
-    this.id_book
   });
+}
+
+class ModifieBibliothequeEvent extends BibliothequeEvent {
+  final String? id_bibliotheque;
+  final String? nom;
+  final List<UserRequestModel>? users;
+  final List<String>? id_livres;
+
+  const ModifieBibliothequeEvent(
+      {this.id_bibliotheque, this.nom, this.id_livres, this.users});
 }

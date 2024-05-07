@@ -6,7 +6,7 @@ import 'package:whashlist/features/bibliotheques/presentation/widgets/listbookbi
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 
 class ListbookScreen extends StatelessWidget {
-  final BibliothequesResponseEntity bibliotheque;
+  final BibliothequeResponseEntity bibliotheque;
   const ListbookScreen({Key? key, required this.bibliotheque})
       : super(key: key);
 

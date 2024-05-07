@@ -1,37 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:whashlist/features/filmotheques/domain/entities/filmotheques_entity.dart';
-import 'package:whashlist/features/filmotheques/presentation/widgets/listmoviefilmo.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
+import 'package:go_router/go_router.dart';
+import 'package:whashlist/features/user/presentation/widgets/film_body.dart';
+import 'package:whashlist/features/user/presentation/widgets/livre_body.dart';
 
-class ListmovieScreen extends StatelessWidget {
-  final FilmothequeResponseEntity filmotheque;
-  const ListmovieScreen({Key? key, required this.filmotheque})
-      : super(key: key);
+class FilmScreen extends StatelessWidget {
+  const FilmScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
-    return Scaffold(
+   return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFCE5CB),
         leading: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: GestureDetector(
-            onTap: () {
-              context.go('/');
-            },
-            child: Image.asset(
-              'home.png',
-              width: 30.0,
-            ),
+                onTap: () {
+                  context.go('/');
+                },
+                child: Image.asset(
+            'assets/home.png',
+            width: 30.0,
           ),
         ),
-        title: Center(
-          child: Text(filmotheque.nom ?? "FILMOTHEQUE"),
         ),
-        actions: [
+        title: const Center(
+          child: Text('FILM'),
+        ),
+       actions: [
           authProvider.isLoggedIn
               ? GestureDetector(
                   onTap: () {
@@ -40,7 +38,7 @@ class ListmovieScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(right: 5.0),
                     child: Image.asset(
-                      '2815428.png',
+                      'assets/2815428.png',
                       width: 80.0,
                     ),
                   ),
@@ -52,14 +50,14 @@ class ListmovieScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(right: 5.0),
                     child: Image.asset(
-                      '2815428.png',
+                      'assets/2815428.png',
                       width: 80.0,
                     ),
                   ),
                 )
         ],
       ),
-      body: ListMovieFilmo(filmothequeId: filmotheque.id,),
-    );
+      body: const FilmBody()
+   );
   }
 }

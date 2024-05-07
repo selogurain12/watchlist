@@ -26,7 +26,7 @@ class _ListMovieFilmo extends State<ListMovieFilmo> {
   void initState() {
     super.initState();
     filmothequesBloc = sl<FilmothequesBloc>();
-    filmothequesBloc.add(ListFilmFilmothequeEvent(
+    filmothequesBloc.add(ListFilmEvent(
       id_filmotheque: widget.filmothequeId,
     ));
   }
@@ -40,11 +40,11 @@ class _ListMovieFilmo extends State<ListMovieFilmo> {
   @override
 Widget build(BuildContext context) {
   final userProvider = Provider.of<UserProvider>(context, listen: false);
-  return BlocBuilder<FilmothequesBloc, FilmothequesState>(
+  return BlocBuilder<FilmothequesBloc, FilmothequeState>(
     bloc: filmothequesBloc,
     builder: (context, state) {
-      if (state is ListFilmFilmothequeLoaded) {
-        final listfilmotheques = state.filmothequemovie;
+      if (state is ListFilmLoaded) {
+        final listfilmotheques = state.listmovie;
         return Column(
           children: [
             const SizedBox(height: 16),
@@ -116,8 +116,8 @@ Widget build(BuildContext context) {
                                             filmothequeId: widget.filmothequeId,
                                             movieId: filmotheque.id,
                                             onMovieFilmothequeDelete: () {
-                                              filmothequesBloc.add(FilmothequesEvent(id: userProvider.userId));
-                                              filmothequesBloc.add(ListFilmFilmothequeEvent(id_filmotheque: widget.filmothequeId));
+                                              filmothequesBloc.add(ListFilmothequeEvent(id: userProvider.userId));
+                                              filmothequesBloc.add(ListFilmEvent(id_filmotheque: widget.filmothequeId));
                                             });
                                       },
                                     );

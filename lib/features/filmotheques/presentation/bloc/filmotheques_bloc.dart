@@ -1,141 +1,106 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whashlist/core/ressources/data_state.dart';
 import 'package:whashlist/features/filmotheques/domain/entities/filmotheques_entity.dart';
-import 'package:whashlist/features/filmotheques/domain/usecases/addfilmotheque.dart';
-import 'package:whashlist/features/filmotheques/domain/usecases/addmovie.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/createfilmotheque.dart';
 import 'package:whashlist/features/filmotheques/domain/usecases/deletefilmotheque.dart';
-import 'package:whashlist/features/filmotheques/domain/usecases/deletemoviefilmotheque.dart';
-import 'package:whashlist/features/filmotheques/domain/usecases/filmotheques.dart';
-import 'package:whashlist/features/filmotheques/domain/usecases/listfilmothequemovie.dart';
-import 'package:whashlist/features/filmotheques/domain/usecases/renamefilmotheque.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/deletemovie.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/deleteuserinfilmotheque.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/listfilmotheques.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/listmovie.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/modifiefilmotheque.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_event.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_state.dart';
+import 'package:whashlist/features/user/domain/entities/user_entity.dart';
 
-class FilmothequesBloc extends Bloc<FilmothequeEvent, FilmothequesState> {
-  final FilmothequesUseCase filmothequesUseCase;
-  final AddFilmothequeUseCase addfilmothequeUseCase;
-  final FilmFilmothequeUseCase filmfilmothequeUseCase;
-  final ListFilmFilmothequeUseCase listfilmfilmothequeUseCase;
-  final RenameFilmothequeUseCase renamefilmothequeUseCase;
+class FilmothequesBloc extends Bloc<FilmothequeEvent, FilmothequeState> {
+  final DeleteFilmUseCase deleteMovieUseCase;
+  final CreateFilmothequeUseCase createfilmothequeUseCase;
+  final DeleteUserinFilmothequeUseCase deleteuserinfilmothequeUseCase;
   final DeleteFilmothequeUseCase deletefilmothequeUseCase;
-  final DeleteMovieFilmothequeUseCase deletemoviefilmothequeUseCase;
+  final ListFilmothequeUseCase listFilmothequeUseCase;
+  final ListFilmUseCase listFilmUseCase;
+  final ModifieFilmothequeUseCase modifieFilmothequeUseCase;
 
   FilmothequesBloc(
-    this.filmothequesUseCase,
-    this.addfilmothequeUseCase,
-    this.filmfilmothequeUseCase,
-    this.listfilmfilmothequeUseCase,
-    this.renamefilmothequeUseCase,
+    this.deleteMovieUseCase,
+    this.createfilmothequeUseCase,
+    this.deleteuserinfilmothequeUseCase,
     this.deletefilmothequeUseCase,
-    this.deletemoviefilmothequeUseCase,
-  ) : super(const FilmothequesLoading()) {
-    on<FilmothequesEvent>(filmotheques);
-    on<AddFilmothequeEvent>(addfilmotheque);
-    on<FilmFilmothequeEvent>(addmovie);
-    on<ListFilmFilmothequeEvent>(filmothequemovie);
-    on<RenameFilmothequeEvent>(renamefilmotheque);
+    this.listFilmothequeUseCase,
+    this.listFilmUseCase,
+    this.modifieFilmothequeUseCase,
+  ) : super(const FilmothequeLoading()) {
+    on<DeleteMovieEvent>(deletemovie);
+    on<CreateFilmothequeEvent>(createfilmotheque);
+    on<DeleteUserinFilmothequeEvent>(deleteuserinfilmotheque);
     on<DeleteFilmothequeEvent>(deletefilmotheque);
-    on<DeleteMovieFilmothequeEvent>(deletemoviefilmotheque);
+    on<ListFilmothequeEvent>(listfilmotheque);
+    on<ListFilmEvent>(listfilm);
+    on<ModifieFilmothequeEvent>(modifiefilmotheque);
   }
 
-  void filmotheques(
-      FilmothequesEvent event, Emitter<FilmothequesState> emit) async {
-    emit(const FilmothequesLoading());
-    final data = await filmothequesUseCase(
-      params: FilmothequesRequestEntity(
-        id: event.id,
+  void deletemovie(
+      DeleteMovieEvent event, Emitter<FilmothequeState> emit) async {
+    emit(const FilmothequeLoading());
+    final data = await deleteMovieUseCase(
+      params: DeleteMovieParams(
+        idfilmotheque: event.id,
+        body: event.filmIds,
       ),
     );
 
     if (data is DataSuccess) {
-      emit(FilmothequesLoaded(filmotheques: data.data));
+      emit(DeleteMovieLoaded(deletemovie: data.data));
     }
 
     if (data is DataFailure) {
-      emit(FilmothequesError(data.error));
+      emit(DeleteFilmError(data.error));
     }
   }
 
-  void addfilmotheque(
-      AddFilmothequeEvent event, Emitter<FilmothequesState> emit) async {
-    emit(const FilmothequesLoading());
-    final data = await addfilmothequeUseCase(
-      params: AddFilmothequeRequestEntity(
+  void createfilmotheque(
+      CreateFilmothequeEvent event, Emitter<FilmothequeState> emit) async {
+    emit(const FilmothequeLoading());
+    final data = await createfilmothequeUseCase(
+      params: CreateFilmothequeRequestEntity(
         nom: event.nom,
-        id_user: event.id_user,
+        users: event.users,
       ),
     );
 
     if (data is DataSuccess) {
-      emit(AddFilmothequeLoaded(addfilmotheque: data.data));
+      emit(CreateFilmothequeLoaded(createfilmotheque: data.data));
     }
 
     if (data is DataFailure) {
-      emit(FilmothequesError(data.error));
+      emit(CreateFilmothequeError(data.error));
     }
   }
 
-  void addmovie(
-      FilmFilmothequeEvent event, Emitter<FilmothequesState> emit) async {
-    emit(const FilmothequesLoading());
-    final data = await filmfilmothequeUseCase(
-      params: FilmFilmothequeRequestEntity(
-        id_film: event.id_film,
-        id_filmotheque: event.id_filmotheque,
+  void deleteuserinfilmotheque(
+      DeleteUserinFilmothequeEvent event, Emitter<FilmothequeState> emit) async {
+    emit(const FilmothequeLoading());
+    final data = await deleteuserinfilmothequeUseCase(
+      params: DeleteUserInFilmothequeParams(
+        idfilmotheque: event.id_filmotheque,
+        body: event.user,
       ),
     );
 
     if (data is DataSuccess) {
-      emit(FilmFilmothequeLoaded(addmovie: data.data));
+      emit(DeleteUserinFilmothequeLoaded(deleteuserinfilmotheque: data.data));
     }
 
     if (data is DataFailure) {
-      emit(FilmFilmothequeError(data.error));
-    }
-  }
-
-  void filmothequemovie(
-      ListFilmFilmothequeEvent event, Emitter<FilmothequesState> emit) async {
-    emit(const FilmothequesLoading());
-    final data = await listfilmfilmothequeUseCase(
-      params: ListFilmFilmothequeRequestEntity(
-        id_filmotheque: event.id_filmotheque,
-      ),
-    );
-
-    if (data is DataSuccess) {
-      emit(ListFilmFilmothequeLoaded(filmothequemovie: data.data));
-    }
-
-    if (data is DataFailure) {
-      emit(ListFilmFilmothequeError(data.error));
-    }
-  }
-
-  void renamefilmotheque(
-      RenameFilmothequeEvent event, Emitter<FilmothequesState> emit) async {
-    emit(const FilmothequesLoading());
-    final data = await renamefilmothequeUseCase(
-      params: FilmothequeRequestEntity(
-          id: event.id, nom: event.nom, id_user: event.id_user),
-    );
-
-    if (data is DataSuccess) {
-      emit(RenameFilmothequeLoaded(renamefilmotheque: data.data));
-    }
-
-    if (data is DataFailure) {
-      emit(RenameFilmothequeError(data.error));
+      emit(DeleteUserinFilmothequeError(data.error));
     }
   }
 
   void deletefilmotheque(
-      DeleteFilmothequeEvent event, Emitter<FilmothequesState> emit) async {
-    emit(const FilmothequesLoading());
+      DeleteFilmothequeEvent event, Emitter<FilmothequeState> emit) async {
+    emit(const FilmothequeLoading());
     final data = await deletefilmothequeUseCase(
-      params: ListFilmFilmothequeRequestEntity(
-        id_filmotheque: event.id_filmotheque,
-      ),
+      params: event.id_filmotheque,
     );
 
     if (data is DataSuccess) {
@@ -147,22 +112,64 @@ class FilmothequesBloc extends Bloc<FilmothequeEvent, FilmothequesState> {
     }
   }
 
-  void deletemoviefilmotheque(DeleteMovieFilmothequeEvent event,
-      Emitter<FilmothequesState> emit) async {
-    emit(const FilmothequesLoading());
-    final data = await deletemoviefilmothequeUseCase(
-      params: FilmFilmothequeRequestEntity(
-        id_filmotheque: event.id_filmotheque,
-        id_film: event.id_movie
+  void listfilmotheque(
+      ListFilmothequeEvent event, Emitter<FilmothequeState> emit) async {
+    emit(const FilmothequeLoading());
+    final data = await listFilmothequeUseCase(
+      params: UserRequestEntity(
+          id: event.id, 
+          nom: event.nom, 
+          prenom: event.prenom,
+          mail: event.mail,
+          username: event.username
+          ),
+    );
+
+    if (data is DataSuccess) {
+      emit(ListFilmothequeLoaded(listfilmotheque: data.data));
+    }
+
+    if (data is DataFailure) {
+      emit(ListFilmothequeError(data.error));
+    }
+  }
+
+  void listfilm(
+      ListFilmEvent event, Emitter<FilmothequeState> emit) async {
+    emit(const FilmothequeLoading());
+    final data = await listFilmUseCase(
+      params: event.id_filmotheque,
+    );
+
+    if (data is DataSuccess) {
+      emit(ListFilmLoaded(listmovie: data.data));
+    }
+
+    if (data is DataFailure) {
+      emit(ListFilmError(data.error));
+    }
+  }
+
+  void modifiefilmotheque(ModifieFilmothequeEvent event,
+      Emitter<FilmothequeState> emit) async {
+    emit(const FilmothequeLoading());
+    final data = await modifieFilmothequeUseCase(
+      params: ModifieFilmothequeParams(
+        idfilmotheque: event.id_filmotheque,
+        body: CreateFilmothequeRequestEntity(
+          id_films: event.id_films,
+          users: event.users,
+          nom: event.nom
+        ),
       ),
     );
 
     if (data is DataSuccess) {
-      emit(DeleteMovieFilmothequeLoaded());
+      emit(ModifieFilmothequeLoaded(modifiefilmotheque: data.data));
     }
 
     if (data is DataFailure) {
-      emit(DeleteMovieFilmothequeError(data.error));
+      emit(ModifieFilmothequeError(data.error));
     }
   }
 }

@@ -30,9 +30,12 @@ class _ViewBibliotheque extends State<ViewBibliotheque> {
     super.initState();
     bibliothequesBloc = sl<BibliothequesBloc>();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    bibliothequesBloc.add(BibliothequesEvent(
-      id: userProvider.userId,
-    ));
+    bibliothequesBloc.add(ListBibliothequeEvent(
+        id: userProvider.userId,
+        nom: userProvider.userNom,
+        prenom: userProvider.userPrenom,
+        mail: userProvider.userMail,
+        username: userProvider.userUsername));
     nom = TextEditingController();
   }
 
@@ -47,16 +50,17 @@ class _ViewBibliotheque extends State<ViewBibliotheque> {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    return BlocBuilder<BibliothequesBloc, BibliothequesState>(
+    return BlocBuilder<BibliothequesBloc, BibliothequeState>(
       bloc: bibliothequesBloc,
       builder: (context, state) {
         if (!authProvider.isLoggedIn) {
-      return const Scaffold(
-        body: Center(
-          child: Text("Veuillez vous connecter"),
-        ),
-      );
-    } if (state is BibliothequesLoaded) {
+          return const Scaffold(
+            body: Center(
+              child: Text("Veuillez vous connecter"),
+            ),
+          );
+        }
+        if (state is ListBibliothequeLoaded) {
           return Scaffold(
               body: Column(children: [
             const SizedBox(height: 16),
@@ -74,35 +78,39 @@ class _ViewBibliotheque extends State<ViewBibliotheque> {
                   ),
                 ),
                 const Spacer(), // Utilisé pour pousser le bouton suivant vers la droite
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal:
-                            8.0), // Ajoutez du padding autour du bouton de création
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        final result = await showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AddBibliotheque(
-                              onBibliothequeAdded: () {
-                                bibliothequesBloc.add(
-                                    BibliothequesEvent(id: userProvider.userId));
-                              },
-                            );
-                          },
-                        );
-                        if (result != null && result) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("La bibliothèque a été créée"),
-                              backgroundColor: Colors.green,
-                            ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal:
+                          8.0), // Ajoutez du padding autour du bouton de création
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      final result = await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AddBibliotheque(
+                            onBibliothequeAdded: () {
+                              bibliothequesBloc.add(ListBibliothequeEvent(
+                                  id: userProvider.userId,
+                                  nom: userProvider.userNom,
+                                  prenom: userProvider.userPrenom,
+                                  mail: userProvider.userMail,
+                                  username: userProvider.userUsername));
+                            },
                           );
-                        }
-                      },
-                      child: const Text("Créer une bibliothèque"),
-                    ),
+                        },
+                      );
+                      if (result != null && result) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("La bibliothèque a été créée"),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                      }
+                    },
+                    child: const Text("Créer une bibliothèque"),
                   ),
+                ),
               ],
             ),
             Expanded(
@@ -115,9 +123,9 @@ class _ViewBibliotheque extends State<ViewBibliotheque> {
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
                     ),
-                    itemCount: state.bibliotheques?.length,
+                    itemCount: state.listbibliotheque?.length,
                     itemBuilder: (context, index) {
-                      final bibliotheque = state.bibliotheques?[index];
+                      final bibliotheque = state.listbibliotheque?[index];
                       return InkWell(
                         onTap: () {
                           context.go(
@@ -184,10 +192,18 @@ class _ViewBibliotheque extends State<ViewBibliotheque> {
                                                                 bibliotheque,
                                                             onBibliothequeDelete:
                                                                 () {
-                                                              bibliothequesBloc.add(
-                                                                  BibliothequesEvent(
-                                                                      id: userProvider
-                                                                          .userId));
+                                                              bibliothequesBloc.add(ListBibliothequeEvent(
+                                                                  id: userProvider
+                                                                      .userId,
+                                                                  nom: userProvider
+                                                                      .userNom,
+                                                                  prenom: userProvider
+                                                                      .userPrenom,
+                                                                  mail: userProvider
+                                                                      .userMail,
+                                                                  username:
+                                                                      userProvider
+                                                                          .userUsername));
                                                             });
                                                       },
                                                     );
@@ -202,10 +218,18 @@ class _ViewBibliotheque extends State<ViewBibliotheque> {
                                                                   bibliotheque,
                                                               onBibliothequeRename:
                                                                   () {
-                                                                bibliothequesBloc.add(
-                                                                    BibliothequesEvent(
-                                                                        id: userProvider
-                                                                            .userId));
+                                                                bibliothequesBloc.add(ListBibliothequeEvent(
+                                                                    id: userProvider
+                                                                        .userId,
+                                                                    nom: userProvider
+                                                                        .userNom,
+                                                                    prenom: userProvider
+                                                                        .userPrenom,
+                                                                    mail: userProvider
+                                                                        .userMail,
+                                                                    username:
+                                                                        userProvider
+                                                                            .userUsername));
                                                               });
                                                         });
                                                     break;

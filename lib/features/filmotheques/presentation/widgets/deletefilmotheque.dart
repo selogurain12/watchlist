@@ -10,7 +10,7 @@ import 'package:whashlist/injection_container.dart';
 
 class DeleteFilmotheque extends StatefulWidget {
   final VoidCallback onFilmothequeDelete;
-  final FilmothequesResponseEntity filmotheque;
+  final FilmothequeResponseEntity filmotheque;
 
   const DeleteFilmotheque({Key? key, required this.filmotheque, required this.onFilmothequeDelete})
       : super(key: key);
@@ -36,7 +36,7 @@ class _DeleteFilmotheque extends State<DeleteFilmotheque> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FilmothequesBloc, FilmothequesState>(
+    return BlocBuilder<FilmothequesBloc, FilmothequeState>(
         bloc: filmothequesBloc,
         builder: (context, state) {
           if (state is DeleteFilmothequeLoaded) {

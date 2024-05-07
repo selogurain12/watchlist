@@ -26,7 +26,7 @@ class _ListBookBiblio extends State<ListBookBiblio> {
   void initState() {
     super.initState();
     bibliothequesBloc = sl<BibliothequesBloc>();
-    bibliothequesBloc.add(ListLivreBibliothequeEvent(
+    bibliothequesBloc.add(ListLivreEvent(
       id_bibliotheque: widget.bibliothequeId,
     ));
   }
@@ -40,11 +40,11 @@ class _ListBookBiblio extends State<ListBookBiblio> {
   @override
 Widget build(BuildContext context) {
   final userProvider = Provider.of<UserProvider>(context, listen: false);
-  return BlocBuilder<BibliothequesBloc, BibliothequesState>(
+  return BlocBuilder<BibliothequesBloc, BibliothequeState>(
     bloc: bibliothequesBloc,
     builder: (context, state) {
-      if (state is ListLivreBibliothequeLoaded) {
-        final listbibliotheque = state.bibliothequebook;
+      if (state is ListLivreLoaded) {
+        final listbibliotheque = state.listbook;
         return Column(
           children: [
             const SizedBox(height: 16),
@@ -116,8 +116,8 @@ Widget build(BuildContext context) {
                                             bibliothequeId: widget.bibliothequeId,
                                             bookId: bibliotheque.id,
                                             onBookBibliothequeDelete: () {
-                                              bibliothequesBloc.add(BibliothequesEvent(id: userProvider.userId));
-                                              bibliothequesBloc.add(ListLivreBibliothequeEvent(id_bibliotheque: widget.bibliothequeId));
+                                              bibliothequesBloc.add(ListBibliothequeEvent(id: userProvider.userId));
+                                              bibliothequesBloc.add(ListLivreEvent(id_bibliotheque: widget.bibliothequeId));
                                             });
                                       },
                                     );

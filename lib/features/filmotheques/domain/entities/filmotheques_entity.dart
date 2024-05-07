@@ -1,119 +1,58 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:equatable/equatable.dart';
+import 'package:whashlist/features/user/data/models/user_model.dart';
 
-class FilmothequesRequestEntity extends Equatable {
-  final String? id;
-
-  const FilmothequesRequestEntity({
-    this.id,
-  });
-
-  @override
-  List<Object?> get props => [
-    id,
-  ];
-}
-
-class FilmothequeRequestEntity extends Equatable {
+class FilmothequeResponseEntity extends Equatable {
   final String? id;
   final String? nom;
-  final String? id_user;
+  final List<String>? id_films;
+  final List<UserRequestModel>? users;
 
-  const FilmothequeRequestEntity({
+  const FilmothequeResponseEntity({
     this.id,
     this.nom,
-    this.id_user
+    this.id_films,
+    this.users
   });
 
   @override
   List<Object?> get props => [
     id,
     nom,
-    id_user
+    id_films,
+    users
   ];
 }
 
-class FilmothequesResponseEntity extends Equatable {
-  final String? id;
+class CreateFilmothequeRequestEntity extends Equatable {
   final String? nom;
-  final String? id_user;
+  final List<String>? id_films;
+  final List<UserRequestModel>? users;
 
-  const FilmothequesResponseEntity({
-    this.id,
+  const CreateFilmothequeRequestEntity({
     this.nom,
-    this.id_user
-  });
-
-  @override
-  List<Object?> get props => [
-    id,
-    nom,
-    id_user
-  ];
-}
-
-class AddFilmothequeRequestEntity extends Equatable {
-  final String? nom;
-  final String? id_user;
-
-  const AddFilmothequeRequestEntity({
-    this.nom,
-    this.id_user
+    this.id_films,
+    this.users
   });
 
   @override
   List<Object?> get props => [
     nom,
-    id_user,
+    id_films,
+    users
   ];
 }
 
-class FilmFilmothequeRequestEntity extends Equatable {
-  final String? id_filmotheque;
-  final String? id_film;
+class DeleteFilmRequestEntity extends Equatable {
+  final List<String>? filmIds;
 
-  const FilmFilmothequeRequestEntity({
-    this.id_film,
-    this.id_filmotheque,
+  const DeleteFilmRequestEntity({
+    this.filmIds,
   });
 
   @override
   List<Object?> get props => [
-    id_film,
-    id_filmotheque
+    filmIds
   ];
 }
-
-class FilmFilmothequeResponseEntity extends Equatable {
-  final String? id;
-  final String? id_film;
-  final String? id_filmotheque;
-
-  const FilmFilmothequeResponseEntity({
-    this.id,
-    this.id_film,
-    this.id_filmotheque
-  });
-
-  @override
-  List<Object?> get props => [
-    id,
-    id_film,
-    id_filmotheque
-  ];
-}
-
-class ListFilmFilmothequeRequestEntity extends Equatable {
-  final String? id_filmotheque;
-
-  const ListFilmFilmothequeRequestEntity({
-    this.id_filmotheque,
-  });
-
-  @override
-  List<Object?> get props => [
-    id_filmotheque
-  ];
-}
-

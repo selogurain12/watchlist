@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whashlist/features/filmotheques/domain/entities/filmotheques_entity.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_bloc.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_event.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_state.dart';
@@ -40,10 +41,10 @@ class _DeleteMovieFilmotheque extends State<DeleteMovieFilmotheque> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FilmothequesBloc, FilmothequesState>(
+    return BlocBuilder<FilmothequesBloc, FilmothequeState>(
         bloc: filmothequesBloc,
         builder: (context, state) {
-          if (state is DeleteMovieFilmothequeLoaded) {
+          if (state is DeleteMovieLoaded) {
             Future.delayed(const Duration(seconds: 2));
             widget.onMovieFilmothequeDelete();
             Navigator.pop(context);
@@ -62,9 +63,12 @@ class _DeleteMovieFilmotheque extends State<DeleteMovieFilmotheque> {
               TextButton(
                 child: const Text('Supprimer'),
                 onPressed: () {
-                  filmothequesBloc.add(DeleteMovieFilmothequeEvent(
-                      id_filmotheque: widget.filmothequeId,
-                      id_movie: widget.movieId.toString()));
+                  final deleteRequest = DeleteFilmRequestEntity(
+                    filmIds: widget.movieId != null ? [widget.movieId!.toString()] : null,
+                  );
+                  filmothequesBloc.add(DeleteMovieEvent(
+                      id: widget.filmothequeId,
+                      filmIds: deleteRequest));
                 },
               ),
             ],

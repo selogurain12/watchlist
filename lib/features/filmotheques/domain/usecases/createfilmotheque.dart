@@ -3,13 +3,13 @@ import 'package:whashlist/core/usecases/usecase.dart';
 import 'package:whashlist/features/filmotheques/domain/entities/filmotheques_entity.dart';
 import 'package:whashlist/features/filmotheques/domain/repositories/filmotheques_repository.dart';
 
-class FilmothequesUseCase implements UseCase<DataState<List<FilmothequesResponseEntity>>, FilmothequesRequestEntity> {
+class CreateFilmothequeUseCase implements UseCase<DataState<FilmothequeResponseEntity>, CreateFilmothequeRequestEntity> {
   final FilmothequesRepository repository;
-  const FilmothequesUseCase(this.repository);
+  const CreateFilmothequeUseCase(this.repository);
   
   @override
-  Future<DataState<List<FilmothequesResponseEntity>>> call({FilmothequesRequestEntity? params}) {
-    return repository.filmotheques(
+  Future<DataState<FilmothequeResponseEntity>>call({CreateFilmothequeRequestEntity? params}) {
+    return repository.createfilmotheque(
       body: params,
     );
   }

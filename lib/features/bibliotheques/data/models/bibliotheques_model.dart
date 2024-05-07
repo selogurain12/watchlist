@@ -2,180 +2,89 @@
 
 import 'package:whashlist/features/bibliotheques/domain/entities/bibliotheques_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:whashlist/features/user/data/models/user_model.dart';
 
 part 'bibliotheques_model.g.dart';
 
 @JsonSerializable()
-class BibliothequesRequestModel extends BibliothequesRequestEntity {
-  final String? id;
-
-  const BibliothequesRequestModel({
-    this.id,
-}): super(
-    id: id,
-  );
-
-  factory BibliothequesRequestModel.fromJson(Map<String, dynamic> json) =>
-    _$BibliothequesRequestModelFromJson(json);
-  Map<String, dynamic> toJson() => _$BibliothequesRequestModelToJson(this);
-
-  factory BibliothequesRequestModel.fromEntity(BibliothequesRequestEntity entity) {
-    return BibliothequesRequestModel(
-      id: entity.id,
-    );
-  }
-}
-
-@JsonSerializable()
-class BibliothequesResponseModel extends BibliothequesResponseEntity {
+class BibliothequeResponseModel extends BibliothequeResponseEntity {
   final String? id;
   final String? nom;
-  final String? id_user;
+  final List<String>? id_livres;
+  final List<UserRequestModel>? users;
 
-  const BibliothequesResponseModel({
+  const BibliothequeResponseModel({
     this.id,
     this.nom,
-    this.id_user
+    this.id_livres,
+    this.users
 }): super(
     id: id,
     nom: nom,
-    id_user: id_user
+    id_livres: id_livres,
+    users: users,
   );
 
-  factory BibliothequesResponseModel.fromJson(Map<String, dynamic> json) =>
-    _$BibliothequesResponseModelFromJson(json);
-  Map<String, dynamic> toJson() => _$BibliothequesResponseModelToJson(this);
+  factory BibliothequeResponseModel.fromJson(Map<String, dynamic> json) =>
+    _$BibliothequeResponseModelFromJson(json);
+  Map<String, dynamic> toJson() => _$BibliothequeResponseModelToJson(this);
 
-  factory BibliothequesResponseModel.fromEntity(BibliothequesResponseEntity entity) {
-    return BibliothequesResponseModel(
+  factory BibliothequeResponseModel.fromEntity(BibliothequeResponseEntity entity) {
+    return BibliothequeResponseModel(
       id: entity.id,
       nom: entity.nom,
-      id_user: entity.id_user,
+      id_livres: entity.id_livres,
+      users: entity.users
     );
   }
 }
 
 @JsonSerializable()
-class BibliothequeRequestModel extends BibliothequeRequestEntity {
-  final String? id;
+class CreateBibliothequeRequestModel extends CreateBibliothequeRequestEntity {
   final String? nom;
-  final String? id_user;
+  final List<String>? id_livres;
+  final List<UserRequestModel>? users;
 
-  const BibliothequeRequestModel({this.id, this.nom, this.id_user})
-      : super(id: id, nom: nom, id_user: id_user);
-
-  factory BibliothequeRequestModel.fromJson(Map<String, dynamic> json) =>
-      _$BibliothequeRequestModelFromJson(json);
-  Map<String, dynamic> toJson() => _$BibliothequeRequestModelToJson(this);
-
-  factory BibliothequeRequestModel.fromEntity(
-      BibliothequeRequestEntity entity) {
-    return BibliothequeRequestModel(
-      id: entity.id,
-      nom: entity.nom,
-      id_user: entity.id_user,
-    );
-  }
-}
-
-@JsonSerializable()
-class AddBibliothequeRequestModel extends AddBibliothequeRequestEntity {
-  final String? id_user;
-  final String? nom;
-
-  const AddBibliothequeRequestModel({
+  const CreateBibliothequeRequestModel({
     this.nom,
-    this.id_user,
+    this.id_livres,
+    this.users
 }): super(
     nom: nom,
-    id_user: id_user,
+    id_livres: id_livres,
+    users: users,
   );
 
-  factory AddBibliothequeRequestModel.fromJson(Map<String, dynamic> json) =>
-    _$AddBibliothequeRequestModelFromJson(json);
-  Map<String, dynamic> toJson() => _$AddBibliothequeRequestModelToJson(this);
+  factory CreateBibliothequeRequestModel.fromJson(Map<String, dynamic> json) =>
+    _$CreateBibliothequeRequestModelFromJson(json);
+  Map<String, dynamic> toJson() => _$CreateBibliothequeRequestModelToJson(this);
 
-  factory AddBibliothequeRequestModel.fromEntity(AddBibliothequeRequestEntity entity) {
-    return AddBibliothequeRequestModel(
+  factory CreateBibliothequeRequestModel.fromEntity(CreateBibliothequeRequestEntity entity) {
+    return CreateBibliothequeRequestModel(
       nom: entity.nom,
-      id_user: entity.id_user,
+      id_livres: entity.id_livres,
+      users: entity.users
     );
   }
 }
 
 @JsonSerializable()
-class LivreBibliothequeRequestModel extends LivreBibliothequeRequestEntity {
-  final String? id_livre;
-  final String? id_bibliotheque;
+class DeleteLivreRequestModel extends DeleteLivreRequestEntity {
+  final List<String>? livreIds;
 
-  const LivreBibliothequeRequestModel({
-    this.id_livre,
-    this.id_bibliotheque,
+  const DeleteLivreRequestModel({
+    this.livreIds,
 }): super(
-    id_livre: id_livre,
-    id_bibliotheque: id_bibliotheque,
+    livreIds: livreIds,
   );
 
-  factory LivreBibliothequeRequestModel.fromJson(Map<String, dynamic> json) =>
-    _$LivreBibliothequeRequestModelFromJson(json);
-  Map<String, dynamic> toJson() => _$LivreBibliothequeRequestModelToJson(this);
+  factory DeleteLivreRequestModel.fromJson(Map<String, dynamic> json) =>
+    _$DeleteLivreRequestModelFromJson(json);
+  Map<String, dynamic> toJson() => _$DeleteLivreRequestModelToJson(this);
 
-  factory LivreBibliothequeRequestModel.fromEntity(LivreBibliothequeRequestEntity entity) {
-    return LivreBibliothequeRequestModel(
-      id_livre: entity.id_livre,
-      id_bibliotheque: entity.id_bibliotheque,
-    );
-  }
-}
-
-@JsonSerializable()
-class LivreBibliothequeResponseModel extends LivreBibliothequeResponseEntity {
-  final String? id;
-  final String? id_livre;
-  final String? id_bibliotheque;
-
-  const LivreBibliothequeResponseModel({
-    this.id,
-    this.id_livre,
-    this.id_bibliotheque
-}): super(
-    id: id,
-    id_livre: id_livre,
-    id_bibliotheque: id_bibliotheque
-  );
-
-  factory LivreBibliothequeResponseModel.fromJson(Map<String, dynamic> json) =>
-    _$LivreBibliothequeResponseModelFromJson(json);
-  Map<String, dynamic> toJson() => _$LivreBibliothequeResponseModelToJson(this);
-
-  factory LivreBibliothequeResponseModel.fromEntity(LivreBibliothequeResponseEntity entity) {
-    return LivreBibliothequeResponseModel(
-      id: entity.id,
-      id_livre: entity.id_livre,
-      id_bibliotheque: entity.id_bibliotheque,
-    );
-  }
-}
-
-@JsonSerializable()
-class ListLivreBibliothequeRequestModel extends ListLivreBibliothequeRequestEntity {
-  final String? id_bibliotheque;
-
-  const ListLivreBibliothequeRequestModel({
-    this.id_bibliotheque,
-  }) : super(
-          id_bibliotheque: id_bibliotheque,
-        );
-
-  factory ListLivreBibliothequeRequestModel.fromJson(Map<String, dynamic> json) =>
-      _$ListLivreBibliothequeRequestModelFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$ListLivreBibliothequeRequestModelToJson(this);
-
-  factory ListLivreBibliothequeRequestModel.fromEntity(
-      ListLivreBibliothequeRequestEntity entity) {
-    return ListLivreBibliothequeRequestModel(
-      id_bibliotheque: entity.id_bibliotheque,
+  factory DeleteLivreRequestModel.fromEntity(DeleteLivreRequestEntity entity) {
+    return DeleteLivreRequestModel(
+      livreIds: entity.livreIds
     );
   }
 }

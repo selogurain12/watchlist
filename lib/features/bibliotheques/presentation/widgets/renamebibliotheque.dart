@@ -10,7 +10,7 @@ import 'package:whashlist/injection_container.dart';
 
 class RenameBibliotheque extends StatefulWidget {
   final VoidCallback onBibliothequeRename;
-  final BibliothequesResponseEntity bibliotheque;
+  final BibliothequeResponseEntity bibliotheque;
 
   const RenameBibliotheque({Key? key, required this.bibliotheque, required this.onBibliothequeRename})
       : super(key: key);
@@ -41,10 +41,10 @@ class _RenameBibliotheque extends State<RenameBibliotheque> {
   Widget build(BuildContext context) {
     final initialName = widget.bibliotheque.nom;
     nom = TextEditingController(text: widget.bibliotheque.nom);
-    return BlocBuilder<BibliothequesBloc, BibliothequesState>(
+    return BlocBuilder<BibliothequesBloc, BibliothequeState>(
         bloc: bibliothequesBloc,
         builder: (context, state) {
-          if (state is RenameBibliothequeError) {
+          if (state is ModifieBibliothequeError) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -56,7 +56,7 @@ class _RenameBibliotheque extends State<RenameBibliotheque> {
             });
           }
           Future.delayed(const Duration(seconds: 5));
-          if (state is RenameBibliothequeLoaded) {
+          if (state is ModifieBibliothequeLoaded) {
             Future.delayed(const Duration(seconds: 2));
             widget.onBibliothequeRename();
             Navigator.pop(context);
@@ -104,10 +104,10 @@ class _RenameBibliotheque extends State<RenameBibliotheque> {
                           ),
                         );
                       } else {
-                        bibliothequesBloc.add(RenameBibliothequeEvent(
-                            id: widget.bibliotheque.id,
+                        bibliothequesBloc.add(ModifieBibliothequeEvent(
+                            id_bibliotheque: widget.bibliotheque.id,
                             nom: nom.text,
-                            id_user: widget.bibliotheque.id_user));
+                        ));
                       }
                     },
                     child: const Text('Valider'),

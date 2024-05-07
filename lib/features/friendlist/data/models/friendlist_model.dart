@@ -2,20 +2,18 @@
 
 import 'package:whashlist/features/friendlist/domain/entities/friendlist_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:whashlist/features/user/data/models/user_model.dart';
 
 part 'friendlist_model.g.dart';
 
 @JsonSerializable()
 class FriendlistRequestModel extends FriendlistRequestEntity {
-  final String? userprincipal;
-  final String? user2;
+  final List<UserRequestModel>? friends;
 
   const FriendlistRequestModel({
-    this.userprincipal,
-    this.user2,
+    this.friends,
 }): super(
-    userprincipal: userprincipal,
-    user2: user2,
+    friends: friends,
   );
 
   factory FriendlistRequestModel.fromJson(Map<String, dynamic> json) =>
@@ -24,8 +22,7 @@ class FriendlistRequestModel extends FriendlistRequestEntity {
 
   factory FriendlistRequestModel.fromEntity(FriendlistRequestEntity entity) {
     return FriendlistRequestModel(
-      userprincipal: entity.userprincipal,
-      user2: entity.user2
+      friends: entity.friends,
     );
   }
 }
@@ -33,17 +30,14 @@ class FriendlistRequestModel extends FriendlistRequestEntity {
 @JsonSerializable()
 class FriendlistResponseModel extends FriendlistResponseEntity {
   final String? id;
-  final String? userprincipal;
-  final String? user2;
+  final List<UserResponseModel>? friends;
 
   const FriendlistResponseModel({
     this.id,
-    this.userprincipal,
-    this.user2
+    this.friends
 }): super(
+    friends: friends,
     id: id,
-    userprincipal: userprincipal,
-    user2: user2
   );
 
   factory FriendlistResponseModel.fromJson(Map<String, dynamic> json) =>
@@ -53,75 +47,7 @@ class FriendlistResponseModel extends FriendlistResponseEntity {
   factory FriendlistResponseModel.fromEntity(FriendlistResponseEntity entity) {
     return FriendlistResponseModel(
       id: entity.id,
-      userprincipal: entity.userprincipal,
-      user2: entity.user2,
-    );
-  }
-}
-
-@JsonSerializable()
-class UserPrincipalRequestModel extends UserPrincipalRequestEntity {
-  final String? userprincipal;
-
-  const UserPrincipalRequestModel({
-    this.userprincipal,
-}): super(
-    userprincipal: userprincipal,
-  );
-
-  factory UserPrincipalRequestModel.fromJson(Map<String, dynamic> json) =>
-    _$UserPrincipalRequestModelFromJson(json);
-  Map<String, dynamic> toJson() => _$UserPrincipalRequestModelToJson(this);
-
-  factory UserPrincipalRequestModel.fromEntity(UserPrincipalRequestEntity entity) {
-    return UserPrincipalRequestModel(
-      userprincipal: entity.userprincipal,
-    );
-  }
-}
-
-@JsonSerializable()
-class UserFriendRequestModel extends UserFriendRequestEntity {
-  final String? userprincipal;
-  final String? user2;
-
-  const UserFriendRequestModel({
-    this.userprincipal,
-    this.user2,
-}): super(
-    userprincipal: userprincipal,
-    user2: user2,
-  );
-
-  factory UserFriendRequestModel.fromJson(Map<String, dynamic> json) =>
-    _$UserFriendRequestModelFromJson(json);
-  Map<String, dynamic> toJson() => _$UserFriendRequestModelToJson(this);
-
-  factory UserFriendRequestModel.fromEntity(UserFriendRequestEntity entity) {
-    return UserFriendRequestModel(
-      userprincipal: entity.userprincipal,
-      user2: entity.user2,
-    );
-  }
-}
-
-@JsonSerializable()
-class DeleteResponseModel extends DeleteResponseEntity {
-  final String? message;
-
-  const DeleteResponseModel({
-    this.message,
-}): super(
-    message: message,
-  );
-
-  factory DeleteResponseModel.fromJson(Map<String, dynamic> json) =>
-    _$DeleteResponseModelFromJson(json);
-  Map<String, dynamic> toJson() => _$DeleteResponseModelToJson(this);
-
-  factory DeleteResponseModel.fromEntity(DeleteResponseEntity entity) {
-    return DeleteResponseModel(
-      message: entity.message,
+      friends: entity.friends,
     );
   }
 }

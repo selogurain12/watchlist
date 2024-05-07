@@ -2,6 +2,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:whashlist/core/constants/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:whashlist/features/friendlist/data/models/friendlist_model.dart';
+import 'package:whashlist/features/user/data/models/user_model.dart';
 
 part 'friendlist_remote_datasource.g.dart';
 
@@ -9,30 +10,31 @@ part 'friendlist_remote_datasource.g.dart';
 abstract class FriendlistService {
   factory FriendlistService(Dio dio) = _FriendlistService;
 
-  @POST("/friendlist/addfriend")
-  Future<HttpResponse<FriendlistResponseModel>> addfriend ({
+  @PATCH("/user/me/friendslist/{id}")
+  Future<HttpResponse<FriendlistResponseModel>> addfriend({
+    @Path('id') String? iduser,
     @Body() FriendlistRequestModel? body,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });
 
-  @POST("/friendlist/listmyfriend")
-  Future<HttpResponse<List<FriendlistResponseModel>>> listfriend ({
-    @Body() UserPrincipalRequestModel? body,
+  @GET("/user/me/friendslist")
+  Future<HttpResponse<List<FriendlistResponseModel>>> listfriend({
+    @Body() UserRequestModel? body,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });
 
-  @POST("/friendlist/listmyfriend/searchfriend")
-  Future<HttpResponse<FriendlistResponseModel>> searchfriend ({
-    @Body() UserFriendRequestModel? body,
+  @GET("/user/{username}")
+  Future<HttpResponse<UserResponseModel>> searchuser({
+    @Path('username') String? username,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });
 
-  @DELETE("/friendlist/listmyfriend/deletefriend")
-  Future<HttpResponse<void>> deletefriend ({
-    @Body() UserFriendRequestModel? body,
+  @DELETE("/user/me/friendslist/{id}")
+  Future<HttpResponse<void>> deletefriend({
+    @Path('id') String? idfriend,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });

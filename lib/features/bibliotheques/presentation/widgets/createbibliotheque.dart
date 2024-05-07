@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques_bloc.dart';
 import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques_event.dart';
 import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques_state.dart';
+import 'package:whashlist/features/user/data/models/user_model.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
 
@@ -40,10 +41,10 @@ class _AddBibliothequeState extends State<AddBibliotheque> {
   @override
 Widget build(BuildContext context) {
   final userProvider = Provider.of<UserProvider>(context, listen: false);
-  return BlocBuilder<BibliothequesBloc, BibliothequesState>(
+  return BlocBuilder<BibliothequesBloc, BibliothequeState>(
     bloc: bibliothequesBloc,
     builder: (context, state) {
-      if (state is BibliothequesError) {
+      if (state is CreateBibliothequeError) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -55,7 +56,7 @@ Widget build(BuildContext context) {
         });
       }
        Future.delayed(const Duration(seconds: 5));
-    if (state is AddBibliothequeLoaded) {
+    if (state is CreateBibliothequeLoaded) {
         Future.delayed(const Duration(seconds: 2));
         widget.onBibliothequeAdded();
         Navigator.pop(context); // Fermer la modale et revenir à la modale précédente
@@ -95,10 +96,19 @@ Widget build(BuildContext context) {
         ),
       );
     } else {
+      final usersList = [
+      UserRequestModel(
+        id: userProvider.userId,
+        nom: userProvider.userNom,
+        prenom: userProvider.userPrenom,
+        mail: userProvider.userMail,
+        username: userProvider.userUsername
+      )
+    ];
       bibliothequesBloc.add(
-        AddBibliothequeEvent(
+        CreateBibliothequeEvent(
           nom: nom.text,
-          id_user: userProvider.userId,
+          users: usersList,
         ),
       );
     }

@@ -1,36 +1,35 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whashlist/core/ressources/data_state.dart';
-import 'package:whashlist/features/friendlist/domain/entities/friendlist_entity.dart';
 import 'package:whashlist/features/friendlist/domain/usecases/addfriend.dart';
 import 'package:whashlist/features/friendlist/domain/usecases/deletefriend.dart';
 import 'package:whashlist/features/friendlist/domain/usecases/listfriend.dart';
 import 'package:whashlist/features/friendlist/domain/usecases/searchfriend.dart';
 import 'package:whashlist/features/friendlist/presentation/bloc/friendlist_event.dart';
 import 'package:whashlist/features/friendlist/presentation/bloc/friendlist_state.dart';
+import 'package:whashlist/features/user/data/models/user_model.dart';
 
 class FriendlistBloc extends Bloc<FriendlistEvent, FriendlistState> {
   final AddFriendUseCase addfriendUseCase;
   final ListFriendUseCase listfriendUseCase;
-  final SearchFriendUseCase searchfriendUseCase;
   final DeleteFriendUseCase deletefriendUseCase;
+  final SearchFriendUseCase searchfriendUseCase;
 
   FriendlistBloc(
     this.addfriendUseCase,
     this.listfriendUseCase,
-    this.searchfriendUseCase,
     this.deletefriendUseCase,
+    this.searchfriendUseCase,
   ) : super(const FriendlistLoading()) {
     on<AddFriendEvent>(addfriend);
     on<ListFriendEvent>(listfriend);
-    on<SearchFriendEvent>(searchfriend);
     on<DeleteFriendEvent>(deletefriend);
+    on<SearchUserEvent>(searchfriend);
   }
 
   void addfriend(AddFriendEvent event, Emitter<FriendlistState> emit) async {
     emit(const FriendlistLoading());
     final data = await addfriendUseCase(
-      params: FriendlistRequestEntity(
-          userprincipal: event.userprincipal, user2: event.user2),
+      params: AddFriendParams(iduser: event.iduser, body: event.friends),
     );
 
     if (data is DataSuccess) {
@@ -45,11 +44,13 @@ class FriendlistBloc extends Bloc<FriendlistEvent, FriendlistState> {
   void listfriend(ListFriendEvent event, Emitter<FriendlistState> emit) async {
     emit(const FriendlistLoading());
     final data = await listfriendUseCase(
-      params: UserPrincipalRequestEntity(
-        userprincipal: event.userprincipal,
-      ),
+      params: UserRequestModel(
+          id: event.id,
+          nom: event.nom,
+          prenom: event.prenom,
+          mail: event.mail,
+          username: event.username),
     );
-
     if (data is DataSuccess) {
       emit(ListFriendLoaded(listfriend: data.data));
     }
@@ -60,21 +61,18 @@ class FriendlistBloc extends Bloc<FriendlistEvent, FriendlistState> {
   }
 
   void searchfriend(
-      SearchFriendEvent event, Emitter<FriendlistState> emit) async {
+      SearchUserEvent event, Emitter<FriendlistState> emit) async {
     emit(const FriendlistLoading());
     final data = await searchfriendUseCase(
-      params: UserFriendRequestEntity(
-        userprincipal: event.userprincipal,
-        user2: event.user2,
-      ),
+      params: event.username,
     );
 
     if (data is DataSuccess) {
-      emit(SearchFriendLoaded(searchfriend: data.data));
+      emit(SearchUserLoaded(searchuser: data.data));
     }
 
     if (data is DataFailure) {
-      emit(SearchFriendError(data.error));
+      emit(SearchUserError(data.error));
     }
   }
 
@@ -82,10 +80,7 @@ class FriendlistBloc extends Bloc<FriendlistEvent, FriendlistState> {
       DeleteFriendEvent event, Emitter<FriendlistState> emit) async {
     emit(const FriendlistLoading());
     final data = await deletefriendUseCase(
-      params: UserFriendRequestEntity(
-        userprincipal: event.userprincipal,
-        user2: event.user2,
-      ),
+      params: event.idfriend,
     );
 
     if (data is DataSuccess) {

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_bloc.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_event.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_state.dart';
+import 'package:whashlist/features/user/data/models/user_model.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
 
@@ -40,10 +41,10 @@ class _AddFilmothequeState extends State<AddFilmotheque> {
   @override
 Widget build(BuildContext context) {
   final userProvider = Provider.of<UserProvider>(context, listen: false);
-  return BlocBuilder<FilmothequesBloc, FilmothequesState>(
+  return BlocBuilder<FilmothequesBloc, FilmothequeState>(
     bloc: filmothequesBloc,
     builder: (context, state) {
-      if (state is FilmothequesError) {
+      if (state is CreateFilmothequeError) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -55,7 +56,7 @@ Widget build(BuildContext context) {
         });
       }
        Future.delayed(const Duration(seconds: 5));
-    if (state is AddFilmothequeLoaded) {
+    if (state is CreateFilmothequeLoaded) {
         Future.delayed(const Duration(seconds: 2));
         widget.onFilmothequeAdded();
         Navigator.pop(context);
@@ -95,10 +96,19 @@ Widget build(BuildContext context) {
         ),
       );
     } else {
+      final usersList = [
+      UserRequestModel(
+        id: userProvider.userId,
+        nom: userProvider.userNom,
+        prenom: userProvider.userPrenom,
+        mail: userProvider.userMail,
+        username: userProvider.userUsername
+      )
+    ];
       filmothequesBloc.add(
-        AddFilmothequeEvent(
+        CreateFilmothequeEvent(
           nom: nom.text,
-          id_user: userProvider.userId,
+          users: usersList,
         ),
       );
     }

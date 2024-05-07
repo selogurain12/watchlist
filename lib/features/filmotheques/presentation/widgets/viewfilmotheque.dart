@@ -31,8 +31,12 @@ class _ViewFilmothequeState extends State<ViewFilmotheque> {
     super.initState();
     filmothequesBloc = sl<FilmothequesBloc>();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    filmothequesBloc.add(FilmothequesEvent(
+    filmothequesBloc.add(ListFilmothequeEvent(
       id: userProvider.userId,
+        nom: userProvider.userNom,
+        prenom: userProvider.userPrenom,
+        mail: userProvider.userMail,
+        username: userProvider.userUsername
     ));
     nom = TextEditingController();
   }
@@ -48,7 +52,7 @@ class _ViewFilmothequeState extends State<ViewFilmotheque> {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    return BlocBuilder<FilmothequesBloc, FilmothequesState>(
+    return BlocBuilder<FilmothequesBloc, FilmothequeState>(
       bloc: filmothequesBloc,
       builder: (context, state) {
         if (!authProvider.isLoggedIn) {
@@ -57,7 +61,7 @@ class _ViewFilmothequeState extends State<ViewFilmotheque> {
           child: Text("Veuillez vous connecter"),
         ),
       );
-    } if (state is FilmothequesLoaded) {
+    } if (state is ListFilmothequeLoaded) {
           return Scaffold(
               body: Column(children: [
             const SizedBox(height: 16),
@@ -87,7 +91,12 @@ class _ViewFilmothequeState extends State<ViewFilmotheque> {
                             return AddFilmotheque(
                               onFilmothequeAdded: () {
                                 filmothequesBloc.add(
-                                    FilmothequesEvent(id: userProvider.userId));
+                                    ListFilmothequeEvent(id: userProvider.userId,
+                                    nom: userProvider.userNom,
+                                  prenom: userProvider.userPrenom,
+                                  mail: userProvider.userMail,
+                                  username: userProvider.userUsername
+                                  ));
                               },
                             );
                           },
@@ -117,9 +126,9 @@ class _ViewFilmothequeState extends State<ViewFilmotheque> {
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
                     ),
-                    itemCount: state.filmotheques?.length,
+                    itemCount: state.listfilmotheque?.length,
                     itemBuilder: (context, index) {
-                      final filmotheque = state.filmotheques?[index];
+                      final filmotheque = state.listfilmotheque?[index];
                       return InkWell(
                         onTap: () {
                           print(filmotheque.id);
@@ -188,9 +197,18 @@ class _ViewFilmothequeState extends State<ViewFilmotheque> {
                                                             onFilmothequeDelete:
                                                                 () {
                                                               filmothequesBloc.add(
-                                                                  FilmothequesEvent(
+                                                                  ListFilmothequeEvent(
                                                                       id: userProvider
-                                                                          .userId));
+                                                                          .userId,
+                                                                          nom: userProvider
+                                                                      .userNom,
+                                                                  prenom: userProvider
+                                                                      .userPrenom,
+                                                                  mail: userProvider
+                                                                      .userMail,
+                                                                  username:
+                                                                      userProvider
+                                                                          .userUsername));
                                                             });
                                                       },
                                                     );
@@ -206,9 +224,17 @@ class _ViewFilmothequeState extends State<ViewFilmotheque> {
                                                               onFilmothequeRename:
                                                                   () {
                                                                 filmothequesBloc.add(
-                                                                    FilmothequesEvent(
+                                                                    ListFilmothequeEvent(
                                                                         id: userProvider
-                                                                            .userId));
+                                                                            .userId,nom: userProvider
+                                                                        .userNom,
+                                                                    prenom: userProvider
+                                                                        .userPrenom,
+                                                                    mail: userProvider
+                                                                        .userMail,
+                                                                    username:
+                                                                        userProvider
+                                                                            .userUsername));
                                                               });
                                                         });
                                                     break;

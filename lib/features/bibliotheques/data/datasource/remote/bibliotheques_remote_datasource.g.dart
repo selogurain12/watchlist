@@ -21,8 +21,47 @@ class _BibliothequesService implements BibliothequesService {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<List<BibliothequesResponseModel>>> bibliotheques({
-    BibliothequesRequestModel? body,
+  Future<HttpResponse<BibliothequeResponseModel>> createbibliotheque({
+    CreateBibliothequeRequestModel? body,
+    String? contentType,
+    String? accept,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{
+      r'Content-Type': contentType,
+      r'Accept': accept,
+    };
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(body?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<BibliothequeResponseModel>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+      contentType: contentType,
+    )
+            .compose(
+              _dio.options,
+              '/user/me/bibliotheque',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = BibliothequeResponseModel.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<List<BibliothequeResponseModel>>> listbibliotheque({
+    UserRequestModel? body,
     String? contentType,
     String? accept,
   }) async {
@@ -37,15 +76,15 @@ class _BibliothequesService implements BibliothequesService {
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
     final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<HttpResponse<List<BibliothequesResponseModel>>>(Options(
-      method: 'POST',
+        _setStreamType<HttpResponse<List<BibliothequeResponseModel>>>(Options(
+      method: 'GET',
       headers: _headers,
       extra: _extra,
       contentType: contentType,
     )
             .compose(
               _dio.options,
-              '/user/me/listbibliotheques',
+              '/user/me/bibliotheque',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -56,15 +95,15 @@ class _BibliothequesService implements BibliothequesService {
             ))));
     var value = _result.data!
         .map((dynamic i) =>
-            BibliothequesResponseModel.fromJson(i as Map<String, dynamic>))
+            BibliothequeResponseModel.fromJson(i as Map<String, dynamic>))
         .toList();
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<BibliothequesResponseModel>> addbibliotheque({
-    AddBibliothequeRequestModel? body,
+  Future<HttpResponse<List<ApiBookResponseModel>>> listbook({
+    String? idbibliotheque,
     String? contentType,
     String? accept,
   }) async {
@@ -76,96 +115,17 @@ class _BibliothequesService implements BibliothequesService {
       r'Accept': accept,
     };
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<BibliothequesResponseModel>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-      contentType: contentType,
-    )
-            .compose(
-              _dio.options,
-              '/user/me/addbibliotheque',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = BibliothequesResponseModel.fromJson(_result.data!);
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<LivreBibliothequeResponseModel>> addbook({
-    LivreBibliothequeRequestModel? body,
-    String? contentType,
-    String? accept,
-  }) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
-    final _headers = <String, dynamic>{
-      r'Content-Type': contentType,
-      r'Accept': accept,
-    };
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<LivreBibliothequeResponseModel>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-      contentType: contentType,
-    )
-            .compose(
-              _dio.options,
-              '/user/me/bibliotheque/addbook',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = LivreBibliothequeResponseModel.fromJson(_result.data!);
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<List<ApiBookResponseModel>>> bibliothequebook({
-    ListLivreBibliothequeRequestModel? body,
-    String? contentType,
-    String? accept,
-  }) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
-    final _headers = <String, dynamic>{
-      r'Content-Type': contentType,
-      r'Accept': accept,
-    };
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(body?.toJson() ?? <String, dynamic>{});
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<HttpResponse<List<ApiBookResponseModel>>>(Options(
-      method: 'POST',
+      method: 'GET',
       headers: _headers,
       extra: _extra,
       contentType: contentType,
     )
             .compose(
               _dio.options,
-              '/user/me/bibliotheque/listbook',
+              '/user/me/bibliotheque/${idbibliotheque}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -183,8 +143,9 @@ class _BibliothequesService implements BibliothequesService {
   }
 
   @override
-  Future<HttpResponse<BibliothequesResponseModel>> renamebibliotheque({
-    BibliothequeRequestModel? body,
+  Future<HttpResponse<BibliothequeResponseModel>> modifiebibliotheque({
+    String? idbibliotheque,
+    CreateBibliothequeRequestModel? body,
     String? contentType,
     String? accept,
   }) async {
@@ -199,15 +160,15 @@ class _BibliothequesService implements BibliothequesService {
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<BibliothequesResponseModel>>(Options(
-      method: 'POST',
+        _setStreamType<HttpResponse<BibliothequeResponseModel>>(Options(
+      method: 'PATCH',
       headers: _headers,
       extra: _extra,
       contentType: contentType,
     )
             .compose(
               _dio.options,
-              '/user/me/renamebibliotheque',
+              '/user/me/bibliotheque/${idbibliotheque}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -216,14 +177,94 @@ class _BibliothequesService implements BibliothequesService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = BibliothequesResponseModel.fromJson(_result.data!);
+    final value = BibliothequeResponseModel.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<BibliothequeResponseModel>> deletebook({
+    String? idbibliotheque,
+    DeleteLivreRequestModel? body,
+    String? contentType,
+    String? accept,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{
+      r'Content-Type': contentType,
+      r'Accept': accept,
+    };
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(body?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<BibliothequeResponseModel>>(Options(
+      method: 'PATCH',
+      headers: _headers,
+      extra: _extra,
+      contentType: contentType,
+    )
+            .compose(
+              _dio.options,
+              '/user/me/bibliotheque/livre/${idbibliotheque}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = BibliothequeResponseModel.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<BibliothequeResponseModel>> deleteuserinbibliotheque({
+    String? idbibliotheque,
+    UserRequestModel? body,
+    String? contentType,
+    String? accept,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{
+      r'Content-Type': contentType,
+      r'Accept': accept,
+    };
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(body?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<BibliothequeResponseModel>>(Options(
+      method: 'DELETE',
+      headers: _headers,
+      extra: _extra,
+      contentType: contentType,
+    )
+            .compose(
+              _dio.options,
+              '/user/me/bibliotheque/user/${idbibliotheque}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = BibliothequeResponseModel.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
   @override
   Future<HttpResponse<void>> deletebibliotheque({
-    ListLivreBibliothequeRequestModel? body,
+    String? idbibliotheque,
     String? contentType,
     String? accept,
   }) async {
@@ -235,8 +276,7 @@ class _BibliothequesService implements BibliothequesService {
       r'Accept': accept,
     };
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(body?.toJson() ?? <String, dynamic>{});
+    const Map<String, dynamic>? _data = null;
     final _result =
         await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
       method: 'DELETE',
@@ -246,45 +286,7 @@ class _BibliothequesService implements BibliothequesService {
     )
             .compose(
               _dio.options,
-              '/user/me/bibliotheque',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final httpResponse = HttpResponse(null, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<void>> deletebookbibliotheque({
-    LivreBibliothequeRequestModel? body,
-    String? contentType,
-    String? accept,
-  }) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
-    final _headers = <String, dynamic>{
-      r'Content-Type': contentType,
-      r'Accept': accept,
-    };
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    final _result =
-        await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
-      method: 'DELETE',
-      headers: _headers,
-      extra: _extra,
-      contentType: contentType,
-    )
-            .compose(
-              _dio.options,
-              '/user/me/bibliotheque/book',
+              '/user/me/bibliotheque/${idbibliotheque}',
               queryParameters: queryParameters,
               data: _data,
             )

@@ -10,7 +10,7 @@ import 'package:whashlist/injection_container.dart';
 
 class RenameFilmotheque extends StatefulWidget {
   final VoidCallback onFilmothequeRename;
-  final FilmothequesResponseEntity filmotheque;
+  final FilmothequeResponseEntity filmotheque;
 
   const RenameFilmotheque({Key? key, required this.filmotheque, required this.onFilmothequeRename})
       : super(key: key);
@@ -41,10 +41,10 @@ class _RenameFilmotheque extends State<RenameFilmotheque> {
   Widget build(BuildContext context) {
     final initialName = widget.filmotheque.nom;
     nom = TextEditingController(text: widget.filmotheque.nom);
-    return BlocBuilder<FilmothequesBloc, FilmothequesState>(
+    return BlocBuilder<FilmothequesBloc, FilmothequeState>(
         bloc: filmothequesBloc,
         builder: (context, state) {
-          if (state is RenameFilmothequeError) {
+          if (state is ModifieFilmothequeError) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -56,7 +56,7 @@ class _RenameFilmotheque extends State<RenameFilmotheque> {
             });
           }
           Future.delayed(const Duration(seconds: 5));
-          if (state is RenameFilmothequeLoaded) {
+          if (state is ModifieFilmothequeLoaded) {
             Future.delayed(const Duration(seconds: 2));
             widget.onFilmothequeRename();
             Navigator.pop(context);
@@ -104,10 +104,10 @@ class _RenameFilmotheque extends State<RenameFilmotheque> {
                           ),
                         );
                       } else {
-                        filmothequesBloc.add(RenameFilmothequeEvent(
-                            id: widget.filmotheque.id,
+                        filmothequesBloc.add(ModifieFilmothequeEvent(
+                            id_filmotheque: widget.filmotheque.id,
                             nom: nom.text,
-                            id_user: widget.filmotheque.id_user));
+                          ));
                       }
                     },
                     child: const Text('Valider'),

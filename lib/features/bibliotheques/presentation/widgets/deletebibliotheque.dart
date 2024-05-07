@@ -10,7 +10,7 @@ import 'package:whashlist/injection_container.dart';
 
 class DeleteBibliotheque extends StatefulWidget {
   final VoidCallback onBibliothequeDelete;
-  final BibliothequesResponseEntity bibliotheque;
+  final BibliothequeResponseEntity bibliotheque;
 
   const DeleteBibliotheque({Key? key, required this.bibliotheque, required this.onBibliothequeDelete})
       : super(key: key);
@@ -36,7 +36,7 @@ class _DeleteBibliotheque extends State<DeleteBibliotheque> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BibliothequesBloc, BibliothequesState>(
+    return BlocBuilder<BibliothequesBloc, BibliothequeState>(
         bloc: bibliothequesBloc,
         builder: (context, state) {
           if (state is DeleteBibliothequeLoaded) {

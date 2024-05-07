@@ -6,102 +6,57 @@ part of 'filmotheques_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-FilmothequesRequestModel _$FilmothequesRequestModelFromJson(
+FilmothequeResponseModel _$FilmothequeResponseModelFromJson(
         Map<String, dynamic> json) =>
-    FilmothequesRequestModel(
-      id: json['id'] as String?,
-    );
-
-Map<String, dynamic> _$FilmothequesRequestModelToJson(
-        FilmothequesRequestModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-    };
-
-FilmothequeRequestModel _$FilmothequeRequestModelFromJson(
-        Map<String, dynamic> json) =>
-    FilmothequeRequestModel(
+    FilmothequeResponseModel(
       id: json['id'] as String?,
       nom: json['nom'] as String?,
-      id_user: json['id_user'] as String?,
+      id_films: (json['id_films'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      users: (json['users'] as List<dynamic>?)
+          ?.map((e) => UserRequestModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$FilmothequeRequestModelToJson(
-        FilmothequeRequestModel instance) =>
+Map<String, dynamic> _$FilmothequeResponseModelToJson(
+        FilmothequeResponseModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'nom': instance.nom,
-      'id_user': instance.id_user,
+      'id_films': instance.id_films,
+      'users': instance.users,
     };
 
-FilmothequesResponseModel _$FilmothequesResponseModelFromJson(
+CreateFilmothequeRequestModel _$CreateFilmothequeRequestModelFromJson(
         Map<String, dynamic> json) =>
-    FilmothequesResponseModel(
-      id: json['id'] as String?,
+    CreateFilmothequeRequestModel(
       nom: json['nom'] as String?,
-      id_user: json['id_user'] as String?,
+      id_films: (json['id_films'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      users: (json['users'] as List<dynamic>?)
+          ?.map((e) => UserRequestModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$FilmothequesResponseModelToJson(
-        FilmothequesResponseModel instance) =>
+Map<String, dynamic> _$CreateFilmothequeRequestModelToJson(
+        CreateFilmothequeRequestModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'nom': instance.nom,
-      'id_user': instance.id_user,
+      'id_films': instance.id_films,
+      'users': instance.users,
     };
 
-AddFilmothequeRequestModel _$AddFilmothequeRequestModelFromJson(
+DeleteFilmRequestModel _$DeleteFilmRequestModelFromJson(
         Map<String, dynamic> json) =>
-    AddFilmothequeRequestModel(
-      nom: json['nom'] as String?,
-      id_user: json['id_user'] as String?,
+    DeleteFilmRequestModel(
+      filmIds:
+          (json['filmIds'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$AddFilmothequeRequestModelToJson(
-        AddFilmothequeRequestModel instance) =>
+Map<String, dynamic> _$DeleteFilmRequestModelToJson(
+        DeleteFilmRequestModel instance) =>
     <String, dynamic>{
-      'id_user': instance.id_user,
-      'nom': instance.nom,
-    };
-
-FilmFilmothequeRequestModel _$FilmFilmothequeRequestModelFromJson(
-        Map<String, dynamic> json) =>
-    FilmFilmothequeRequestModel(
-      id_film: json['id_film'] as String?,
-      id_filmotheque: json['id_filmotheque'] as String?,
-    );
-
-Map<String, dynamic> _$FilmFilmothequeRequestModelToJson(
-        FilmFilmothequeRequestModel instance) =>
-    <String, dynamic>{
-      'id_film': instance.id_film,
-      'id_filmotheque': instance.id_filmotheque,
-    };
-
-FilmFilmothequeResponseModel _$FilmFilmothequeResponseModelFromJson(
-        Map<String, dynamic> json) =>
-    FilmFilmothequeResponseModel(
-      id: json['id'] as String?,
-      id_film: json['id_film'] as String?,
-      id_filmotheque: json['id_filmotheque'] as String?,
-    );
-
-Map<String, dynamic> _$FilmFilmothequeResponseModelToJson(
-        FilmFilmothequeResponseModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'id_film': instance.id_film,
-      'id_filmotheque': instance.id_filmotheque,
-    };
-
-ListFilmFilmothequeRequestModel _$ListFilmFilmothequeRequestModelFromJson(
-        Map<String, dynamic> json) =>
-    ListFilmFilmothequeRequestModel(
-      id_filmotheque: json['id_filmotheque'] as String?,
-    );
-
-Map<String, dynamic> _$ListFilmFilmothequeRequestModelToJson(
-        ListFilmFilmothequeRequestModel instance) =>
-    <String, dynamic>{
-      'id_filmotheque': instance.id_filmotheque,
+      'filmIds': instance.filmIds,
     };

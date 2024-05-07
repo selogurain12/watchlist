@@ -6,6 +6,80 @@ import 'package:json_annotation/json_annotation.dart';
 part 'user_model.g.dart';
 
 @JsonSerializable()
+class UserRequestModel extends UserRequestEntity {
+  final String? username;
+  final String? mail;
+  final String? nom;
+  final String? prenom;
+  final String? id;
+
+  const UserRequestModel({
+    this.username,
+    this.mail,
+    this.id,
+    this.nom,
+    this.prenom
+}): super(
+    username: username,
+    mail: mail,
+    id: id,
+    nom: nom,
+    prenom: prenom,
+  );
+
+  factory UserRequestModel.fromJson(Map<String, dynamic> json) =>
+    _$UserRequestModelFromJson(json);
+  Map<String, dynamic> toJson() => _$UserRequestModelToJson(this);
+
+  factory UserRequestModel.fromEntity(UserRequestEntity entity) {
+    return UserRequestModel(
+      username: entity.username,
+      mail: entity.mail,
+      id: entity.id,
+      nom: entity.nom,
+      prenom: entity.prenom
+    );
+  }
+}
+
+@JsonSerializable()
+class UserResponseModel extends UserResponseEntity {
+  final String? username;
+  final String? mail;
+  final String? nom;
+  final String? prenom;
+  final String? id;
+
+  const UserResponseModel({
+    this.username,
+    this.mail,
+    this.id,
+    this.nom,
+    this.prenom
+}): super(
+    username: username,
+    mail: mail,
+    id: id,
+    nom: nom,
+    prenom: prenom,
+  );
+
+  factory UserResponseModel.fromJson(Map<String, dynamic> json) =>
+    _$UserResponseModelFromJson(json);
+  Map<String, dynamic> toJson() => _$UserResponseModelToJson(this);
+
+  factory UserResponseModel.fromEntity(UserResponseEntity entity) {
+    return UserResponseModel(
+      username: entity.username,
+      mail: entity.mail,
+      id: entity.id,
+      nom: entity.nom,
+      prenom: entity.prenom
+    );
+  }
+}
+
+@JsonSerializable()
 class LoginUserRequestModel extends LoginUserRequestEntity {
   final String? username;
   final String? mdp;

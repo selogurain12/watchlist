@@ -13,6 +13,8 @@ import 'package:whashlist/features/movie/presentation/pages/detailsmovie_screen.
 import 'package:whashlist/features/stats/presentation/pages/stats_screen.dart';
 import 'package:whashlist/features/user/presentation/pages/compte_screen.dart';
 import 'package:whashlist/features/user/presentation/pages/connected_screen.dart';
+import 'package:whashlist/features/user/presentation/pages/film_screen.dart';
+import 'package:whashlist/features/user/presentation/pages/livre_screen.dart';
 import 'package:whashlist/features/user/presentation/pages/login_screen.dart';
 import 'package:whashlist/features/user/presentation/pages/register_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -23,6 +25,14 @@ final router = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) => const HomeScreen(),
+    ),
+    GoRoute(
+      path: '/livre',
+      builder: (context, state) => const LivreScreen(),
+    ),
+    GoRoute(
+      path: '/film',
+      builder: (context, state) => const FilmScreen(),
     ),
     GoRoute(
       path: '/register',
@@ -73,7 +83,7 @@ final router = GoRouter(
     GoRoute(
       path: '/listefilms',
       builder: ((context, state) {
-        final filmotheques = state.extra as FilmothequesResponseEntity;
+        final filmotheques = state.extra as FilmothequeResponseEntity;
         return ListmovieScreen(filmotheque: filmotheques);
       }) 
     ),
@@ -84,7 +94,7 @@ final router = GoRouter(
     GoRoute(
       path: '/listebooks',
       builder: ((context, state) {
-        final bibliotheque = state.extra as BibliothequesResponseEntity;
+        final bibliotheque = state.extra as BibliothequeResponseEntity;
         return ListbookScreen(bibliotheque: bibliotheque);
       }) 
     ),

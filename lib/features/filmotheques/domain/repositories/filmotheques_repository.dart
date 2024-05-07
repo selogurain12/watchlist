@@ -1,38 +1,37 @@
 import 'package:whashlist/core/ressources/data_state.dart';
 import 'package:whashlist/features/filmotheques/domain/entities/filmotheques_entity.dart';
 import 'package:whashlist/features/movie/domain/entities/searchmovie_entity.dart';
+import 'package:whashlist/features/user/domain/entities/user_entity.dart';
 
 abstract class FilmothequesRepository {
-  Future<DataState<List<FilmothequesResponseEntity>>> filmotheques({
-    FilmothequesRequestEntity? body,
+  Future<DataState<FilmothequeResponseEntity>> createfilmotheque({
+    CreateFilmothequeRequestEntity? body,
   });
 
-  Future<DataState<FilmothequesResponseEntity>> addfilmotheque({
-    AddFilmothequeRequestEntity? body,
+  Future<DataState<List<FilmothequeResponseEntity>>> listfilmotheque({
+    UserRequestEntity? body,
   });
 
-  Future<DataState<FilmFilmothequeResponseEntity>> addmovie({
-    FilmFilmothequeRequestEntity? body,
+  Future<DataState<List<SearchMovieResponseEntity>>> listmovie({
+    String? idfilmotheque,
   });
 
-  Future<DataState<List<SearchMovieResponseEntity>>>
-      filmothequemovie({
-    ListFilmFilmothequeRequestEntity? body,
+  Future<DataState<FilmothequeResponseEntity>> modifiefilmotheque({
+    String? idfilmotheque,
+    CreateFilmothequeRequestEntity? body
   });
 
-  Future<DataState<FilmothequesResponseEntity>>
-      renamefilmotheque({
-    FilmothequeRequestEntity? body,
+  Future<DataState<FilmothequeResponseEntity>> deletemovie({
+    String? idfilmotheque,
+    DeleteFilmRequestEntity? body
   });
 
-  Future<DataState<void>>
-      deletefilmotheque({
-    ListFilmFilmothequeRequestEntity? body,
+  Future<DataState<FilmothequeResponseEntity>> deleteuserinfilmotheque({
+    String? idfilmotheque,
+    UserRequestEntity? body
   });
 
-  Future<DataState<void>>
-      deletemoviefilmotheque({
-    FilmFilmothequeRequestEntity? body,
+  Future<DataState<void>> deletefilmotheque({
+    String? idfilmotheque,
   });
-  
 }

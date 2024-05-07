@@ -6,6 +6,42 @@ part of 'user_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+UserRequestModel _$UserRequestModelFromJson(Map<String, dynamic> json) =>
+    UserRequestModel(
+      username: json['username'] as String?,
+      mail: json['mail'] as String?,
+      id: json['id'] as String?,
+      nom: json['nom'] as String?,
+      prenom: json['prenom'] as String?,
+    );
+
+Map<String, dynamic> _$UserRequestModelToJson(UserRequestModel instance) =>
+    <String, dynamic>{
+      'username': instance.username,
+      'mail': instance.mail,
+      'nom': instance.nom,
+      'prenom': instance.prenom,
+      'id': instance.id,
+    };
+
+UserResponseModel _$UserResponseModelFromJson(Map<String, dynamic> json) =>
+    UserResponseModel(
+      username: json['username'] as String?,
+      mail: json['mail'] as String?,
+      id: json['id'] as String?,
+      nom: json['nom'] as String?,
+      prenom: json['prenom'] as String?,
+    );
+
+Map<String, dynamic> _$UserResponseModelToJson(UserResponseModel instance) =>
+    <String, dynamic>{
+      'username': instance.username,
+      'mail': instance.mail,
+      'nom': instance.nom,
+      'prenom': instance.prenom,
+      'id': instance.id,
+    };
+
 LoginUserRequestModel _$LoginUserRequestModelFromJson(
         Map<String, dynamic> json) =>
     LoginUserRequestModel(

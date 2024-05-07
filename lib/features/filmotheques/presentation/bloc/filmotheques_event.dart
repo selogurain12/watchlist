@@ -1,55 +1,36 @@
 // ignore_for_file: non_constant_identifier_names
+import 'package:whashlist/features/filmotheques/domain/entities/filmotheques_entity.dart';
+import 'package:whashlist/features/user/data/models/user_model.dart';
+import 'package:whashlist/features/user/domain/entities/user_entity.dart';
 
 abstract class FilmothequeEvent {
-  const FilmothequeEvent({String? id});
+  const FilmothequeEvent();
 }
 
-class FilmothequesEvent extends FilmothequeEvent {
+class DeleteMovieEvent extends FilmothequeEvent {
   final String? id;
+  final DeleteFilmRequestEntity? filmIds;
 
-  const FilmothequesEvent({
-    this.id,
-  });
+  const DeleteMovieEvent({this.id, this.filmIds});
 }
 
-class AddFilmothequeEvent extends FilmothequeEvent {
+class CreateFilmothequeEvent extends FilmothequeEvent {
   final String? nom;
-  final String? id_user;
+  final List<UserRequestModel>? users;
 
-  const AddFilmothequeEvent({
+  const CreateFilmothequeEvent({
     this.nom,
-    this.id_user,
+    this.users,
   });
 }
 
-class RenameFilmothequeEvent extends FilmothequeEvent {
-  final String? id;
-  final String? nom;
-  final String? id_user;
-
-  const RenameFilmothequeEvent({
-    this.id,
-    this.nom,
-    this.id_user,
-  });
-}
-
-class FilmFilmothequeEvent extends FilmothequeEvent {
-  final String? id_film;
+class DeleteUserinFilmothequeEvent extends FilmothequeEvent {
   final String? id_filmotheque;
+  final UserRequestEntity? user;
 
-  const FilmFilmothequeEvent({
-    this.id_film,
-    this.id_filmotheque,
-  });
-}
-
-class ListFilmFilmothequeEvent extends FilmothequeEvent {
-  final String? id_filmotheque;
-
-  const ListFilmFilmothequeEvent({
-    this.id_filmotheque,
-  });
+  const DeleteUserinFilmothequeEvent(
+      {this.id_filmotheque,
+      this.user});
 }
 
 class DeleteFilmothequeEvent extends FilmothequeEvent {
@@ -60,12 +41,31 @@ class DeleteFilmothequeEvent extends FilmothequeEvent {
   });
 }
 
-class DeleteMovieFilmothequeEvent extends FilmothequeEvent {
-  final String? id_filmotheque;
-  final String? id_movie;
+class ListFilmothequeEvent extends FilmothequeEvent {
+  final String? id;
+  final String? nom;
+  final String? prenom;
+  final String? mail;
+  final String? username;
 
-  const DeleteMovieFilmothequeEvent({
+  const ListFilmothequeEvent(
+      {this.id, this.nom, this.mail, this.prenom, this.username});
+}
+
+class ListFilmEvent extends FilmothequeEvent {
+  final String? id_filmotheque;
+
+  const ListFilmEvent({
     this.id_filmotheque,
-    this.id_movie
   });
+}
+
+class ModifieFilmothequeEvent extends FilmothequeEvent {
+  final String? id_filmotheque;
+  final String? nom;
+  final List<UserRequestModel>? users;
+  final List<String>? id_films;
+
+  const ModifieFilmothequeEvent(
+      {this.id_filmotheque, this.nom, this.id_films, this.users});
 }

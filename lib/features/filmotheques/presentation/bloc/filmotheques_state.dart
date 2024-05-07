@@ -2,85 +2,90 @@ import 'package:dio/dio.dart';
 import 'package:whashlist/features/filmotheques/domain/entities/filmotheques_entity.dart';
 import 'package:whashlist/features/movie/domain/entities/searchmovie_entity.dart';
 
-abstract class FilmothequesState {
-  final List<FilmothequesResponseEntity>? filmotheques;
-  final FilmothequesResponseEntity? addfilmotheque;
-  final FilmFilmothequeResponseEntity? addmovie;
-  final List<SearchMovieResponseEntity>? filmothequemovie;
-  final FilmothequesResponseEntity? renamefilmotheque;
+abstract class FilmothequeState {
+  final FilmothequeResponseEntity? createfilmotheque;
+  final List<FilmothequeResponseEntity>? listfilmotheque;
+  final List<SearchMovieResponseEntity>? listmovie;
+  final FilmothequeResponseEntity? modifiefilmotheque;
+  final FilmothequeResponseEntity? deletemovie;
+  final FilmothequeResponseEntity? deleteuserinfilmotheque;
   final void deletefilmotheque;
-  final void deletemoviefilmotheque;
   final DioException? error;
 
-  const FilmothequesState(
-      {this.error,
-      this.filmotheques,
-      this.addfilmotheque,
-      this.addmovie,
-      this.filmothequemovie,
-      this.renamefilmotheque,
-      this.deletemoviefilmotheque,
-      this.deletefilmotheque});
+  const FilmothequeState({
+    this.error,
+    this.createfilmotheque,
+    this.listfilmotheque,
+    this.listmovie,
+    this.modifiefilmotheque,
+    this.deletemovie,
+    this.deleteuserinfilmotheque,
+    this.deletefilmotheque,
+  });
 }
 
-class FilmothequesLoading extends FilmothequesState {
-  const FilmothequesLoading();
+class FilmothequeLoading extends FilmothequeState {
+  const FilmothequeLoading();
 }
 
-class FilmothequesLoaded extends FilmothequesState {
-  const FilmothequesLoaded({List<FilmothequesResponseEntity>? filmotheques})
-      : super(filmotheques: filmotheques);
+class DeleteMovieLoaded extends FilmothequeState {
+  const DeleteMovieLoaded({FilmothequeResponseEntity? deletemovie }) : super(deletemovie: deletemovie );
 }
 
-class FilmFilmothequeLoaded extends FilmothequesState {
-  const FilmFilmothequeLoaded({FilmFilmothequeResponseEntity? addmovie})
-      : super(addmovie: addmovie);
+class CreateFilmothequeLoaded extends FilmothequeState {
+  const CreateFilmothequeLoaded({FilmothequeResponseEntity? createfilmotheque}) : super(createfilmotheque: createfilmotheque);
 }
 
-class AddFilmothequeLoaded extends FilmothequesState {
-  const AddFilmothequeLoaded({FilmothequesResponseEntity? addfilmotheque})
-      : super(addfilmotheque: addfilmotheque);
+class DeleteUserinFilmothequeLoaded extends FilmothequeState {
+  const DeleteUserinFilmothequeLoaded({FilmothequeResponseEntity? deleteuserinfilmotheque}) : super(deleteuserinfilmotheque: deleteuserinfilmotheque);
 }
 
-class RenameFilmothequeLoaded extends FilmothequesState {
-  const RenameFilmothequeLoaded({FilmothequesResponseEntity? renamefilmotheque})
-      : super(renamefilmotheque: renamefilmotheque);
-}
-
-class ListFilmFilmothequeLoaded extends FilmothequesState {
-  const ListFilmFilmothequeLoaded(
-      {List<SearchMovieResponseEntity>? filmothequemovie})
-      : super(filmothequemovie: filmothequemovie);
-}
-
-class DeleteFilmothequeLoaded extends FilmothequesState {
+class DeleteFilmothequeLoaded extends FilmothequeState {
   const DeleteFilmothequeLoaded() : super();
 }
 
-class DeleteMovieFilmothequeLoaded extends FilmothequesState {
-  const DeleteMovieFilmothequeLoaded() : super();
+class ListFilmothequeLoaded extends FilmothequeState {
+  const ListFilmothequeLoaded(
+      {List<FilmothequeResponseEntity>? listfilmotheque})
+      : super(listfilmotheque: listfilmotheque);
 }
 
-class FilmothequesError extends FilmothequesState {
-  const FilmothequesError(DioException? error) : super(error: error);
+class ListFilmLoaded extends FilmothequeState {
+  const ListFilmLoaded({List<SearchMovieResponseEntity>? listmovie}) : super(listmovie: listmovie);
 }
 
-class FilmFilmothequeError extends FilmothequesState {
-  const FilmFilmothequeError(DioException? error) : super(error: error);
+class ModifieFilmothequeLoaded extends FilmothequeState {
+  const ModifieFilmothequeLoaded({FilmothequeResponseEntity? modifiefilmotheque}) : super(modifiefilmotheque: modifiefilmotheque);
 }
 
-class ListFilmFilmothequeError extends FilmothequesState {
-  const ListFilmFilmothequeError(DioException? error) : super(error: error);
+class FilmothequeError extends FilmothequeState {
+  const FilmothequeError(DioException? error) : super(error: error);
 }
 
-class RenameFilmothequeError extends FilmothequesState {
-  const RenameFilmothequeError(DioException? error) : super(error: error);
+class DeleteFilmError extends FilmothequeState {
+  const DeleteFilmError(DioException? error) : super(error: error);
 }
 
-class DeleteFilmothequeError extends FilmothequesState {
+class CreateFilmothequeError extends FilmothequeState {
+  const CreateFilmothequeError(DioException? error) : super(error: error);
+}
+
+class DeleteUserinFilmothequeError extends FilmothequeState {
+  const DeleteUserinFilmothequeError(DioException? error) : super(error: error);
+}
+
+class DeleteFilmothequeError extends FilmothequeState {
   const DeleteFilmothequeError(DioException? error) : super(error: error);
 }
 
-class DeleteMovieFilmothequeError extends FilmothequesState {
-  const DeleteMovieFilmothequeError(DioException? error) : super(error: error);
+class ListFilmothequeError extends FilmothequeState {
+  const ListFilmothequeError(DioException? error) : super(error: error);
+}
+
+class ListFilmError extends FilmothequeState {
+  const ListFilmError(DioException? error) : super(error: error);
+}
+
+class ModifieFilmothequeError extends FilmothequeState {
+  const ModifieFilmothequeError(DioException? error) : super(error: error);
 }

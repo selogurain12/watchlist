@@ -28,7 +28,7 @@ class _AddBookState extends State<AddBook> {
   String? selectedValue;
   int? pageslu;
   bool showCreateForm = false;
-  String? selectedBookId;
+  List<String>? selectedBookId;
   String? selectedBibliothequeId;
 
   @override
@@ -38,9 +38,15 @@ class _AddBookState extends State<AddBook> {
     statsBloc = sl<StatsBloc>();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     nom = TextEditingController();
-    selectedBookId = widget.book.id;
+    selectedBookId = widget.book.id != null ? [widget.book.id!] : [];
     pageslu = widget.book.pageCount;
-    bibliothequesBloc.add(BibliothequesEvent(id: userProvider.userId));
+    bibliothequesBloc.add(ListBibliothequeEvent(
+      id: userProvider.userId,
+      nom: userProvider.userNom,
+      prenom: userProvider.userPrenom,
+      username: userProvider.userUsername,
+      mail: userProvider.userMail
+    ));
   }
 
   @override
@@ -54,10 +60,10 @@ class _AddBookState extends State<AddBook> {
   @override
 Widget build(BuildContext context) {
   final userProvider = Provider.of<UserProvider>(context, listen: false);
-  return BlocBuilder<BibliothequesBloc, BibliothequesState>(
+  return BlocBuilder<BibliothequesBloc, BibliothequeState>(
     bloc: bibliothequesBloc,
     builder: (context, state) {
-      if (state is LivreBibliothequeError) {
+      if (state is ModifieBibliothequeError) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -68,8 +74,8 @@ Widget build(BuildContext context) {
           Navigator.of(context).pop();
         });
       }
-      if (state.bibliotheques != null) {
-        List<DropdownMenuItem<String>> dropdownItems = state.bibliotheques!
+      if (state.listbibliotheque != null) {
+        List<DropdownMenuItem<String>> dropdownItems = state.listbibliotheque!
             .map<DropdownMenuItem<String>>((item) => DropdownMenuItem<String>(
                   value: item.nom,
                   child: Text(item.nom ?? ""),
@@ -96,7 +102,7 @@ Widget build(BuildContext context) {
                     onChanged: (String? newValue) {
                       setState(() {
                         selectedValue = newValue;
-                        selectedBibliothequeId = state.bibliotheques!
+                        selectedBibliothequeId = state.listbibliotheque!
                             .firstWhere((element) => element.nom == newValue)
                             .id; // Récupération de l'ID de la filmothèque sélectionnée
                       });
@@ -113,8 +119,14 @@ Widget build(BuildContext context) {
                           return AddBibliotheque(
                             onBibliothequeAdded: () {
             // Cette fonction sera appelée lorsque la bibliothèque est ajoutée avec succès
-            bibliothequesBloc.add(BibliothequesEvent(id: userProvider.userId));
-          },
+                              bibliothequesBloc.add(ListBibliothequeEvent(
+                                id: userProvider.userId,
+                                nom: userProvider.userNom,
+                                prenom: userProvider.userPrenom,
+                                username: userProvider.userUsername,
+                                mail: userProvider.userMail
+                              ));
+                            },
                           );
                         }
                         );
@@ -125,9 +137,9 @@ Widget build(BuildContext context) {
                 ElevatedButton(
                   onPressed: () async {
                     bibliothequesBloc.add(
-                      LivreBibliothequeEvent(
+                      ModifieBibliothequeEvent(
                         id_bibliotheque: selectedBibliothequeId,
-                        id_livre: selectedBookId,
+                        id_livres: selectedBookId,
                       ),
                     );
                      if (selectedBibliothequeId == null) {
@@ -141,9 +153,9 @@ Widget build(BuildContext context) {
           Navigator.of(context).pop();
         });
       }
-                    if (state is BibliothequesLoaded) {
+                    if (state is ListBibliothequeLoaded) {
                       WidgetsBinding.instance.addPostFrameCallback((_) async {
-                        if(state is! LivreBibliothequeError && state is! BibliothequesError && selectedBibliothequeId != null){
+                        if(state is! ModifieBibliothequeLoaded && state is! BibliothequesError && selectedBibliothequeId != null){
                           await Future.delayed(const Duration(seconds: 2));
                           Navigator.of(context).pop(true);
                         }

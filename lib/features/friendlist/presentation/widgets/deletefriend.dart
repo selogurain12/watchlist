@@ -65,6 +65,15 @@ class _DeleteFriend extends State<DeleteFriend> {
           widget.onFriendDelete();
           Navigator.pop(context);
         }
+        if (state is SearchUserLoaded) {
+      if (state.searchuser != null) {
+            friendlistBloc.add(
+              DeleteFriendEvent(
+                idfriend: state.searchuser!.id,
+              ),
+            );
+          }
+    }
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
@@ -110,10 +119,7 @@ class _DeleteFriend extends State<DeleteFriend> {
                       );
                     } else {
                       friendlistBloc.add(
-                        DeleteFriendEvent(
-                          userprincipal: userProvider.userUsername,
-                          user2: user2.text,
-                        ),
+                        SearchUserEvent(username: user2.text)
                       );
                     }
                   },
