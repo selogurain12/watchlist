@@ -8,11 +8,6 @@ import { User } from '../users/entities/user.entity';
 export class FriendslistController {
   constructor(private readonly friendslistService: FriendslistService) {}
 
-  @Post()
-  create(@Body() createFriendslistDto: CreateFriendslistDto) {
-    return this.friendslistService.create(createFriendslistDto);
-  }
-
   @Get()
   findAll(@Body() user: User) {
     return this.friendslistService.findAll(user);
@@ -26,6 +21,6 @@ export class FriendslistController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.friendslistService.remove(id);
+    return this.friendslistService.removefriend(id);
   }
 }

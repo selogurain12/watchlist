@@ -63,7 +63,7 @@ export class FriendslistService {
   }
   
 
-  async remove(id: string) {
+  async removefriend(id: string) {
     const friendsLists = await this.friendslistRepository.find({ relations: ['friends'] });
     for (const friendsList of friendsLists) {
       const friendToRemove = friendsList.friends.find(friend => friend.id === id);
@@ -76,4 +76,19 @@ export class FriendslistService {
     throw new NotFoundException(`Friend with ID ${id} not found in any friends list`);
   }
   
+  
+  async remove(id: string) {
+    const friends = await this.friendslistRepository.find({ 
+        where: { user: { id } },
+        relations: ['friends']
+    });
+
+    if (!friends.length) {
+        console.log('No friends list found for user with ID:', id);
+        return;
+    }
+    const friendIds = friends.map(friend => friend.id);
+    await this.friendslistRepository.delete(friendIds);
+}
+
 }
