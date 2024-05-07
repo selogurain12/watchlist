@@ -4,6 +4,7 @@ import { UpdateFilmsencoursDto } from './dto/update-filmsencours.dto';
 import { Filmsencours } from './entities/filmsencours.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class FilmsencoursService {
@@ -32,8 +33,14 @@ export class FilmsencoursService {
     return this.filmsencoursRepository.save(saveFilmsencours);
   }
 
-  findAll() {
-    return this.filmsencoursRepository.find();
+  findAll(user: User) {
+    return this.filmsencoursRepository.find({
+      where: {
+        user: {
+          id: user.id
+        }
+      }
+    });
   }
 
   async findOne(id: string) {
