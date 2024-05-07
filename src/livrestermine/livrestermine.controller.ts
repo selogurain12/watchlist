@@ -2,8 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { LivrestermineService } from './livrestermine.service';
 import { CreateLivrestermineDto } from './dto/create-livrestermine.dto';
 import { UpdateLivrestermineDto } from './dto/update-livrestermine.dto';
+import { User } from '../users/entities/user.entity';
 
-@Controller('livrestermine')
+@Controller('user/me/livrestermine')
 export class LivrestermineController {
   constructor(private readonly livrestermineService: LivrestermineService) {}
 
@@ -13,8 +14,8 @@ export class LivrestermineController {
   }
 
   @Get()
-  findAll() {
-    return this.livrestermineService.findAll();
+  findAll(@Body() user: User) {
+    return this.livrestermineService.findAll(user);
   }
 
   @Delete(':id')

@@ -4,6 +4,7 @@ import { UpdateLivrestermineDto } from './dto/update-livrestermine.dto';
 import { Livrestermine } from './entities/livrestermine.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class LivrestermineService {
@@ -30,8 +31,14 @@ export class LivrestermineService {
     return this.livretermineRepository.save(saveLivretermie);
   }
 
-  findAll() {
-    return this.livretermineRepository.find();
+  findAll(user: User) {
+    return this.livretermineRepository.find({
+      where: {
+        user: {
+          id: user.id
+        }
+      }
+    });
   }
 
   async remove(id: string) {
@@ -41,6 +48,6 @@ export class LivrestermineService {
     if(!existingLivretermine){
       throw new NotFoundException("This relation dosen't exist")
     }
-    return this.livretermineRepository.delete(existingLivretermine.id);
+    this.livretermineRepository.delete(existingLivretermine.id);
   }
 }
