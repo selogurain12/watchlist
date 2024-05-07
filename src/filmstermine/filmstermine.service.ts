@@ -4,6 +4,7 @@ import { UpdateFilmstermineDto } from './dto/update-filmstermine.dto';
 import { Filmstermine } from './entities/filmstermine.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class FilmstermineService {
@@ -30,8 +31,14 @@ export class FilmstermineService {
     return this.filmstermineRepository.save(saveFilmstermie);
   }
 
-  findAll() {
-    return this.filmstermineRepository.find();
+  findAll(user: User) {
+    return this.filmstermineRepository.find({
+      where: {
+        user: {
+          id: user.id
+        }
+      }
+    });
   }
 
   async remove(id: string) {
@@ -41,6 +48,6 @@ export class FilmstermineService {
     if(!existingFilmtermine){
       throw new NotFoundException("This relation dosen't exist")
     }
-    return this.filmstermineRepository.delete(existingFilmtermine.id);
+    this.filmstermineRepository.delete(existingFilmtermine.id);
   }
 }

@@ -2,8 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { FilmstermineService } from './filmstermine.service';
 import { CreateFilmstermineDto } from './dto/create-filmstermine.dto';
 import { UpdateFilmstermineDto } from './dto/update-filmstermine.dto';
+import { User } from '../users/entities/user.entity';
 
-@Controller('filmstermine')
+@Controller('user/me/filmstermine')
 export class FilmstermineController {
   constructor(private readonly filmstermineService: FilmstermineService) {}
 
@@ -13,8 +14,8 @@ export class FilmstermineController {
   }
 
   @Get()
-  findAll() {
-    return this.filmstermineService.findAll();
+  findAll(@Body() user: User) {
+    return this.filmstermineService.findAll(user);
   }
 
   @Delete(':id')
