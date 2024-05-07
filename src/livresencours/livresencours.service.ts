@@ -4,6 +4,7 @@ import { UpdateLivresencoursDto } from './dto/update-livresencours.dto';
 import { Livresencours } from './entities/livresencours.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class LivresencoursService {
@@ -32,8 +33,14 @@ export class LivresencoursService {
     return this.livresencoursRepository.save(saveLivreencours);
   }
 
-  findAll() {
-    return this.livresencoursRepository.find();
+  findAll(user: User) {
+    return this.livresencoursRepository.find({
+      where: {
+        user: {
+          id: user.id
+        }
+      }
+  });
   }
 
   async findOne(id: string) {
@@ -53,7 +60,7 @@ export class LivresencoursService {
     if(!existingLivreenCours){
       throw new NotFoundException("This relation dosen't exist")
     }
-    existingLivreenCours.nbpageslus = existingLivreenCours.nbpageslus;
+    existingLivreenCours.nbpageslus = updateLivresencoursDto.nbpageslus;
     await this.livresencoursRepository.save(existingLivreenCours)
     return existingLivreenCours;
   }
