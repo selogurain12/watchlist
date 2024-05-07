@@ -9,6 +9,8 @@ import { MeService } from '../me/me.service';
 import { CreateMeDto } from '../me/dto/create-me.dto';
 import { FriendslistService } from '../friendslist/friendslist.service';
 import { CreateFriendslistDto } from '../friendslist/dto/create-friendslist.dto';
+import { LivresencoursService } from '../livresencours/livresencours.service';
+import { LivrestermineService } from '../livrestermine/livrestermine.service';
 
 @Injectable()
 export class UserService {
@@ -73,8 +75,8 @@ export class UserService {
     return existingUser;
   }
 
-  async findOne(id: string) {
-    const findUser = await this.userRepository.findOne({where: {id}})
+  async findOne(username: string) {
+    const findUser = await this.userRepository.findOne({where: {username}})
     return findUser;
   }
 
@@ -89,6 +91,7 @@ export class UserService {
     );
     const saveUser =
       await this.userRepository.save(updatedUser);
+    delete saveUser.mdp;
     return saveUser;
   }
 
@@ -99,7 +102,8 @@ export class UserService {
     if (!user) {
       throw new NotFoundException("This user dosen't exist");
     }
-    const stats = await this.meService.remove(id)
+    await this.meService.remove(id)
+    await this.friendslistService.remove(id)
     this.userRepository.delete(user.id);
   }
 }
