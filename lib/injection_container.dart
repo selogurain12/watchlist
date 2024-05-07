@@ -2,13 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:whashlist/features/bibliotheques/data/datasource/remote/bibliotheques_remote_datasource.dart';
 import 'package:whashlist/features/bibliotheques/data/repositories/bibliotheques_repository_impl.dart';
 import 'package:whashlist/features/bibliotheques/domain/repositories/bibliotheques_repository.dart';
-import 'package:whashlist/features/bibliotheques/domain/usecases/addbibliotheque.dart';
-import 'package:whashlist/features/bibliotheques/domain/usecases/addbook.dart';
-import 'package:whashlist/features/bibliotheques/domain/usecases/bibliotheques.dart';
+import 'package:whashlist/features/bibliotheques/domain/usecases/createbibliotheque.dart';
 import 'package:whashlist/features/bibliotheques/domain/usecases/deletebibliotheque.dart';
-import 'package:whashlist/features/bibliotheques/domain/usecases/deletebookbibliotheque.dart';
-import 'package:whashlist/features/bibliotheques/domain/usecases/listbibliothequebook.dart';
-import 'package:whashlist/features/bibliotheques/domain/usecases/renamebibliotheque.dart';
+import 'package:whashlist/features/bibliotheques/domain/usecases/deletebook.dart';
+import 'package:whashlist/features/bibliotheques/domain/usecases/deleteuserinbibliotheque.dart';
+import 'package:whashlist/features/bibliotheques/domain/usecases/listbibliotheques.dart';
+import 'package:whashlist/features/bibliotheques/domain/usecases/listbook.dart';
+import 'package:whashlist/features/bibliotheques/domain/usecases/modifiebibliotheque.dart';
 import 'package:whashlist/features/bibliotheques/presentation/bloc/bibliotheques_bloc.dart';
 import 'package:whashlist/features/book/data/datasource/remote/book_remote_datasource.dart';
 import 'package:whashlist/features/book/data/repositories/book_repository_impl.dart';
@@ -18,13 +18,13 @@ import 'package:whashlist/features/book/presentation/bloc/book_bloc.dart';
 import 'package:whashlist/features/filmotheques/data/datasource/remote/filmotheques_remote_datasource.dart';
 import 'package:whashlist/features/filmotheques/data/repositories/filmotheques_repository_impl.dart';
 import 'package:whashlist/features/filmotheques/domain/repositories/filmotheques_repository.dart';
-import 'package:whashlist/features/filmotheques/domain/usecases/addfilmotheque.dart';
-import 'package:whashlist/features/filmotheques/domain/usecases/addmovie.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/createfilmotheque.dart';
 import 'package:whashlist/features/filmotheques/domain/usecases/deletefilmotheque.dart';
-import 'package:whashlist/features/filmotheques/domain/usecases/deletemoviefilmotheque.dart';
-import 'package:whashlist/features/filmotheques/domain/usecases/filmotheques.dart';
-import 'package:whashlist/features/filmotheques/domain/usecases/listfilmothequemovie.dart';
-import 'package:whashlist/features/filmotheques/domain/usecases/renamefilmotheque.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/deletemovie.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/deleteuserinfilmotheque.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/listfilmotheques.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/listmovie.dart';
+import 'package:whashlist/features/filmotheques/domain/usecases/modifiefilmotheque.dart';
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_bloc.dart';
 import 'package:whashlist/features/friendlist/data/datasource/remote/friendlist_remote_datasource.dart';
 import 'package:whashlist/features/friendlist/data/repositories/friendlist_repository_impl.dart';
@@ -91,29 +91,29 @@ Future<void> initializeDependencies() async {
   //Movie
   sl.registerSingleton<SearchMovieUseCase>(SearchMovieUseCase(sl()));
   //Filmotheques
-  sl.registerSingleton<FilmothequesUseCase>(FilmothequesUseCase(sl()));
-  sl.registerSingleton<AddFilmothequeUseCase>(AddFilmothequeUseCase(sl()));
-  sl.registerSingleton<FilmFilmothequeUseCase>(FilmFilmothequeUseCase(sl()));
-  sl.registerSingleton<ListFilmFilmothequeUseCase>(ListFilmFilmothequeUseCase(sl()));
-  sl.registerSingleton<RenameFilmothequeUseCase>(RenameFilmothequeUseCase(sl()));
+  sl.registerSingleton<CreateFilmothequeUseCase>(CreateFilmothequeUseCase(sl()));
+  sl.registerSingleton<DeleteUserinFilmothequeUseCase>(DeleteUserinFilmothequeUseCase(sl()));
+  sl.registerSingleton<DeleteFilmUseCase>(DeleteFilmUseCase(sl()));
+  sl.registerSingleton<ListFilmothequeUseCase>(ListFilmothequeUseCase(sl()));
+  sl.registerSingleton<ListFilmUseCase>(ListFilmUseCase(sl()));
   sl.registerSingleton<DeleteFilmothequeUseCase>(DeleteFilmothequeUseCase(sl()));
-  sl.registerSingleton<DeleteMovieFilmothequeUseCase>(DeleteMovieFilmothequeUseCase(sl()));
+  sl.registerSingleton<ModifieFilmothequeUseCase>(ModifieFilmothequeUseCase(sl()));
   //Bibliotheques
-  sl.registerSingleton<BibliothequesUseCase>(BibliothequesUseCase(sl()));
-  sl.registerSingleton<AddBibliothequeUseCase>(AddBibliothequeUseCase(sl()));
-  sl.registerSingleton<LivreBibliothequeUseCase>(LivreBibliothequeUseCase(sl()));
-  sl.registerSingleton<ListLivreBibliothequeUseCase>(ListLivreBibliothequeUseCase(sl()));
-  sl.registerSingleton<RenameBibliothequeUseCase>(RenameBibliothequeUseCase(sl()));
+  sl.registerSingleton<CreateBibliothequeUseCase>(CreateBibliothequeUseCase(sl()));
+  sl.registerSingleton<DeleteBookUseCase>(DeleteBookUseCase(sl()));
+  sl.registerSingleton<DeleteUserinBibliothequeUseCase>(DeleteUserinBibliothequeUseCase(sl()));
+  sl.registerSingleton<ListBibliothequeUseCase>(ListBibliothequeUseCase(sl()));
+  sl.registerSingleton<ListLivreUseCase>(ListLivreUseCase(sl()));
   sl.registerSingleton<DeleteBibliothequeUseCase>(DeleteBibliothequeUseCase(sl()));
-  sl.registerSingleton<DeleteBookBibliothequeUseCase>(DeleteBookBibliothequeUseCase(sl()));
+  sl.registerSingleton<ModifieBibliothequeUseCase>(ModifieBibliothequeUseCase(sl()));
   //Stats
   sl.registerSingleton<UpdateStatsUseCase>(UpdateStatsUseCase(sl()));
   sl.registerSingleton<StatsUseCase>(StatsUseCase(sl()));
   //Friendlist
   sl.registerSingleton<AddFriendUseCase>(AddFriendUseCase(sl()));
   sl.registerSingleton<ListFriendUseCase>(ListFriendUseCase(sl()));
-  sl.registerSingleton<SearchFriendUseCase>(SearchFriendUseCase(sl()));
   sl.registerSingleton<DeleteFriendUseCase>(DeleteFriendUseCase(sl()));
+  sl.registerSingleton<SearchFriendUseCase>(SearchFriendUseCase(sl()));
 
   /////////////////////////// BLOC ///////////////////////////////////////////////
   // User
