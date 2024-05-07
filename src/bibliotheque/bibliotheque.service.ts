@@ -18,17 +18,25 @@ export class BibliothequeService {
     private readonly bookService: BookService,
   ){}
   async create(createBibliothequeDto: CreateBibliothequeDto) {
-    const existingBibliotheque = await this.bibliothequeRepository.findOne({where: {
-      nom: createBibliothequeDto.nom,
-    },
-  relations: ["users"]})
-    if(existingBibliotheque){
-      throw new ConflictException("This bibliotheque already exist")
+    for (const user of createBibliothequeDto.users) {
+      // Check if the user already has a bibliothèque with the same name
+      const existingBibliotheque = await this.bibliothequeRepository.createQueryBuilder('bibliotheque')
+        .leftJoin('bibliotheque.users', 'user')
+        .where('bibliotheque.nom = :nom', { nom: createBibliothequeDto.nom })
+        .andWhere('user.id = :userId', { userId: user.id })
+        .getOne();
+
+      if (existingBibliotheque) {
+        throw new ConflictException(`User ${user.id} already has a bibliothèque with the name ${createBibliothequeDto.nom}`);
+      }
     }
+
     const newBibliotheque = this.bibliothequeRepository.create({
       nom: createBibliothequeDto.nom,
-      users: createBibliothequeDto.users
-    })
+      users: createBibliothequeDto.users,
+      id_livres: createBibliothequeDto.id_livres || []
+    });
+
     return this.bibliothequeRepository.save(newBibliotheque);
   }
 
@@ -100,11 +108,13 @@ return existingBibliotheque;
     const updatedUsers = bibliotheque.users.filter(finduser => finduser.id !== user.id);
     bibliotheque.users = updatedUsers;
     await this.bibliothequeRepository.save(bibliotheque);
+    return bibliotheque;
 }
 
 async removeLivreFromBibliotheque(id: string, livreIdsToRemove: string[]): Promise<Bibliotheque> {
   const bibliotheque = await this.bibliothequeRepository.findOne({
-    where: { id }
+    where: { id },
+    relations:["users"]
   });
 
   if (!bibliotheque) {
