@@ -7,6 +7,8 @@ import 'package:whashlist/features/book/presentation/pages/searchbook_screen.dar
 import 'package:whashlist/features/filmotheques/domain/entities/filmotheques_entity.dart';
 import 'package:whashlist/features/filmotheques/presentation/pages/listmovie_screen.dart';
 import 'package:whashlist/features/filmotheques/presentation/pages/viewfilmo_screen.dart';
+import 'package:whashlist/features/filmtermine/presentation/pages/listfilmtermine_screen.dart';
+import 'package:whashlist/features/livretermine/presentation/pages/listlivretermine_screen.dart';
 import 'package:whashlist/features/movie/domain/entities/searchmovie_entity.dart';
 import 'package:whashlist/features/movie/presentation/pages/searchmovie_screen.dart';
 import 'package:whashlist/features/movie/presentation/pages/detailsmovie_screen.dart';
@@ -97,6 +99,14 @@ final router = GoRouter(
         final bibliotheque = state.extra as BibliothequeResponseEntity;
         return ListbookScreen(bibliotheque: bibliotheque);
       }) 
+    ),
+    GoRoute(
+      path: '/filmtermine',
+      builder: (context, state) => const ListFilmTermineScreen(),
+    ),
+    GoRoute(
+      path: '/livretermine',
+      builder: (context, state) => const ListLivreTermineScreen(),
     ),
   ],
 );
