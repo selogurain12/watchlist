@@ -20,17 +20,7 @@ Future<void> main() async {
           create: (context) => UserProvider(),
         ),
       ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => sl<UserBloc>(),
-          ),
-          BlocProvider(
-            create: (context) => sl<BookBloc>(),
-          ),
-        ],
         child: const MyApp(),
-      ),
     ),
   );
 }
