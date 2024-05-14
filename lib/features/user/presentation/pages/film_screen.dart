@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:go_router/go_router.dart';
 import 'package:whashlist/features/user/presentation/widgets/film_body.dart';
-import 'package:whashlist/features/user/presentation/widgets/livre_body.dart';
 
 class FilmScreen extends StatelessWidget {
   const FilmScreen({super.key});

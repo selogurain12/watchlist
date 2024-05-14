@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -73,7 +71,7 @@ class _ViewFilmothequeState extends State<ViewFilmotheque> {
                           8.0), // Ajoutez du padding autour du bouton de retour
                   child: ElevatedButton(
                     onPressed: () {
-                      context.go("/");
+                      context.go("/film");
                     },
                     child: const Icon(Icons.arrow_back_rounded),
                   ),
@@ -131,7 +129,6 @@ class _ViewFilmothequeState extends State<ViewFilmotheque> {
                       final filmotheque = state.listfilmotheque?[index];
                       return InkWell(
                         onTap: () {
-                          print(filmotheque.id);
                           context.go(
                             "/listefilms",
                             extra: filmotheque,

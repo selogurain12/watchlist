@@ -70,7 +70,6 @@ class _AddFriend extends State<AddFriend> {
           Navigator.pop(context);
         }
         if (state is SearchUserLoaded) {
-          print(state.searchuser);
           if (state.searchuser != null) {
             // Ajoutez cette vérification
             final friendRequest = FriendlistRequestEntity(friends: [
