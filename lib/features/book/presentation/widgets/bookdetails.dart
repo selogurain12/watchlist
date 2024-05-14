@@ -1,13 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whashlist/features/bibliotheques/presentation/widgets/addbooktobiblio.dart';
 import 'package:whashlist/features/book/domain/entities/book_entity.dart';
+import 'package:whashlist/features/livretermine/presentation/widgets/addbooktolivretermine.dart';
 import 'package:whashlist/features/stats/presentation/bloc/stats_bloc.dart';
-import 'package:whashlist/features/stats/presentation/bloc/stats_event.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
 
@@ -38,7 +39,6 @@ void dispose() {
 
  @override
 Widget build(BuildContext context) {
-  final userProvider = Provider.of<UserProvider>(context, listen: false);
   final authProvider = Provider.of<AuthProvider>(context);
   return Scaffold(
     body: Stack(
@@ -71,36 +71,6 @@ Widget build(BuildContext context) {
                         },
                         child: const Icon(Icons.arrow_back_rounded),
                       ),
-                      const Spacer(),
-                      if (authProvider.isLoggedIn)
-                        ElevatedButton(
-                          onPressed: () async {
-                            final result = await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AddBook(book: widget.book);
-                              },
-                            );
-                            if (result != null && result) {
-                          statsBloc.add(
-                      UpdateStatEvent(
-                        iduser: userProvider.userId,
-                        filmsvu: 0,
-                        tempsvu: 0,
-                        livreslu: 1,
-                        pageslu: pageslu,
-                      )
-                    );
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("La filmothèque a été mise à jour"),
-                                  backgroundColor: Colors.green,
-                                ),
-                              );
-                            }
-                          },
-                          child: const Text("Ajouter à une bibliothèque"),
-                        ),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -209,7 +179,79 @@ Widget build(BuildContext context) {
               ),
             )
           ]
-        )
+        ),
+        floatingActionButton: authProvider.isLoggedIn ? buildSpeedDial() : null,
       );
   }
+
+SpeedDial buildSpeedDial() {
+  return SpeedDial(
+    icon: Icons.add,
+    activeIcon: Icons.close,
+    buttonSize: Size(56.0, 56.0),
+    visible: true,
+    curve: Curves.bounceIn,
+    overlayColor: Colors.black,
+    overlayOpacity: 0.5,
+    tooltip: 'Menu',
+    heroTag: 'speed-dial-hero-tag',
+    backgroundColor: Colors.blue,
+    foregroundColor: Colors.white,
+    elevation: 8.0,
+    shape: CircleBorder(),
+    children: [
+      SpeedDialChild(
+        child: Icon(Icons.bookmark),
+        backgroundColor: Colors.red,
+        label: 'Ajouter à une bibliothèque',
+        labelStyle: TextStyle(fontSize: 16.0),
+        onTap: () async {
+                            final result = await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AddBook(book: widget.book);
+                              },
+                            );
+                            if (result != null && result) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("La bibliothèque a été mise à jour"),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            }
+                          },
+      ),
+      SpeedDialChild(
+        child: Icon(Icons.timelapse_outlined),
+        backgroundColor: Colors.green,
+        label: 'Je suis en train de lire ce livre',
+        labelStyle: TextStyle(fontSize: 16.0),
+        onTap: () => print('Share Tapped!'),
+      ),
+      SpeedDialChild(
+        child: Icon(Icons.done),
+        backgroundColor: Colors.blue,
+        label: 'J\'ai terminé ce livre',
+        labelStyle: TextStyle(fontSize: 16.0),
+        onTap: () async {
+                            final result = await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AddBookToLivreTermine(id_livre: widget.book.id);
+                              },
+                            );
+                            if (result != null && result) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("La bibliothèque a été mise à jour"),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            }
+                          },
+      ),
+    ],
+  );
+}
 }

@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:whashlist/features/filmtermine/presentation/widgets/addmovietofilmtermine.dart';
 import 'package:whashlist/features/movie/domain/entities/searchmovie_entity.dart';
 import 'package:whashlist/features/filmotheques/presentation/widgets/addmovietofilmo.dart';
 import 'package:whashlist/features/stats/presentation/bloc/stats_bloc.dart';
-import 'package:whashlist/features/stats/presentation/bloc/stats_event.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
 
@@ -40,7 +41,6 @@ class _DetailMovieState extends State<DetailMovie> {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       body: Stack(
         children: [
@@ -71,36 +71,6 @@ class _DetailMovieState extends State<DetailMovie> {
                         },
                         child: const Icon(Icons.arrow_back_rounded),
                       ),
-                      const Spacer(), // Ajout de cet espace pour pousser le bouton à l'extrémité droite
-                      if (authProvider.isLoggedIn)
-                        ElevatedButton(
-                          onPressed: () async {
-                            final result = await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AddMovie(movie: widget.movie);
-                              },
-                            );
-                            if (result != null && result) {
-                              statsBloc.add(
-                                UpdateStatEvent(
-                                iduser: userProvider.userId,
-                                filmsvu: 1,
-                                tempsvu: tempsvu,
-                                livreslu: 0,
-                                pageslu: 0,
-                              )
-                              );
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("La filmothèque a été mise à jour"),
-                                  backgroundColor: Colors.green,
-                                ),
-                              );
-                            }
-                          },
-                          child: const Text("Ajouter à une filmothèque"),
-                        ),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -250,6 +220,7 @@ class _DetailMovieState extends State<DetailMovie> {
           ),
         ],
       ),
+      floatingActionButton: authProvider.isLoggedIn ? buildSpeedDial() : null,
     );
   }
 
@@ -285,5 +256,75 @@ String formatBudget(int? budget) {
   }
   final formatter = NumberFormat.currency(locale: 'en_US', symbol: '\$');
   return formatter.format(budget);
+}
+SpeedDial buildSpeedDial() {
+  return SpeedDial(
+    icon: Icons.add,
+    activeIcon: Icons.close,
+    buttonSize: Size(56.0, 56.0),
+    visible: true,
+    curve: Curves.bounceIn,
+    overlayColor: Colors.black,
+    overlayOpacity: 0.5,
+    tooltip: 'Menu',
+    heroTag: 'speed-dial-hero-tag',
+    backgroundColor: Colors.blue,
+    foregroundColor: Colors.white,
+    elevation: 8.0,
+    shape: CircleBorder(),
+    children: [
+      SpeedDialChild(
+        child: Icon(Icons.bookmark),
+        backgroundColor: Colors.red,
+        label: 'Ajouter à une filmothèque',
+        labelStyle: TextStyle(fontSize: 16.0),
+        onTap: () async {
+                            final result = await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AddMovie(movie: widget.movie);
+                              },
+                            );
+                            if (result != null && result) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("La filmothèque a été mise à jour"),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            }
+                          },
+      ),
+      SpeedDialChild(
+        child: Icon(Icons.timelapse_outlined),
+        backgroundColor: Colors.green,
+        label: 'Je suis en train de regarder ce film',
+        labelStyle: TextStyle(fontSize: 16.0),
+        onTap: () => print('Share Tapped!'),
+      ),
+      SpeedDialChild(
+        child: Icon(Icons.done),
+        backgroundColor: Colors.blue,
+        label: 'J\'ai terminé ce film',
+        labelStyle: TextStyle(fontSize: 16.0),
+        onTap: () async {
+                            final result = await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AddMovieToFilmTermine(id_film: widget.movie.id.toString(),);
+                              },
+                            );
+                            if (result != null && result) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("La filmothèque a été mise à jour"),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            }
+                          },
+      ),
+    ],
+  );
 }
 }
