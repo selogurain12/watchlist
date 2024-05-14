@@ -1,16 +1,16 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateLivrestermineDto } from './dto/create-livrestermine.dto';
-import { UpdateLivrestermineDto } from './dto/update-livrestermine.dto';
 import { Livrestermine } from './entities/livrestermine.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../users/entities/user.entity';
+import { BookService } from '../Book/book.service';
 
 @Injectable()
 export class LivrestermineService {
   constructor(
     @InjectRepository(Livrestermine)
     public readonly livretermineRepository: Repository<Livrestermine>,
+    private readonly livreService: BookService,
   ){}
   async create(createLivrestermineDto: CreateLivrestermineDto) {
     const existingLivretermine = await this.livretermineRepository.findOne({
@@ -31,19 +31,22 @@ export class LivrestermineService {
     return this.livretermineRepository.save(saveLivretermie);
   }
 
-  findAll(user: User) {
-    return this.livretermineRepository.find({
+  async findAll(id: string) {
+    const livres = await this.livretermineRepository.find({
       where: {
         user: {
-          id: user.id
+          id
         }
       }
     });
+    const livreIds = livres.map(livre => livre.id_livre);
+    const books = await Promise.all(livreIds.map(id => this.livreService.getBook(id)));
+    return books
   }
 
   async remove(id: string) {
     const existingLivretermine = await this.livretermineRepository.findOne({
-      where: {id}
+      where: {id_livre: id}
     })
     if(!existingLivretermine){
       throw new NotFoundException("This relation dosen't exist")

@@ -1,8 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { LivrestermineService } from './livrestermine.service';
 import { CreateLivrestermineDto } from './dto/create-livrestermine.dto';
-import { UpdateLivrestermineDto } from './dto/update-livrestermine.dto';
-import { User } from '../users/entities/user.entity';
 
 @Controller('user/me/livrestermine')
 export class LivrestermineController {
@@ -13,9 +11,10 @@ export class LivrestermineController {
     return this.livrestermineService.create(createLivrestermineDto);
   }
 
-  @Get()
-  findAll(@Body() user: User) {
-    return this.livrestermineService.findAll(user);
+  @Get(':id')
+  findAll(@Param('id') id: string) {
+    console.log(id);
+    return this.livrestermineService.findAll(id);
   }
 
   @Delete(':id')
