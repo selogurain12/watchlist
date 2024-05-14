@@ -2,8 +2,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { LivresencoursService } from './livresencours.service';
 import { CreateLivresencoursDto } from './dto/create-livresencours.dto';
 import { UpdateLivresencoursDto } from './dto/update-livresencours.dto';
-import { User } from '../users/entities/user.entity';
-import { UserController } from '../users/users.controller';
 
 @Controller('user/me/livresencours')
 export class LivresencoursController {
@@ -14,14 +12,9 @@ export class LivresencoursController {
     return this.livresencoursService.create(createLivresencoursDto);
   }
 
-  @Get()
-  findAll(@Body() user: User) {
-    return this.livresencoursService.findAll(user);
-  }
-
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.livresencoursService.findOne(id);
+  findAll(@Param('id') id: string) {
+    return this.livresencoursService.findAll(id);
   }
 
   @Patch(':id')

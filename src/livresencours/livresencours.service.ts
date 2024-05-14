@@ -4,13 +4,14 @@ import { UpdateLivresencoursDto } from './dto/update-livresencours.dto';
 import { Livresencours } from './entities/livresencours.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../users/entities/user.entity';
+import { BookService } from '../Book/book.service';
 
 @Injectable()
 export class LivresencoursService {
   constructor(
     @InjectRepository(Livresencours)
     public readonly livresencoursRepository: Repository<Livresencours>,
+    private readonly livreService: BookService,
   ){}
 
   async create(createLivresencoursDto: CreateLivresencoursDto) {
@@ -21,41 +22,39 @@ export class LivresencoursService {
           id: createLivresencoursDto.user.id
         },
       }
-    })
-    if(existingLivreenCours){
-      throw new ConflictException("This book is already added")
+    });
+    if (existingLivreenCours) {
+      throw new ConflictException("This book is already added");
     }
-    const saveLivreencours = this.livresencoursRepository.create({
-      nbpageslus: createLivresencoursDto.nbpageslus,
-      user: createLivresencoursDto.user,
-      id_livre: createLivresencoursDto.id_livre
-    })
-    return this.livresencoursRepository.save(saveLivreencours);
+    const saveLivreencours = this.livresencoursRepository.create(createLivresencoursDto);
+
+    const saved = await this.livresencoursRepository.save(saveLivreencours);
+    // Créer un objet sans inclure les détails de l'utilisateur
+    const result = {
+      id: saved.id,
+      id_livre: saved.id_livre,
+      nbpageslus: saved.nbpageslus
+    };
+
+    return result;
   }
 
-  findAll(user: User) {
-    return this.livresencoursRepository.find({
+  async findAll(id: string) {
+    const livres = await this.livresencoursRepository.find({
       where: {
         user: {
-          id: user.id
+          id
         }
       }
   });
-  }
-
-  async findOne(id: string) {
-    const existingLivreenCours = await this.livresencoursRepository.findOne({
-      where: {id}
-    })
-    if(!existingLivreenCours){
-      throw new NotFoundException("This relation dosen't exist")
-    }
-    return existingLivreenCours;
+    const livreIds = livres.map(livre => livre.id_livre);
+    const books = await Promise.all(livreIds.map(id => this.livreService.getBook(id)));
+    return books
   }
 
   async update(id: string, updateLivresencoursDto: UpdateLivresencoursDto) {
     const existingLivreenCours = await this.livresencoursRepository.findOne({
-      where: {id}
+      where: {id_livre: id}
     })
     if(!existingLivreenCours){
       throw new NotFoundException("This relation dosen't exist")
@@ -67,7 +66,7 @@ export class LivresencoursService {
 
   async remove(id: string) {
     const existingLivreenCours = await this.livresencoursRepository.findOne({
-      where: {id}
+      where: {id_livre: id}
     })
     if(!existingLivreenCours){
       throw new NotFoundException("This relation dosen't exist")
