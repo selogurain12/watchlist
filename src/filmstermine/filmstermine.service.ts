@@ -1,16 +1,16 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateFilmstermineDto } from './dto/create-filmstermine.dto';
-import { UpdateFilmstermineDto } from './dto/update-filmstermine.dto';
 import { Filmstermine } from './entities/filmstermine.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../users/entities/user.entity';
+import { MovieService } from '../movie/movie.service';
 
 @Injectable()
 export class FilmstermineService {
   constructor(
     @InjectRepository(Filmstermine)
     public readonly filmstermineRepository: Repository<Filmstermine>,
+    private readonly movieService: MovieService,
   ){}
   async create(createFilmstermineDto: CreateFilmstermineDto) {
     const existingFilmtermine = await this.filmstermineRepository.findOne({
@@ -31,19 +31,24 @@ export class FilmstermineService {
     return this.filmstermineRepository.save(saveFilmstermie);
   }
 
-  findAll(user: User) {
-    return this.filmstermineRepository.find({
+  async findAll(id: string) {
+    const films = await this.filmstermineRepository.find({
       where: {
         user: {
-          id: user.id
+          id
         }
-      }
+      },
+      relations: ["user"]
     });
+    const movieIds = films.map(film => film.id_film);
+    const movies = await Promise.all(movieIds.map(id => this.movieService.getMovie(id)));
+    return movies;
   }
+  
 
   async remove(id: string) {
     const existingFilmtermine = await this.filmstermineRepository.findOne({
-      where: {id}
+      where: {id_film: id}
     })
     if(!existingFilmtermine){
       throw new NotFoundException("This relation dosen't exist")
