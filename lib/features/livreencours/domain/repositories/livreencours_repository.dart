@@ -1,5 +1,4 @@
 import 'package:whashlist/core/ressources/data_state.dart';
-import 'package:whashlist/features/book/domain/entities/book_entity.dart';
 import 'package:whashlist/features/livreencours/domain/entities/livreencours_entity.dart';
 
 abstract class LivreEnCoursRepository {
@@ -7,7 +6,11 @@ abstract class LivreEnCoursRepository {
     CreateLivreEnCoursRequestEntity? body,
   });
 
-  Future<DataState<List<ApiBookResponseEntity>>> listlivreencours({
+  Future<DataState<List<AllLivreEnCoursResponseEntity>>> listlivreencours({
+    String? id,
+  });
+
+  Future<DataState<LivreEnCoursResponseEntity>> livreencours({
     String? id,
   });
 

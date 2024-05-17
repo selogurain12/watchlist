@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:whashlist/features/book/domain/entities/book_entity.dart';
 import 'package:whashlist/features/livreencours/domain/entities/livreencours_entity.dart';
 
 abstract class LivreEnCoursState {
   final LivreEnCoursResponseEntity? createlivreencours;
-  final List<ApiBookResponseEntity>? listlivreencours;
+  final List<AllLivreEnCoursResponseEntity>? listlivreencours;
+  final LivreEnCoursResponseEntity? livreencours;
   final LivreEnCoursResponseEntity? updatelivreencours;
   final void deletelivreencours;
   final DioException? error;
@@ -14,6 +14,7 @@ abstract class LivreEnCoursState {
     this.createlivreencours,
     this.listlivreencours,
     this.updatelivreencours,
+    this.livreencours,
     this.deletelivreencours,
   });
 }
@@ -33,12 +34,18 @@ class DeleteLivreEnCoursLoaded extends LivreEnCoursState {
 }
 
 class ListLivreEnCoursLoaded extends LivreEnCoursState {
-  const ListLivreEnCoursLoaded({List<ApiBookResponseEntity>? listlivreencours})
+  const ListLivreEnCoursLoaded({List<AllLivreEnCoursResponseEntity>? listlivreencours})
       : super(listlivreencours: listlivreencours);
 }
 
+class LivreEnCoursLoaded extends LivreEnCoursState {
+  const LivreEnCoursLoaded({LivreEnCoursResponseEntity? livreencours})
+      : super(livreencours: livreencours);
+}
+
 class UpdateLivreEnCoursLoaded extends LivreEnCoursState {
-  const UpdateLivreEnCoursLoaded({LivreEnCoursResponseEntity? updatelivreencours})
+  const UpdateLivreEnCoursLoaded(
+      {LivreEnCoursResponseEntity? updatelivreencours})
       : super(updatelivreencours: updatelivreencours);
 }
 
@@ -56,6 +63,10 @@ class CreateLivreEnCoursError extends LivreEnCoursState {
 
 class ListLivreEnCoursError extends LivreEnCoursState {
   const ListLivreEnCoursError(DioException? error) : super(error: error);
+}
+
+class LivresEnCoursError extends LivreEnCoursState {
+  const LivresEnCoursError(DioException? error) : super(error: error);
 }
 
 class UpdateLivreEnCoursError extends LivreEnCoursState {

@@ -1,7 +1,6 @@
 import 'package:retrofit/retrofit.dart';
 import 'package:whashlist/core/constants/constants.dart';
 import 'package:dio/dio.dart';
-import 'package:whashlist/features/book/data/models/book_model.dart';
 import 'package:whashlist/features/livreencours/data/models/livreencours_model.dart';
 
 part 'livreencours_remote_datasource.g.dart';
@@ -18,7 +17,14 @@ abstract class LivreEnCoursService {
   });
 
   @GET("/user/me/livresencours/{id}")
-  Future<HttpResponse<List<ApiBookResponseModel>>> listlivreencours({
+  Future<HttpResponse<List<AllLivreEnCoursResponseModel>>> listlivreencours({
+    @Path('id') String? id,
+    @Header('Content-Type') String? contentType,
+    @Header('Accept') String? accept,
+  });
+
+  @GET("/user/me/livresencours/livre/{id}")
+  Future<HttpResponse<LivreEnCoursResponseModel>> livreencours({
     @Path('id') String? id,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,

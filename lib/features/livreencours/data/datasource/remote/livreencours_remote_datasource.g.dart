@@ -60,7 +60,7 @@ class _LivreEnCoursService implements LivreEnCoursService {
   }
 
   @override
-  Future<HttpResponse<List<ApiBookResponseModel>>> listlivreencours({
+  Future<HttpResponse<List<AllLivreEnCoursResponseModel>>> listlivreencours({
     String? id,
     String? contentType,
     String? accept,
@@ -75,7 +75,49 @@ class _LivreEnCoursService implements LivreEnCoursService {
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<HttpResponse<List<ApiBookResponseModel>>>(Options(
+        _setStreamType<HttpResponse<List<AllLivreEnCoursResponseModel>>>(
+            Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+      contentType: contentType,
+    )
+                .compose(
+                  _dio.options,
+                  '/user/me/livresencours/${id}',
+                  queryParameters: queryParameters,
+                  data: _data,
+                )
+                .copyWith(
+                    baseUrl: _combineBaseUrls(
+                  _dio.options.baseUrl,
+                  baseUrl,
+                ))));
+    var value = _result.data!
+        .map((dynamic i) =>
+            AllLivreEnCoursResponseModel.fromJson(i as Map<String, dynamic>))
+        .toList();
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<LivreEnCoursResponseModel>> livreencours({
+    String? id,
+    String? contentType,
+    String? accept,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{
+      r'Content-Type': contentType,
+      r'Accept': accept,
+    };
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<LivreEnCoursResponseModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -83,7 +125,7 @@ class _LivreEnCoursService implements LivreEnCoursService {
     )
             .compose(
               _dio.options,
-              '/user/me/livresencours/${id}',
+              '/user/me/livresencours/livre/${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -92,10 +134,7 @@ class _LivreEnCoursService implements LivreEnCoursService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
-        .map((dynamic i) =>
-            ApiBookResponseModel.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = LivreEnCoursResponseModel.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

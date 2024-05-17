@@ -3,13 +3,13 @@ import 'package:whashlist/core/usecases/usecase.dart';
 import 'package:whashlist/features/livreencours/domain/entities/livreencours_entity.dart';
 import 'package:whashlist/features/livreencours/domain/repositories/livreencours_repository.dart';
 
-class ListLivreEnCoursUseCase implements UseCase<DataState<List<AllLivreEnCoursResponseEntity>>, String?> {
+class LivreEnCoursUseCase implements UseCase<DataState<LivreEnCoursResponseEntity>, String?> {
   final LivreEnCoursRepository repository;
-  const ListLivreEnCoursUseCase(this.repository);
+  const LivreEnCoursUseCase(this.repository);
   
   @override
-  Future<DataState<List<AllLivreEnCoursResponseEntity>>>call({String? params}) {
-    return repository.listlivreencours(
+  Future<DataState<LivreEnCoursResponseEntity>>call({String? params}) {
+    return repository.livreencours(
       id: params,
     );
   }

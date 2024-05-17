@@ -51,3 +51,48 @@ Map<String, dynamic> _$UpdateLivreEnCoursRequestModelToJson(
     <String, dynamic>{
       'nbpageslus': instance.nbpageslus,
     };
+
+AllLivreEnCoursResponseModel _$AllLivreEnCoursResponseModelFromJson(
+        Map<String, dynamic> json) =>
+    AllLivreEnCoursResponseModel(
+      id: json['id'] as String?,
+      title: json['title'] as String?,
+      authors: (json['authors'] as List<dynamic>?)
+          ?.map((e) => e as String?)
+          .toList(),
+      publisher: json['publisher'] as String?,
+      imageLink: json['imageLink'] as String?,
+      publisherDate: json['publisherDate'] as String?,
+      description: json['description'] as String?,
+      industryIdentifierstype: json['industryIdentifierstype'] as String?,
+      industryIdentifieridentyfier:
+          json['industryIdentifieridentyfier'] as String?,
+      pageCount: json['pageCount'] as int?,
+      categories: (json['categories'] as List<dynamic>?)
+          ?.map((e) => e as String?)
+          .toList(),
+      retailPriceamount: (json['retailPriceamount'] as num?)?.toDouble(),
+      retailPricecurrencyCode: json['retailPricecurrencyCode'] as String?,
+      retailPricebuyLink: json['retailPricebuyLink'] as String?,
+      nbpageslus: json['nbpageslus'] as int?,
+    );
+
+Map<String, dynamic> _$AllLivreEnCoursResponseModelToJson(
+        AllLivreEnCoursResponseModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'authors': instance.authors,
+      'publisher': instance.publisher,
+      'imageLink': instance.imageLink,
+      'publisherDate': instance.publisherDate,
+      'description': instance.description,
+      'industryIdentifierstype': instance.industryIdentifierstype,
+      'industryIdentifieridentyfier': instance.industryIdentifieridentyfier,
+      'pageCount': instance.pageCount,
+      'categories': instance.categories,
+      'retailPriceamount': instance.retailPriceamount,
+      'retailPricecurrencyCode': instance.retailPricecurrencyCode,
+      'retailPricebuyLink': instance.retailPricebuyLink,
+      'nbpageslus': instance.nbpageslus,
+    };

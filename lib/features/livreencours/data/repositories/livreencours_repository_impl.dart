@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:whashlist/core/ressources/data_state.dart';
-import 'package:whashlist/features/book/data/models/book_model.dart';
 import 'package:whashlist/features/livreencours/data/datasource/remote/livreencours_remote_datasource.dart';
 import 'package:whashlist/features/livreencours/data/models/livreencours_model.dart';
 import 'package:whashlist/features/livreencours/domain/entities/livreencours_entity.dart';
@@ -38,10 +37,37 @@ class LivreEnCoursRepositoryImpl implements LivreEnCoursRepository {
   }
 
   @override
-  Future<DataState<List<ApiBookResponseModel>>> listlivreencours(
+  Future<DataState<List<AllLivreEnCoursResponseModel>>> listlivreencours(
       {String? id}) async {
     try {
       final response = await apiService.listlivreencours(
+        id: id,
+        accept: "application/json",
+        contentType: "application/json",
+      );
+      if (response.response.statusCode == 200) {
+        // await _getAndSaveToken();
+        return DataSuccess(response.data);
+      } else {
+        return DataFailure(
+          DioException(
+            requestOptions: response.response.requestOptions,
+            error: response.response.statusMessage,
+            response: response.response,
+            type: DioExceptionType.badResponse,
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return DataFailure(e);
+    }
+  }
+
+  @override
+  Future<DataState<LivreEnCoursResponseModel>> livreencours(
+      {String? id}) async {
+    try {
+      final response = await apiService.livreencours(
         id: id,
         accept: "application/json",
         contentType: "application/json",

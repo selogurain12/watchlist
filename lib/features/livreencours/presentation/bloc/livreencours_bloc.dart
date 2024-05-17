@@ -4,6 +4,7 @@ import 'package:whashlist/features/livreencours/domain/entities/livreencours_ent
 import 'package:whashlist/features/livreencours/domain/usecases/createlivreencours.dart';
 import 'package:whashlist/features/livreencours/domain/usecases/deletelivreencours.dart';
 import 'package:whashlist/features/livreencours/domain/usecases/listlivreencours.dart';
+import 'package:whashlist/features/livreencours/domain/usecases/livreencours.dart';
 import 'package:whashlist/features/livreencours/domain/usecases/updatelivreencours.dart';
 import 'package:whashlist/features/livreencours/presentation/bloc/livreencours_event.dart';
 import 'package:whashlist/features/livreencours/presentation/bloc/livreencours_state.dart';
@@ -12,6 +13,7 @@ class LivreEnCoursBloc extends Bloc<LivreEnCoursEvent, LivreEnCoursState> {
   final DeleteLivreEnCoursUseCase deletelivreencoursUseCase;
   final CreateLivreEnCoursUseCase createlivreencoursUseCase;
   final ListLivreEnCoursUseCase listlivreencoursUseCase;
+  final LivreEnCoursUseCase livreencoursUseCase;
   final UpdateLivreEnCoursUseCase updatelivreencoursUseCase;
 
   LivreEnCoursBloc(
@@ -19,10 +21,12 @@ class LivreEnCoursBloc extends Bloc<LivreEnCoursEvent, LivreEnCoursState> {
     this.createlivreencoursUseCase,
     this.listlivreencoursUseCase,
     this.updatelivreencoursUseCase,
+    this.livreencoursUseCase,
   ) : super(const LivreEnCoursLoading()) {
     on<DeleteLivreEnCoursEvent>(deletelivreencours);
     on<CreateLivreEnCoursEvent>(createlivreencours);
     on<ListLivreEnCoursEvent>(listlivreencours);
+    on<LivresEnCoursEvent>(livreencours);
     on<UpdateLivreEnCoursEvent>(updatelivreencours);
   }
 
@@ -47,9 +51,9 @@ class LivreEnCoursBloc extends Bloc<LivreEnCoursEvent, LivreEnCoursState> {
     emit(const LivreEnCoursLoading());
     final data = await createlivreencoursUseCase(
       params: CreateLivreEnCoursRequestEntity(
-        id_livre: event.id_livre,
-        user: event.user,
-      ),
+          id_livre: event.id_livre,
+          user: event.user,
+          nbpageslus: event.nbpageslus),
     );
     if (data is DataSuccess) {
       emit(CreateLivreEnCoursLoaded(createlivreencours: data.data));
@@ -72,6 +76,21 @@ class LivreEnCoursBloc extends Bloc<LivreEnCoursEvent, LivreEnCoursState> {
 
     if (data is DataFailure) {
       emit(ListLivreEnCoursError(data.error));
+    }
+  }
+
+  void livreencours(
+      LivresEnCoursEvent event, Emitter<LivreEnCoursState> emit) async {
+    emit(const LivreEnCoursLoading());
+    final data = await livreencoursUseCase(
+      params: event.id,
+    );
+    if (data is DataSuccess) {
+      emit(LivreEnCoursLoaded(livreencours: data.data));
+    }
+
+    if (data is DataFailure) {
+      emit(LivresEnCoursError(data.error));
     }
   }
 

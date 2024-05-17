@@ -28,6 +28,12 @@ class ListLivreEnCoursEvent extends LivreEnCoursEvent {
   const ListLivreEnCoursEvent({this.id});
 }
 
+class LivresEnCoursEvent extends LivreEnCoursEvent {
+  final String? id;
+
+  const LivresEnCoursEvent({this.id});
+}
+
 class UpdateLivreEnCoursEvent extends LivreEnCoursEvent {
   final String? id;
   final UpdateLivreEnCoursRequestEntity? update;
