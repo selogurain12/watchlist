@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whashlist/features/bibliotheques/presentation/widgets/addbooktobiblio.dart';
 import 'package:whashlist/features/book/domain/entities/book_entity.dart';
+import 'package:whashlist/features/livreencours/presentation/widgets/addbooktolivreencours.dart';
 import 'package:whashlist/features/livretermine/presentation/widgets/addbooktolivretermine.dart';
 import 'package:whashlist/features/stats/presentation/bloc/stats_bloc.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
@@ -227,7 +228,22 @@ SpeedDial buildSpeedDial() {
         backgroundColor: Colors.green,
         label: 'Je suis en train de lire ce livre',
         labelStyle: TextStyle(fontSize: 16.0),
-        onTap: () => print('Share Tapped!'),
+        onTap: ()async {
+                            final result = await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AddBookToLivreEnCours(id_livre: widget.book.id, totalPages: widget.book.pageCount,);
+                              },
+                            );
+                            if (result != null && result) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("La bibliothèque a été mise à jour"),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            }
+                          },
       ),
       SpeedDialChild(
         child: Icon(Icons.done),
