@@ -17,6 +17,11 @@ export class FilmsencoursController {
     return this.filmsencoursService.findAll(id);
   }
 
+  @Get('film/:id')
+  findfilm(@Param('id') id: string) {
+    return this.filmsencoursService.findfilm(id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateFilmsencourDto: UpdateFilmsencoursDto) {
     return this.filmsencoursService.update(id, updateFilmsencourDto);

@@ -47,6 +47,14 @@ export class FilmsencoursService {
     return movies;
   }
 
+  async findfilm(id: string) {
+    return await this.filmsencoursRepository.find({
+      where: {
+        id_film: id
+      }
+    });
+  }
+
   async findOne(id: string) {
     const existingFilmenCours = await this.filmsencoursRepository.findOne({
       where: {id}
