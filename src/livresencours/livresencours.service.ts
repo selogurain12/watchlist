@@ -46,10 +46,26 @@ export class LivresencoursService {
           id
         }
       }
-  });
-    const livreIds = livres.map(livre => livre.id_livre);
-    const books = await Promise.all(livreIds.map(id => this.livreService.getBook(id)));
-    return books
+    });
+    const booksWithPagesLues = await Promise.all(
+      livres.map(async (livre) => {
+        const bookDetails = await this.livreService.getBook(livre.id_livre);
+        return {
+          ...bookDetails,
+          nbpageslus: livre.nbpageslus
+        };
+      })
+    );
+    return booksWithPagesLues;
+  }
+  
+
+  async findlivre(id: string) {
+    return await this.livresencoursRepository.findOne({
+      where: {
+        id_livre: id
+      }
+    });
   }
 
   async update(id: string, updateLivresencoursDto: UpdateLivresencoursDto) {

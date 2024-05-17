@@ -17,6 +17,12 @@ export class LivresencoursController {
     return this.livresencoursService.findAll(id);
   }
 
+  @Get('livre/:id')
+  findfilm(@Param('id') id: string) {
+    console.log(id)
+    return this.livresencoursService.findlivre(id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateLivresencoursDto: UpdateLivresencoursDto) {
     return this.livresencoursService.update(id, updateLivresencoursDto);
