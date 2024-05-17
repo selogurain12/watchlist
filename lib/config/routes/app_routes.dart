@@ -8,6 +8,7 @@ import 'package:whashlist/features/filmotheques/domain/entities/filmotheques_ent
 import 'package:whashlist/features/filmotheques/presentation/pages/listmovie_screen.dart';
 import 'package:whashlist/features/filmotheques/presentation/pages/viewfilmo_screen.dart';
 import 'package:whashlist/features/filmtermine/presentation/pages/listfilmtermine_screen.dart';
+import 'package:whashlist/features/livreencours/presentation/pages/listlivreencours_screen.dart';
 import 'package:whashlist/features/livretermine/presentation/pages/listlivretermine_screen.dart';
 import 'package:whashlist/features/movie/domain/entities/searchmovie_entity.dart';
 import 'package:whashlist/features/movie/presentation/pages/searchmovie_screen.dart';
@@ -107,6 +108,10 @@ final router = GoRouter(
     GoRoute(
       path: '/livretermine',
       builder: (context, state) => const ListLivreTermineScreen(),
+    ),
+    GoRoute(
+      path: '/livreencours',
+      builder: (context, state) => const ListLivreEnCoursScreen(),
     ),
   ],
 );
