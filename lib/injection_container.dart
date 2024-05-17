@@ -41,6 +41,15 @@ import 'package:whashlist/features/friendlist/domain/usecases/deletefriend.dart'
 import 'package:whashlist/features/friendlist/domain/usecases/listfriend.dart';
 import 'package:whashlist/features/friendlist/domain/usecases/searchfriend.dart';
 import 'package:whashlist/features/friendlist/presentation/bloc/friendlist_bloc.dart';
+import 'package:whashlist/features/livreencours/data/datasource/remote/livreencours_remote_datasource.dart';
+import 'package:whashlist/features/livreencours/data/repositories/livreencours_repository_impl.dart';
+import 'package:whashlist/features/livreencours/domain/repositories/livreencours_repository.dart';
+import 'package:whashlist/features/livreencours/domain/usecases/createlivreencours.dart';
+import 'package:whashlist/features/livreencours/domain/usecases/deletelivreencours.dart';
+import 'package:whashlist/features/livreencours/domain/usecases/listlivreencours.dart';
+import 'package:whashlist/features/livreencours/domain/usecases/livreencours.dart';
+import 'package:whashlist/features/livreencours/domain/usecases/updatelivreencours.dart';
+import 'package:whashlist/features/livreencours/presentation/bloc/livreencours_bloc.dart';
 import 'package:whashlist/features/livretermine/data/datasource/remote/livretermine_remote_datasource.dart';
 import 'package:whashlist/features/livretermine/data/repositories/livretermine_repository_impl.dart';
 import 'package:whashlist/features/livretermine/domain/repositories/livretermine_repository.dart';
@@ -102,6 +111,10 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<LivretermineService>(LivretermineService(sl()));
   sl.registerSingleton<LivreTermineRepository>(LivreTermineRepositoryImpl(sl()));
 
+  //Livre en cours
+  sl.registerSingleton<LivreEnCoursService>(LivreEnCoursService(sl()));
+  sl.registerSingleton<LivreEnCoursRepository>(LivreEnCoursRepositoryImpl(sl()));
+
   /////////////////////////// USECASE ////////////////////////////////////////////
   // User
   sl.registerSingleton<LoginUseCase>(LoginUseCase(sl()));
@@ -142,6 +155,12 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<ListFriendUseCase>(ListFriendUseCase(sl()));
   sl.registerSingleton<DeleteFriendUseCase>(DeleteFriendUseCase(sl()));
   sl.registerSingleton<SearchFriendUseCase>(SearchFriendUseCase(sl()));
+  //Livre en cours
+  sl.registerSingleton<CreateLivreEnCoursUseCase>(CreateLivreEnCoursUseCase(sl()));
+  sl.registerSingleton<DeleteLivreEnCoursUseCase>(DeleteLivreEnCoursUseCase(sl()));
+  sl.registerSingleton<ListLivreEnCoursUseCase>(ListLivreEnCoursUseCase(sl()));
+  sl.registerSingleton<LivreEnCoursUseCase>(LivreEnCoursUseCase(sl()));
+  sl.registerSingleton<UpdateLivreEnCoursUseCase>(UpdateLivreEnCoursUseCase(sl()));
 
   /////////////////////////// BLOC ///////////////////////////////////////////////
   // User
@@ -162,4 +181,6 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<LivreTermineBloc>(() => LivreTermineBloc(sl(), sl(), sl()));
   //Friendlist
   sl.registerFactory<FriendlistBloc>(() => FriendlistBloc(sl(), sl(), sl(), sl()));
+  //Livre en cours
+  sl.registerFactory<LivreEnCoursBloc>(() => LivreEnCoursBloc(sl(), sl(), sl(), sl(), sl()));
 }
