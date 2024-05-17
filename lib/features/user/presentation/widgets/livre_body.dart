@@ -117,7 +117,7 @@ class LivreBody extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: ElevatedButton(
               onPressed: () {
-                context.go('/filmotheque');
+                context.go('/livreencours');
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.zero,
