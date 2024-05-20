@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:equatable/equatable.dart';
-import 'package:whashlist/features/book/domain/entities/book_entity.dart';
 import 'package:whashlist/features/user/data/models/user_model.dart';
 
 class LivreEnCoursResponseEntity extends Equatable {
@@ -13,9 +12,6 @@ class LivreEnCoursResponseEntity extends Equatable {
 
   @override
   List<Object?> get props => [id, id_livre, nbpageslus];
-
-  firstWhere(bool Function(dynamic livre) param0,
-      {required ApiBookResponseEntity Function() orElse}) {}
 }
 
 class CreateLivreEnCoursRequestEntity extends Equatable {
