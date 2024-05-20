@@ -141,6 +141,7 @@ class _ListLivreEnCours extends State<ListLivreEnCours> {
                                       builder: (BuildContext context) {
                                         return DeleteLivreEnCours(
                                             livreId: livreencours.id,
+                                            pagesLus: livreencours.nbpageslus,
                                             onBookLivreEnCoursDelete: () {
                                               livreencoursBloc
                                                   .add(ListLivreEnCoursEvent(

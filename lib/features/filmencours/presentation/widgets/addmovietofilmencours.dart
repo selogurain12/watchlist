@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:whashlist/features/filmencours/presentation/bloc/filmencours_bloc.dart';
 import 'package:whashlist/features/filmencours/presentation/bloc/filmencours_event.dart';
 import 'package:whashlist/features/filmencours/presentation/bloc/filmencours_state.dart';
+import 'package:whashlist/features/stats/domain/entities/stats_entity.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_bloc.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_event.dart';
 import 'package:whashlist/features/user/data/models/user_model.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
@@ -22,17 +25,20 @@ class _AddMovieToFilmEnCours extends State<AddMovieToFilmEnCours> {
   late FilmEnCoursBloc filmEnCoursBloc;
   late TextEditingController nbtempsvus;
   double progressValue = 0.0;
+  late StatsBloc statsBloc;
 
   @override
   void initState() {
     super.initState();
     filmEnCoursBloc = sl<FilmEnCoursBloc>();
     nbtempsvus = TextEditingController();
+    statsBloc = sl<StatsBloc>();
   }
 
   @override
   void dispose() {
     nbtempsvus.dispose();
+    statsBloc.close();
     filmEnCoursBloc.close();
     super.dispose();
   }
@@ -89,9 +95,9 @@ class _AddMovieToFilmEnCours extends State<AddMovieToFilmEnCours> {
                     controller: nbtempsvus,
                     onChanged: (value) {
                       setState(() {
-                        int pagesLues = int.tryParse(value) ?? 0;
+                        int TempsVus = int.tryParse(value) ?? 0;
                         progressValue = widget.totalTemps != null && widget.totalTemps! > 0
-                          ? pagesLues / widget.totalTemps!
+                          ? TempsVus / widget.totalTemps!
                           : 0.0;
                       });
                     },
@@ -136,6 +142,14 @@ class _AddMovieToFilmEnCours extends State<AddMovieToFilmEnCours> {
                       );
                       return;
                     }
+                    final updateStats =
+              StatsRequestEntity(tempsvu: tempsVus, pageslu: 0);
+          statsBloc.add(
+            UpdateStatEvent(
+              id: userProvider.userId,
+              update: updateStats,
+            ),
+          );
                     filmEnCoursBloc.add(CreateFilmEnCoursEvent(
                         id_film: widget.id_film,
                         tempsvisionnage: tempsVus,

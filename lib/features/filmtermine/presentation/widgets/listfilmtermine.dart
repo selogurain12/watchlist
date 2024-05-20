@@ -122,6 +122,7 @@ Widget build(BuildContext context) {
                                       builder: (BuildContext context) {
                                         return DeleteMovieFilmTermine(
                                             movieId: filmtermine.id,
+                                            tempsvisionnage: filmtermine.runtime,
                                             onMovieFilmTermineDelete: () {
                                               filmTermineBloc.add(ListFilmTermineEvent(
                                                 id: userProvider.userId,

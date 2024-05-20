@@ -122,6 +122,7 @@ Widget build(BuildContext context) {
                                       builder: (BuildContext context) {
                                         return DeleteLivreTermine(
                                             livreId: livretermine.id,
+                                            pagesLus: livretermine.pageCount,
                                             onBookLivreTermineDelete: () {
                                               livreTermineBloc.add(ListLivreTermineEvent(
                                                 id: userProvider.userId,

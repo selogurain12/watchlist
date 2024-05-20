@@ -6,14 +6,18 @@ import 'package:provider/provider.dart';
 import 'package:whashlist/features/filmtermine/presentation/bloc/filmtermine_bloc.dart';
 import 'package:whashlist/features/filmtermine/presentation/bloc/filmtermine_event.dart';
 import 'package:whashlist/features/filmtermine/presentation/bloc/filmtermine_state.dart';
+import 'package:whashlist/features/stats/domain/entities/stats_entity.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_bloc.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_event.dart';
 import 'package:whashlist/features/user/data/models/user_model.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
 
 class AddMovieToFilmTermine extends StatefulWidget {
   final String? id_film;
+  final int? tempsvisionnage;
 
-  const AddMovieToFilmTermine({Key? key, required this.id_film})
+  const AddMovieToFilmTermine({Key? key, required this.id_film, required this.tempsvisionnage})
       : super(key: key);
 
   @override
@@ -22,16 +26,19 @@ class AddMovieToFilmTermine extends StatefulWidget {
 
 class _AddMovieToFilmTermine extends State<AddMovieToFilmTermine> {
   late FilmTermineBloc filmtermineBloc;
+  late StatsBloc statsBloc;
 
   @override
   void initState() {
     super.initState();
     filmtermineBloc = sl<FilmTermineBloc>();
+    statsBloc = sl<StatsBloc>();
   }
 
   @override
   void dispose() {
     super.dispose();
+    statsBloc.close();
     filmtermineBloc.close();
   }
 
@@ -59,6 +66,14 @@ class _AddMovieToFilmTermine extends State<AddMovieToFilmTermine> {
             });
           }
           if (state is CreateFilmTermineLoaded) {
+            final updateStats =
+              StatsRequestEntity(tempsvu: widget.tempsvisionnage, pageslu: 0);
+          statsBloc.add(
+            UpdateStatEvent(
+              id: userProvider.userId,
+              update: updateStats,
+            ),
+          );
             WidgetsBinding.instance.addPostFrameCallback((_) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(

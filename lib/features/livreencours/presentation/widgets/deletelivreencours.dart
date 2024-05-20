@@ -2,17 +2,23 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:whashlist/features/livreencours/presentation/bloc/livreencours_bloc.dart';
 import 'package:whashlist/features/livreencours/presentation/bloc/livreencours_event.dart';
 import 'package:whashlist/features/livreencours/presentation/bloc/livreencours_state.dart';
+import 'package:whashlist/features/stats/domain/entities/stats_entity.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_bloc.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_event.dart';
+import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
 
 class DeleteLivreEnCours extends StatefulWidget {
   final VoidCallback onBookLivreEnCoursDelete;
   final String? livreId;
+  final int? pagesLus;
 
   const DeleteLivreEnCours(
-      {Key? key, required this.livreId, required this.onBookLivreEnCoursDelete})
+      {Key? key, required this.livreId, required this.onBookLivreEnCoursDelete, required this.pagesLus})
       : super(key: key);
 
   @override
@@ -21,21 +27,25 @@ class DeleteLivreEnCours extends StatefulWidget {
 
 class _DeleteMovieLivreEnCours extends State<DeleteLivreEnCours> {
   late LivreEnCoursBloc livreencoursBloc;
+  late StatsBloc statsBloc;
 
   @override
   void initState() {
     super.initState();
+    statsBloc = sl<StatsBloc>();
     livreencoursBloc = sl<LivreEnCoursBloc>();
   }
 
   @override
   void dispose() {
     super.dispose();
+    statsBloc.close();
     livreencoursBloc.close();
   }
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     return BlocBuilder<LivreEnCoursBloc, LivreEnCoursState>(
         bloc: livreencoursBloc,
         builder: (context, state) {
@@ -58,6 +68,12 @@ class _DeleteMovieLivreEnCours extends State<DeleteLivreEnCours> {
               TextButton(
                 child: const Text('Supprimer'),
                 onPressed: () {
+                  final updateStats =
+                      StatsRequestEntity(tempsvu: 0, pageslu: -widget.pagesLus!);
+                      statsBloc.add(UpdateStatEvent(
+                    id: userProvider.userId,
+                    update: updateStats,
+                  ));
                   livreencoursBloc.add(
                       DeleteLivreEnCoursEvent(id: widget.livreId));
                 },

@@ -10,6 +10,9 @@ import 'package:whashlist/features/filmencours/presentation/bloc/filmencours_sta
 import 'package:whashlist/features/filmtermine/presentation/bloc/filmtermine_bloc.dart';
 import 'package:whashlist/features/filmtermine/presentation/bloc/filmtermine_event.dart';
 import 'package:whashlist/features/filmtermine/presentation/bloc/filmtermine_state.dart';
+import 'package:whashlist/features/stats/domain/entities/stats_entity.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_bloc.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_event.dart';
 import 'package:whashlist/features/user/data/models/user_model.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
@@ -30,6 +33,7 @@ class _UpdateFilmEnCours extends State<UpdateFilmEnCours> {
   late FilmEnCoursBloc filmEnCoursBloc;
   late FilmTermineBloc filmTermineBloc;
   late TextEditingController nbtempsvus;
+  late StatsBloc statsBloc;
   double progressValue = 0.0;
 
   @override
@@ -37,6 +41,7 @@ class _UpdateFilmEnCours extends State<UpdateFilmEnCours> {
     super.initState();
     filmEnCoursBloc = sl<FilmEnCoursBloc>();
     filmTermineBloc = sl<FilmTermineBloc>();
+    statsBloc = sl<StatsBloc>();
     nbtempsvus = TextEditingController();
   }
 
@@ -46,6 +51,7 @@ class _UpdateFilmEnCours extends State<UpdateFilmEnCours> {
     nbtempsvus.dispose();
     filmTermineBloc.close();
     filmEnCoursBloc.close();
+    statsBloc.close();
   }
 
   @override
@@ -76,6 +82,17 @@ class _UpdateFilmEnCours extends State<UpdateFilmEnCours> {
                 });
               }
               if (state is UpdateFilmEnCoursLoaded) {
+                final nbTempsVus = int.tryParse(nbtempsvus.text) ?? 0;
+                final updateStats = StatsRequestEntity(
+                  tempsvu: widget.filmEnCours.tempsvisionnage! - nbTempsVus,
+                  pageslu: 0,
+                );
+                statsBloc.add(
+                  UpdateStatEvent(
+                    id: userProvider.userId,
+                    update: updateStats,
+                  ),
+                );
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   widget.onFilmEnCours();
                   Navigator.pop(context);
@@ -169,7 +186,7 @@ class _UpdateFilmEnCours extends State<UpdateFilmEnCours> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
-                                  "Le nombre de temps vus ne peut pas être supérieur à la durée total du film"),
+                                  "Le nombre de temps vus ne peut pas être supérieur à la durée totale du film"),
                               backgroundColor: Colors.red,
                             ),
                           );

@@ -141,6 +141,7 @@ class _ListFilmEnCours extends State<ListFilmEnCours> {
                                       builder: (BuildContext context) {
                                         return DeleteFilmEnCours(
                                             filmId: filmencours.id.toString(),
+                                            tempsVu: filmencours.tempsvisionnage,
                                             onBookFilmEnCoursDelete: () {
                                               filmencoursBloc
                                                   .add(ListFilmEnCoursEvent(

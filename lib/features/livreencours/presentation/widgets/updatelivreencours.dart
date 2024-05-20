@@ -10,6 +10,9 @@ import 'package:whashlist/features/livreencours/presentation/bloc/livreencours_s
 import 'package:whashlist/features/livretermine/presentation/bloc/livretermine_bloc.dart';
 import 'package:whashlist/features/livretermine/presentation/bloc/livretermine_event.dart';
 import 'package:whashlist/features/livretermine/presentation/bloc/livretermine_state.dart';
+import 'package:whashlist/features/stats/domain/entities/stats_entity.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_bloc.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_event.dart';
 import 'package:whashlist/features/user/data/models/user_model.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
@@ -31,12 +34,14 @@ class _UpdateLivreEnCours extends State<UpdateLivreEnCours> {
   late LivreTermineBloc livreTermineBloc;
   late TextEditingController nbpageslus;
   double progressValue = 0.0;
+  late StatsBloc statsBloc;
 
   @override
   void initState() {
     super.initState();
     livreEnCoursBloc = sl<LivreEnCoursBloc>();
     livreTermineBloc = sl<LivreTermineBloc>();
+    statsBloc = sl<StatsBloc>();
     nbpageslus = TextEditingController();
   }
 
@@ -45,6 +50,7 @@ class _UpdateLivreEnCours extends State<UpdateLivreEnCours> {
     super.dispose();
     nbpageslus.dispose();
     livreTermineBloc.close();
+    statsBloc.close();
     livreEnCoursBloc.close();
   }
 
@@ -76,6 +82,17 @@ class _UpdateLivreEnCours extends State<UpdateLivreEnCours> {
                 });
               }
               if (state is UpdateLivreEnCoursLoaded) {
+                final nbTempsVus = int.tryParse(nbpageslus.text) ?? 0;
+                final updateStats = StatsRequestEntity(
+                  tempsvu: widget.livreEnCours.nbpageslus! - nbTempsVus,
+                  pageslu: 0,
+                );
+                statsBloc.add(
+                  UpdateStatEvent(
+                    id: userProvider.userId,
+                    update: updateStats,
+                  ),
+                );
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   widget.onLivreEnCours();
                   Navigator.pop(context);

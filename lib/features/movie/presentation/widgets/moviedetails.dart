@@ -327,7 +327,7 @@ SpeedDial buildSpeedDial() {
                             final result = await showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return AddMovieToFilmTermine(id_film: widget.movie.id.toString(),);
+                                return AddMovieToFilmTermine(id_film: widget.movie.id.toString(), tempsvisionnage: widget.movie.runtime,);
                               },
                             );
                             if (result != null && result) {

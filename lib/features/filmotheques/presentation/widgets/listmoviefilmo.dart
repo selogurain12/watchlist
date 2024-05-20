@@ -115,6 +115,7 @@ Widget build(BuildContext context) {
                                         return DeleteMovieFilmotheque(
                                             filmothequeId: widget.filmothequeId,
                                             movieId: filmotheque.id,
+                                            tempsVisionnage: filmotheque.runtime,
                                             onMovieFilmothequeDelete: () {
                                               filmothequesBloc.add(ListFilmothequeEvent(id: userProvider.userId));
                                               filmothequesBloc.add(ListFilmEvent(id_filmotheque: widget.filmothequeId));

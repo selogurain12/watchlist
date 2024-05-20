@@ -254,7 +254,7 @@ SpeedDial buildSpeedDial() {
                             final result = await showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return AddBookToLivreTermine(id_livre: widget.book.id);
+                                return AddBookToLivreTermine(id_livre: widget.book.id, pageslus: widget.book.pageCount,);
                               },
                             );
                             if (result != null && result) {

@@ -6,14 +6,19 @@ import 'package:provider/provider.dart';
 import 'package:whashlist/features/livretermine/presentation/bloc/livretermine_bloc.dart';
 import 'package:whashlist/features/livretermine/presentation/bloc/livretermine_event.dart';
 import 'package:whashlist/features/livretermine/presentation/bloc/livretermine_state.dart';
+import 'package:whashlist/features/stats/domain/entities/stats_entity.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_bloc.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_event.dart';
 import 'package:whashlist/features/user/data/models/user_model.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
 
 class AddBookToLivreTermine extends StatefulWidget {
   final String? id_livre;
+  final int? pageslus;
 
-  const AddBookToLivreTermine({Key? key, required this.id_livre})
+  const AddBookToLivreTermine(
+      {Key? key, required this.id_livre, required this.pageslus})
       : super(key: key);
 
   @override
@@ -22,16 +27,19 @@ class AddBookToLivreTermine extends StatefulWidget {
 
 class _AddBookToLivreTermine extends State<AddBookToLivreTermine> {
   late LivreTermineBloc livretermineBloc;
+  late StatsBloc statsBloc;
 
   @override
   void initState() {
     super.initState();
     livretermineBloc = sl<LivreTermineBloc>();
+    statsBloc = sl<StatsBloc>();
   }
 
   @override
   void dispose() {
     super.dispose();
+    statsBloc.close();
     livretermineBloc.close();
   }
 
@@ -83,6 +91,14 @@ class _AddBookToLivreTermine extends State<AddBookToLivreTermine> {
               TextButton(
                 child: const Text('Ajouter'),
                 onPressed: () {
+                  final updateStats =
+                      StatsRequestEntity(tempsvu: 0, pageslu: widget.pageslus);
+                  statsBloc.add(
+                    UpdateStatEvent(
+                      id: userProvider.userId,
+                      update: updateStats,
+                    ),
+                  );
                   livretermineBloc.add(CreateLivreTermineEvent(
                       id_livre: widget.id_livre, user: usersList));
                 },

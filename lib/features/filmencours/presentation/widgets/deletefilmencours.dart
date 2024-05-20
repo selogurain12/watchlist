@@ -2,17 +2,23 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:whashlist/features/filmencours/presentation/bloc/filmencours_bloc.dart';
 import 'package:whashlist/features/filmencours/presentation/bloc/filmencours_event.dart';
 import 'package:whashlist/features/filmencours/presentation/bloc/filmencours_state.dart';
+import 'package:whashlist/features/stats/domain/entities/stats_entity.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_bloc.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_event.dart';
+import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
 
 class DeleteFilmEnCours extends StatefulWidget {
   final VoidCallback onBookFilmEnCoursDelete;
   final String? filmId;
+  final int? tempsVu;
 
   const DeleteFilmEnCours(
-      {Key? key, required this.filmId, required this.onBookFilmEnCoursDelete})
+      {Key? key, required this.filmId, required this.tempsVu, required this.onBookFilmEnCoursDelete})
       : super(key: key);
 
   @override
@@ -21,10 +27,12 @@ class DeleteFilmEnCours extends StatefulWidget {
 
 class _DeleteMovieFilmEnCours extends State<DeleteFilmEnCours> {
   late FilmEnCoursBloc filmencoursBloc;
+  late StatsBloc statsBloc;
 
   @override
   void initState() {
     super.initState();
+    statsBloc = sl<StatsBloc>();
     filmencoursBloc = sl<FilmEnCoursBloc>();
   }
 
@@ -32,10 +40,12 @@ class _DeleteMovieFilmEnCours extends State<DeleteFilmEnCours> {
   void dispose() {
     super.dispose();
     filmencoursBloc.close();
+    statsBloc.close();
   }
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     return BlocBuilder<FilmEnCoursBloc, FilmEnCoursState>(
         bloc: filmencoursBloc,
         builder: (context, state) {
@@ -58,8 +68,14 @@ class _DeleteMovieFilmEnCours extends State<DeleteFilmEnCours> {
               TextButton(
                 child: const Text('Supprimer'),
                 onPressed: () {
-                  filmencoursBloc.add(
-                      DeleteFilmEnCoursEvent(id: widget.filmId));
+                  final updateStats =
+                      StatsRequestEntity(tempsvu: -widget.tempsVu!, pageslu: 0);
+                  statsBloc.add(UpdateStatEvent(
+                    id: userProvider.userId,
+                    update: updateStats,
+                  ));
+                  filmencoursBloc
+                      .add(DeleteFilmEnCoursEvent(id: widget.filmId));
                 },
               ),
             ],

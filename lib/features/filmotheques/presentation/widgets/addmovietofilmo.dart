@@ -8,6 +8,9 @@ import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_e
 import 'package:whashlist/features/filmotheques/presentation/bloc/filmotheques_state.dart';
 import 'package:whashlist/features/filmotheques/presentation/widgets/createfilmotheque.dart';
 import 'package:whashlist/features/movie/domain/entities/searchmovie_entity.dart';
+import 'package:whashlist/features/stats/domain/entities/stats_entity.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_bloc.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_event.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
 
@@ -23,6 +26,7 @@ class AddMovie extends StatefulWidget {
 class _AddMovieState extends State<AddMovie> {
   late FilmothequesBloc filmothequesBloc;
   late TextEditingController nom;
+  late StatsBloc statsBloc;
   String? selectedValue;
   bool showCreateForm = false;
   List<String>? selectedMovieId;
@@ -34,6 +38,7 @@ class _AddMovieState extends State<AddMovie> {
     filmothequesBloc = sl<FilmothequesBloc>();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     nom = TextEditingController();
+    statsBloc = sl<StatsBloc>();
     selectedMovieId =
         widget.movie.id.toString() != null ? [widget.movie.id!.toString()] : [];
     filmothequesBloc.add(ListFilmothequeEvent(
@@ -48,6 +53,7 @@ class _AddMovieState extends State<AddMovie> {
   void dispose() {
     super.dispose();
     nom.dispose();
+    statsBloc.close();
     filmothequesBloc.close();
   }
 
@@ -146,6 +152,14 @@ class _AddMovieState extends State<AddMovie> {
                         });
                       }
                       if (state is ListFilmothequeLoaded) {
+                        final updateStats =
+              StatsRequestEntity(tempsvu: widget.movie.runtime, pageslu: 0);
+          statsBloc.add(
+            UpdateStatEvent(
+              id: userProvider.userId,
+              update: updateStats,
+            ),
+          );
                         WidgetsBinding.instance.addPostFrameCallback((_) async {
                           if (state is! ModifieFilmothequeError &&
                               state is! FilmothequeError) {

@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:whashlist/features/livreencours/presentation/bloc/livreencours_bloc.dart';
 import 'package:whashlist/features/livreencours/presentation/bloc/livreencours_event.dart';
 import 'package:whashlist/features/livreencours/presentation/bloc/livreencours_state.dart';
+import 'package:whashlist/features/stats/domain/entities/stats_entity.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_bloc.dart';
+import 'package:whashlist/features/stats/presentation/bloc/stats_event.dart';
 import 'package:whashlist/features/user/data/models/user_model.dart';
 import 'package:whashlist/features/user/presentation/bloc/user_state.dart';
 import 'package:whashlist/injection_container.dart';
@@ -22,18 +25,21 @@ class _AddBookToLivreEnCours extends State<AddBookToLivreEnCours> {
   late LivreEnCoursBloc livreEnCoursBloc;
   late TextEditingController nbpageslus;
   double progressValue = 0.0;
+  late StatsBloc statsBloc;
 
   @override
   void initState() {
     super.initState();
     livreEnCoursBloc = sl<LivreEnCoursBloc>();
     nbpageslus = TextEditingController();
+    statsBloc = sl<StatsBloc>();
   }
 
   @override
   void dispose() {
     nbpageslus.dispose();
     livreEnCoursBloc.close();
+    statsBloc.close();
     super.dispose();
   }
 
@@ -55,6 +61,14 @@ class _AddBookToLivreEnCours extends State<AddBookToLivreEnCours> {
           });
         }
         if (state is CreateLivreEnCoursLoaded) {
+          final updateStats =
+              StatsRequestEntity(tempsvu: 0, pageslu: widget.totalPages);
+          statsBloc.add(
+            UpdateStatEvent(
+              id: userProvider.userId,
+              update: updateStats,
+            ),
+          );
           WidgetsBinding.instance.addPostFrameCallback((_) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -136,6 +150,14 @@ class _AddBookToLivreEnCours extends State<AddBookToLivreEnCours> {
                       );
                       return;
                     }
+                    final updateStats =
+              StatsRequestEntity(tempsvu: 0, pageslu: pagesLus);
+          statsBloc.add(
+            UpdateStatEvent(
+              id: userProvider.userId,
+              update: updateStats,
+            ),
+          );
                     livreEnCoursBloc.add(CreateLivreEnCoursEvent(
                         id_livre: widget.id_livre,
                         nbpageslus: pagesLus,

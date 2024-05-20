@@ -115,6 +115,7 @@ Widget build(BuildContext context) {
                                         return DeleteBookBibliotheque(
                                             bibliothequeId: widget.bibliothequeId,
                                             bookId: bibliotheque.id,
+                                            pageCount: bibliotheque.pageCount,
                                             onBookBibliothequeDelete: () {
                                               bibliothequesBloc.add(ListBibliothequeEvent(id: userProvider.userId));
                                               bibliothequesBloc.add(ListLivreEvent(id_bibliotheque: widget.bibliothequeId));
