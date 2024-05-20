@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:whashlist/features/filmencours/presentation/widgets/addmovietofilmencours.dart';
 import 'package:whashlist/features/filmtermine/presentation/widgets/addmovietofilmtermine.dart';
 import 'package:whashlist/features/movie/domain/entities/searchmovie_entity.dart';
 import 'package:whashlist/features/filmotheques/presentation/widgets/addmovietofilmo.dart';
@@ -300,7 +301,22 @@ SpeedDial buildSpeedDial() {
         backgroundColor: Colors.green,
         label: 'Je suis en train de regarder ce film',
         labelStyle: TextStyle(fontSize: 16.0),
-        onTap: () => print('Share Tapped!'),
+        onTap: ()async {
+                            final result = await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AddMovieToFilmEnCours(id_film: widget.movie.id.toString(), totalTemps: widget.movie.runtime,);
+                              },
+                            );
+                            if (result != null && result) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("La filmothèque a été mise à jour"),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            }
+                          },
       ),
       SpeedDialChild(
         child: Icon(Icons.done),
