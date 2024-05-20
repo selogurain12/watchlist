@@ -117,7 +117,7 @@ class FilmBody extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: ElevatedButton(
               onPressed: () {
-                context.go('/filmotheque');
+                context.go('/filmencours');
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.zero,
