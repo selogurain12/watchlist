@@ -42,9 +42,16 @@ export class FilmsencoursService {
         }
       }
     });
-    const movieIds = films.map(film => film.id_film);
-    const movies = await Promise.all(movieIds.map(id => this.movieService.getMovie(id)));
-    return movies;
+    const movieWithTempsVus = await Promise.all(
+      films.map(async (film) => {
+        const movieDetails = await this.movieService.getMovie(film.id_film);
+        return {
+          ...movieDetails,
+          tempsvisionnage: film.tempsvisionnage
+        };
+      })
+    );
+    return movieWithTempsVus;
   }
 
   async findfilm(id: string) {
@@ -53,16 +60,6 @@ export class FilmsencoursService {
         id_film: id
       }
     });
-  }
-
-  async findOne(id: string) {
-    const existingFilmenCours = await this.filmsencoursRepository.findOne({
-      where: {id}
-    })
-    if(!existingFilmenCours){
-      throw new NotFoundException("This relation dosen't exist")
-    }
-    return existingFilmenCours;
   }
 
   async update(id: string, updateFilmsencoursDto: UpdateFilmsencoursDto) {
