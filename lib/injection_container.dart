@@ -15,6 +15,15 @@ import 'package:whashlist/features/book/data/repositories/book_repository_impl.d
 import 'package:whashlist/features/book/domain/repositories/book_repository.dart';
 import 'package:whashlist/features/book/domain/usecases/searchbook.dart';
 import 'package:whashlist/features/book/presentation/bloc/book_bloc.dart';
+import 'package:whashlist/features/filmencours/data/datasource/remote/filmencours_remote_datasource.dart';
+import 'package:whashlist/features/filmencours/data/repositories/filmencours_repository_impl.dart';
+import 'package:whashlist/features/filmencours/domain/repositories/filmencours_repository.dart';
+import 'package:whashlist/features/filmencours/domain/usecases/createfilmencours.dart';
+import 'package:whashlist/features/filmencours/domain/usecases/deletefilmencours.dart';
+import 'package:whashlist/features/filmencours/domain/usecases/filmencours.dart';
+import 'package:whashlist/features/filmencours/domain/usecases/listfilmencours.dart';
+import 'package:whashlist/features/filmencours/domain/usecases/updatefilmencours.dart';
+import 'package:whashlist/features/filmencours/presentation/bloc/filmencours_bloc.dart';
 import 'package:whashlist/features/filmotheques/data/datasource/remote/filmotheques_remote_datasource.dart';
 import 'package:whashlist/features/filmotheques/data/repositories/filmotheques_repository_impl.dart';
 import 'package:whashlist/features/filmotheques/domain/repositories/filmotheques_repository.dart';
@@ -110,10 +119,12 @@ Future<void> initializeDependencies() async {
   //Livre termine
   sl.registerSingleton<LivretermineService>(LivretermineService(sl()));
   sl.registerSingleton<LivreTermineRepository>(LivreTermineRepositoryImpl(sl()));
-
   //Livre en cours
   sl.registerSingleton<LivreEnCoursService>(LivreEnCoursService(sl()));
   sl.registerSingleton<LivreEnCoursRepository>(LivreEnCoursRepositoryImpl(sl()));
+  //Film en cours
+  sl.registerSingleton<FilmEnCoursService>(FilmEnCoursService(sl()));
+  sl.registerSingleton<FilmEnCoursRepository>(FilmEnCoursRepositoryImpl(sl()));
 
   /////////////////////////// USECASE ////////////////////////////////////////////
   // User
@@ -161,6 +172,12 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<ListLivreEnCoursUseCase>(ListLivreEnCoursUseCase(sl()));
   sl.registerSingleton<LivreEnCoursUseCase>(LivreEnCoursUseCase(sl()));
   sl.registerSingleton<UpdateLivreEnCoursUseCase>(UpdateLivreEnCoursUseCase(sl()));
+  //Film en cours
+  sl.registerSingleton<CreateFilmEnCoursUseCase>(CreateFilmEnCoursUseCase(sl()));
+  sl.registerSingleton<DeleteFilmEnCoursUseCase>(DeleteFilmEnCoursUseCase(sl()));
+  sl.registerSingleton<ListFilmEnCoursUseCase>(ListFilmEnCoursUseCase(sl()));
+  sl.registerSingleton<FilmEnCoursUseCase>(FilmEnCoursUseCase(sl()));
+  sl.registerSingleton<UpdateFilmEnCoursUseCase>(UpdateFilmEnCoursUseCase(sl()));
 
   /////////////////////////// BLOC ///////////////////////////////////////////////
   // User
@@ -183,4 +200,6 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<FriendlistBloc>(() => FriendlistBloc(sl(), sl(), sl(), sl()));
   //Livre en cours
   sl.registerFactory<LivreEnCoursBloc>(() => LivreEnCoursBloc(sl(), sl(), sl(), sl(), sl()));
+  //Film en cours
+  sl.registerFactory<FilmEnCoursBloc>(() => FilmEnCoursBloc(sl(), sl(), sl(), sl(), sl()));
 }
