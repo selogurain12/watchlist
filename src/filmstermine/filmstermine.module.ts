@@ -9,5 +9,6 @@ import { MovieService } from '../movie/movie.service';
   imports: [TypeOrmModule.forFeature([Filmstermine])],
   controllers: [FilmstermineController],
   providers: [FilmstermineService, MovieService],
+  exports: [FilmstermineService]
 })
 export class FilmstermineModule {}

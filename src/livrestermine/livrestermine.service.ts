@@ -4,6 +4,7 @@ import { Livrestermine } from './entities/livrestermine.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BookService } from '../Book/book.service';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class LivrestermineService {
@@ -42,6 +43,15 @@ export class LivrestermineService {
     const livreIds = livres.map(livre => livre.id_livre);
     const books = await Promise.all(livreIds.map(id => this.livreService.getBook(id)));
     return books
+  }
+
+  countAll(users: User) {
+    return this.livretermineRepository.count({where: 
+      {user: {
+        id: users.id
+      }},
+      relations: ["user"]
+    });
   }
 
   async remove(id: string) {

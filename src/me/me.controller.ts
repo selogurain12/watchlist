@@ -20,7 +20,7 @@ export class MeController {
   }
 
 
-  @Patch(':id')
+  @Patch('stats/:id')
   update(@Param('id') id: string, @Body() updateMeDto: UpdateMeDto) {
     return this.meService.update(id, updateMeDto);
   }

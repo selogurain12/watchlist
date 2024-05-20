@@ -5,6 +5,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Stats } from './entities/me.entity';
 import { In, Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
+import { FilmothequeService } from '../filmotheque/filmotheque.service';
+import { BibliothequeService } from '../bibliotheque/bibliotheque.service';
+import { LivrestermineService } from '../livrestermine/livrestermine.service';
+import { FilmstermineService } from '../filmstermine/filmstermine.service';
+import { LivresencoursService } from '../livresencours/livresencours.service';
+import { FilmsencoursService } from '../filmsencours/filmsencours.service';
 
 @Injectable()
 export class MeService {
@@ -13,6 +19,12 @@ export class MeService {
     public readonly meRepository: Repository<Stats>,
     @InjectRepository(User)
     public readonly userRepository: Repository<User>,
+    public readonly filmothequeService: FilmothequeService,
+    public readonly bibliothequeService: BibliothequeService,
+    public readonly livreTermineService: LivrestermineService,
+    public readonly filmTermineService: FilmstermineService,
+    public readonly livreEnCoursService: LivresencoursService,
+    public readonly filmEnCoursService: FilmsencoursService,
   ){}
   
   async create(createMeDto: CreateMeDto) {
@@ -66,7 +78,21 @@ export class MeService {
     if(!existingStats){
       throw new NotFoundException('This stats dosen\'t exist')
     }
-    return existingStats;
+    const filmotheque = await this.filmothequeService.countAll(user)
+    const bibliotheque = await this.bibliothequeService.countAll(user)
+    const filmsTermine = await this.filmTermineService.countAll(user)
+    const livresTermine = await this.livreTermineService.countAll(user)
+    const livreEnCours = await this.livreEnCoursService.countAll(user)
+    const filmEnCours = await this.filmEnCoursService.countAll(user)
+    return {
+      ...existingStats,
+      filmotheque,
+      bibliotheque,
+      filmEnCours,
+      filmsTermine,
+      livreEnCours,
+      livresTermine
+    };
   }
 
   async update(userid: string, updateMeDto: UpdateMeDto) {
@@ -79,9 +105,7 @@ export class MeService {
     if (!existingStats) {
       throw new NotFoundException("Stats not found");
     }
-    existingStats.filmsvu += updateMeDto.filmsvu || 0;
     existingStats.tempsvu += updateMeDto.tempsvu || 0;
-    existingStats.livreslu += updateMeDto.livreslu || 0;
     existingStats.pageslu += updateMeDto.pageslu || 0;
 
     const savedStats = await this.meRepository.save(existingStats);

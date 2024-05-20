@@ -42,6 +42,15 @@ export class FilmothequeService {
     });
   }
 
+  countAll(users: User) {
+    return this.filmothequeRepository.count({where: 
+      {users: {
+        id: users.id
+      }},
+      relations: ["users"]
+    });
+  }
+
   async listFilminFilmotheque(id: string): Promise<Movie[]> {
     const filmotheque = await this.filmothequeRepository.findOne({where: {id}});
     if (!filmotheque) {

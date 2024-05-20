@@ -4,6 +4,7 @@ import { Filmstermine } from './entities/filmstermine.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MovieService } from '../movie/movie.service';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class FilmstermineService {
@@ -43,6 +44,15 @@ export class FilmstermineService {
     const movieIds = films.map(film => film.id_film);
     const movies = await Promise.all(movieIds.map(id => this.movieService.getMovie(id)));
     return movies;
+  }
+
+  countAll(users: User) {
+    return this.filmstermineRepository.count({where: 
+      {user: {
+        id: users.id
+      }},
+      relations: ["user"]
+    });
   }
   
 

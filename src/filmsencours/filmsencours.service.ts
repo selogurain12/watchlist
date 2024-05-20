@@ -5,6 +5,7 @@ import { Filmsencours } from './entities/filmsencours.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MovieService } from '../movie/movie.service';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class FilmsencoursService {
@@ -52,6 +53,15 @@ export class FilmsencoursService {
       })
     );
     return movieWithTempsVus;
+  }
+
+  countAll(users: User) {
+    return this.filmsencoursRepository.count({where: 
+      {user: {
+        id: users.id
+      }},
+      relations: ["user"]
+    });
   }
 
   async findfilm(id: string) {

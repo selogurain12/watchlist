@@ -49,6 +49,15 @@ export class BibliothequeService {
     });
   }
 
+  countAll(users: User) {
+    return this.bibliothequeRepository.count({where: 
+      {users: {
+        id: users.id
+      }},
+      relations: ["users"]
+    });
+  }
+
   async listBookinBibliotheque(id: string): Promise<Book[]> {
     const bibliotheque = await this.bibliothequeRepository.findOne({where: {id}});
     if (!bibliotheque) {

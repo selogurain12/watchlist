@@ -5,6 +5,7 @@ import { Livresencours } from './entities/livresencours.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BookService } from '../Book/book.service';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class LivresencoursService {
@@ -65,6 +66,15 @@ export class LivresencoursService {
       where: {
         id_livre: id
       }
+    });
+  }
+
+  countAll(users: User) {
+    return this.livresencoursRepository.count({where: 
+      {user: {
+        id: users.id
+      }},
+      relations: ["user"]
     });
   }
 

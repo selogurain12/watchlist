@@ -11,13 +11,7 @@ export class Stats {
     user: User;
 
     @Column()
-    filmsvu: number;
-
-    @Column()
     tempsvu: number;
-
-    @Column()
-    livreslu: number;
 
     @Column()
     pageslu: number;

@@ -13,9 +13,14 @@ import { Bibliotheque } from '../bibliotheque/entities/bibliotheque.entity';
 import { BibliothequeService } from '../bibliotheque/bibliotheque.service';
 import { MovieService } from '../Movie/movie.service';
 import { BookService } from '../Book/book.service';
+import { LivrestermineModule } from '../livrestermine/livrestermine.module';
+import { FilmstermineModule } from '../filmstermine/filmstermine.module';
+import { LivresencoursModule } from '../livresencours/livresencours.module';
+import { FilmsencoursModule } from '../filmsencours/filmsencours.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Stats, Friendslist, Filmotheque, Bibliotheque])],
+  imports: [TypeOrmModule.forFeature([User, Stats, Friendslist, Filmotheque, Bibliotheque]),
+LivrestermineModule, FilmstermineModule, LivresencoursModule, FilmsencoursModule],
   controllers: [UserController],
   providers: [UserService, MeService, FriendslistService, FilmothequeService, BibliothequeService, MovieService, BookService],
 })
