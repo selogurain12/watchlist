@@ -82,45 +82,6 @@ class _StatsUserState extends State<StatsUser> {
                       mainAxisAlignment: MainAxisAlignment.center, // Centrer les éléments verticalement dans la colonne
                       children: [
                         const Text(
-                          "Nombre de films vus",
-                          style: TextStyle(
-                            fontSize: 20.0, // Taille de la police
-                            fontWeight: FontWeight.bold, // Gras
-                          ),
-                        ),
-                        const SizedBox(height: 10.0), // Espacement vertical entre les textes
-                        Text(
-                          stats?.filmsvu != null ? stats!.filmsvu.toString() : '0', // Convert int to String and handle possible null
-                          style: const TextStyle(
-                            fontSize: 16.0, // Taille de la police
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20.0),
-                Center(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: 150.0, // Augmentez la hauteur pour accommoder le texte supplémentaire
-                    margin: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFCE5CB), // Couleur de fond
-                      borderRadius: BorderRadius.circular(10), // Arrondi des angles
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5), // Couleur de l'ombre
-                          spreadRadius: 5, // Étendue de l'ombre
-                          blurRadius: 7, // Flou de l'ombre
-                          offset: const Offset(0, 3), // Décalage de l'ombre
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center, // Centrer les éléments verticalement dans la colonne
-                      children: [
-                        const Text(
                           "Temps de visionnage",
                           style: TextStyle(
                             fontSize: 20.0, // Taille de la police
@@ -160,7 +121,7 @@ class _StatsUserState extends State<StatsUser> {
                       mainAxisAlignment: MainAxisAlignment.center, // Centrer les éléments verticalement dans la colonne
                       children: [
                         const Text(
-                          "Nombre de livres lus",
+                          "Nombre de pages lus",
                           style: TextStyle(
                             fontSize: 20.0, // Taille de la police
                             fontWeight: FontWeight.bold, // Gras
@@ -168,7 +129,7 @@ class _StatsUserState extends State<StatsUser> {
                         ),
                         const SizedBox(height: 10.0), // Espacement vertical entre les textes
                         Text(
-                          stats?.livreslu != null ? stats!.livreslu.toString() : '0', // Convert int to String and handle possible null
+                          stats?.pageslu != null ? stats!.pageslu.toString() : '0',
                           style: const TextStyle(
                             fontSize: 16.0, // Taille de la police
                           ),
@@ -199,7 +160,7 @@ class _StatsUserState extends State<StatsUser> {
                       mainAxisAlignment: MainAxisAlignment.center, // Centrer les éléments verticalement dans la colonne
                       children: [
                         const Text(
-                          "Nombre de pages lus",
+                          "Nombre de filmothèques",
                           style: TextStyle(
                             fontSize: 20.0, // Taille de la police
                             fontWeight: FontWeight.bold, // Gras
@@ -207,7 +168,202 @@ class _StatsUserState extends State<StatsUser> {
                         ),
                         const SizedBox(height: 10.0), // Espacement vertical entre les textes
                         Text(
-                          stats?.pageslu != null ? stats!.pageslu.toString() : '0',
+                          stats?.filmotheque != null ? stats!.filmotheque.toString() : '0',
+                          style: const TextStyle(
+                            fontSize: 16.0, // Taille de la police
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                Center(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 150.0, // Augmentez la hauteur pour accommoder le texte supplémentaire
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFCE5CB), // Couleur de fond
+                      borderRadius: BorderRadius.circular(10), // Arrondi des angles
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5), // Couleur de l'ombre
+                          spreadRadius: 5, // Étendue de l'ombre
+                          blurRadius: 7, // Flou de l'ombre
+                          offset: const Offset(0, 3), // Décalage de l'ombre
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center, // Centrer les éléments verticalement dans la colonne
+                      children: [
+                        const Text(
+                          "Nombre de bibliothèques",
+                          style: TextStyle(
+                            fontSize: 20.0, // Taille de la police
+                            fontWeight: FontWeight.bold, // Gras
+                          ),
+                        ),
+                        const SizedBox(height: 10.0), // Espacement vertical entre les textes
+                        Text(
+                          stats?.bibliotheque != null ? stats!.bibliotheque.toString() : '0',
+                          style: const TextStyle(
+                            fontSize: 16.0, // Taille de la police
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                Center(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 150.0, // Augmentez la hauteur pour accommoder le texte supplémentaire
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFCE5CB), // Couleur de fond
+                      borderRadius: BorderRadius.circular(10), // Arrondi des angles
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5), // Couleur de l'ombre
+                          spreadRadius: 5, // Étendue de l'ombre
+                          blurRadius: 7, // Flou de l'ombre
+                          offset: const Offset(0, 3), // Décalage de l'ombre
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center, // Centrer les éléments verticalement dans la colonne
+                      children: [
+                        const Text(
+                          "Nombre de films en cours",
+                          style: TextStyle(
+                            fontSize: 20.0, // Taille de la police
+                            fontWeight: FontWeight.bold, // Gras
+                          ),
+                        ),
+                        const SizedBox(height: 10.0), // Espacement vertical entre les textes
+                        Text(
+                          stats?.filmEnCours != null ? stats!.filmEnCours.toString() : '0',
+                          style: const TextStyle(
+                            fontSize: 16.0, // Taille de la police
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                Center(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 150.0, // Augmentez la hauteur pour accommoder le texte supplémentaire
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFCE5CB), // Couleur de fond
+                      borderRadius: BorderRadius.circular(10), // Arrondi des angles
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5), // Couleur de l'ombre
+                          spreadRadius: 5, // Étendue de l'ombre
+                          blurRadius: 7, // Flou de l'ombre
+                          offset: const Offset(0, 3), // Décalage de l'ombre
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center, // Centrer les éléments verticalement dans la colonne
+                      children: [
+                        const Text(
+                          "Nombre de livres en cours",
+                          style: TextStyle(
+                            fontSize: 20.0, // Taille de la police
+                            fontWeight: FontWeight.bold, // Gras
+                          ),
+                        ),
+                        const SizedBox(height: 10.0), // Espacement vertical entre les textes
+                        Text(
+                          stats?.livreEnCours != null ? stats!.livreEnCours.toString() : '0',
+                          style: const TextStyle(
+                            fontSize: 16.0, // Taille de la police
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                Center(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 150.0, // Augmentez la hauteur pour accommoder le texte supplémentaire
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFCE5CB), // Couleur de fond
+                      borderRadius: BorderRadius.circular(10), // Arrondi des angles
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5), // Couleur de l'ombre
+                          spreadRadius: 5, // Étendue de l'ombre
+                          blurRadius: 7, // Flou de l'ombre
+                          offset: const Offset(0, 3), // Décalage de l'ombre
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center, // Centrer les éléments verticalement dans la colonne
+                      children: [
+                        const Text(
+                          "Nombre de films terminés",
+                          style: TextStyle(
+                            fontSize: 20.0, // Taille de la police
+                            fontWeight: FontWeight.bold, // Gras
+                          ),
+                        ),
+                        const SizedBox(height: 10.0), // Espacement vertical entre les textes
+                        Text(
+                          stats?.filmsTermine != null ? stats!.filmsTermine.toString() : '0',
+                          style: const TextStyle(
+                            fontSize: 16.0, // Taille de la police
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                Center(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 150.0, // Augmentez la hauteur pour accommoder le texte supplémentaire
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFCE5CB), // Couleur de fond
+                      borderRadius: BorderRadius.circular(10), // Arrondi des angles
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5), // Couleur de l'ombre
+                          spreadRadius: 5, // Étendue de l'ombre
+                          blurRadius: 7, // Flou de l'ombre
+                          offset: const Offset(0, 3), // Décalage de l'ombre
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center, // Centrer les éléments verticalement dans la colonne
+                      children: [
+                        const Text(
+                          "Nombre de livres terminés",
+                          style: TextStyle(
+                            fontSize: 20.0, // Taille de la police
+                            fontWeight: FontWeight.bold, // Gras
+                          ),
+                        ),
+                        const SizedBox(height: 10.0), // Espacement vertical entre les textes
+                        Text(
+                          stats?.livresTermine != null ? stats!.livresTermine.toString() : '0',
                           style: const TextStyle(
                             fontSize: 16.0, // Taille de la police
                           ),

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:whashlist/features/stats/domain/entities/stats_entity.dart';
 
 abstract class StatsState {
-  final UpdateStatsResponseEntity? updatestats;
+  final StatsResponseEntity? updatestats;
   final StatsResponseEntity? stats;
   final DioException? error;
 
@@ -18,7 +18,7 @@ class StatsLoading extends StatsState {
 }
 
 class UpdateStatsLoaded extends StatsState {
-  const UpdateStatsLoaded({UpdateStatsResponseEntity? updatestats})
+  const UpdateStatsLoaded({StatsResponseEntity? updatestats})
       : super(updatestats: updatestats);
 }
 

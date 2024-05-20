@@ -3,14 +3,23 @@ import 'package:whashlist/core/usecases/usecase.dart';
 import 'package:whashlist/features/stats/domain/entities/stats_entity.dart';
 import 'package:whashlist/features/stats/domain/repositories/stats_repository.dart';
 
-class UpdateStatsUseCase implements UseCase<DataState<UpdateStatsResponseEntity>, UpdateStatsRequestEntity> {
+class UpdateStatsUseCase
+    implements UseCase<DataState<StatsResponseEntity>, UpdateStatsParam> {
   final StatsRepository repository;
   const UpdateStatsUseCase(this.repository);
-  
+
   @override
-  Future<DataState<UpdateStatsResponseEntity>> call({UpdateStatsRequestEntity? params}) {
+  Future<DataState<StatsResponseEntity>> call({UpdateStatsParam? params}) {
     return repository.updatestats(
-      body: params,
+      id: params?.id,
+      body: params?.stats,
     );
   }
+}
+
+class UpdateStatsParam {
+  final String? id;
+  final StatsRequestEntity? stats;
+
+  UpdateStatsParam({this.id, this.stats});
 }

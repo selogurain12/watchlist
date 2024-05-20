@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whashlist/core/ressources/data_state.dart';
-import 'package:whashlist/features/stats/domain/entities/stats_entity.dart';
 import 'package:whashlist/features/stats/domain/usecases/stats.dart';
 import 'package:whashlist/features/stats/domain/usecases/updatestats.dart';
 import 'package:whashlist/features/stats/presentation/bloc/stats_event.dart';
 import 'package:whashlist/features/stats/presentation/bloc/stats_state.dart';
+import 'package:whashlist/features/user/domain/entities/user_entity.dart';
 
 class StatsBloc extends Bloc<StatEvent, StatsState> {
   final UpdateStatsUseCase updatestatsUseCase;
@@ -21,12 +21,7 @@ class StatsBloc extends Bloc<StatEvent, StatsState> {
   void updatestats(UpdateStatEvent event, Emitter<StatsState> emit) async {
     emit(const StatsLoading());
     final data = await updatestatsUseCase(
-      params: UpdateStatsRequestEntity(
-          iduser: event.iduser,
-          filmsvu: event.filmsvu,
-          tempsvu: event.tempsvu,
-          livreslu: event.livreslu,
-          pageslu: event.pageslu),
+      params: UpdateStatsParam(id: event.id, stats: event.update),
     );
 
     if (data is DataSuccess) {
@@ -41,11 +36,12 @@ class StatsBloc extends Bloc<StatEvent, StatsState> {
   void stats(StatsEvent event, Emitter<StatsState> emit) async {
     emit(const StatsLoading());
     final data = await statsUseCase(
-      params: StatsRequestEntity(
+      params: UserRequestEntity(
           id: event.id,
           nom: event.nom,
           prenom: event.prenom,
-          username: event.username),
+          username: event.username,
+          mail: event.mail),
     );
 
     if (data is DataSuccess) {

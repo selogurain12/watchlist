@@ -1,20 +1,16 @@
+import 'package:whashlist/features/stats/domain/entities/stats_entity.dart';
+
 abstract class StatEvent {
   const StatEvent();
 }
 
 class UpdateStatEvent extends StatEvent {
-  final String? iduser;
-  final int? filmsvu;
-  final int? tempsvu;
-  final int? livreslu;
-  final int? pageslu;
+  final String? id;
+  final StatsRequestEntity? update;
 
   const UpdateStatEvent({
-    this.iduser,
-    this.filmsvu,
-    this.tempsvu,
-    this.livreslu,
-    this.pageslu,
+    this.id,
+    this.update,
   });
 }
 
@@ -23,11 +19,13 @@ class StatsEvent extends StatEvent {
   final String? nom;
   final String? prenom;
   final String? username;
+  final String? mail;
 
   const StatsEvent({
     this.id,
     this.nom,
     this.prenom,
     this.username,
+    this.mail
   });
 }

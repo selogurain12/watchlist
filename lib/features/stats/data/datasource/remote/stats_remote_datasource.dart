@@ -2,6 +2,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:whashlist/core/constants/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:whashlist/features/stats/data/models/stats_model.dart';
+import 'package:whashlist/features/user/data/models/user_model.dart';
 
 part 'stats_remote_datasource.g.dart';
 
@@ -9,15 +10,16 @@ part 'stats_remote_datasource.g.dart';
 abstract class StatsService {
   factory StatsService(Dio dio) = _StatsService;
 
-  @POST("/user/me/updatestats")
-  Future<HttpResponse<UpdateStatsResponseModel>> updatestats ({
-    @Body() UpdateStatsRequestModel? body,
+  @GET("/user/me/stats")
+  Future<HttpResponse<StatsResponseModel>> stats ({
+    @Body() UserRequestModel? body,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,
   });
 
-  @POST("/user/me/stats")
-  Future<HttpResponse<StatsResponseModel>> stats ({
+  @PATCH("/user/me/stats/{id}")
+  Future<HttpResponse<StatsResponseModel>> updatestats ({
+    @Path('id') String? id,
     @Body() StatsRequestModel? body,
     @Header('Content-Type') String? contentType,
     @Header('Accept') String? accept,

@@ -7,96 +7,16 @@ import 'package:json_annotation/json_annotation.dart';
 part 'stats_model.g.dart';
 
 @JsonSerializable()
-class UpdateStatsRequestModel extends UpdateStatsRequestEntity {
-  final String? iduser;
-  final int? filmsvu;
-  final int? tempsvu;
-  final int? livreslu;
-  final int? pageslu;
-
-  const UpdateStatsRequestModel({
-    this.iduser,
-    this.filmsvu,
-    this.tempsvu,
-    this.livreslu,
-    this.pageslu
-}): super(
-    iduser: iduser,
-    filmsvu: filmsvu,
-    tempsvu: tempsvu,
-    livreslu: livreslu,
-    pageslu: pageslu,
-  );
-
-  factory UpdateStatsRequestModel.fromJson(Map<String, dynamic> json) =>
-    _$UpdateStatsRequestModelFromJson(json);
-  Map<String, dynamic> toJson() => _$UpdateStatsRequestModelToJson(this);
-
-  factory UpdateStatsRequestModel.fromEntity(UpdateStatsRequestEntity entity) {
-    return UpdateStatsRequestModel(
-      iduser: entity.iduser,
-      filmsvu: entity.filmsvu,
-      tempsvu: entity.tempsvu,
-      livreslu: entity.livreslu,
-      pageslu: entity.pageslu,
-    );
-  }
-}
-
-@JsonSerializable()
-class UpdateStatsResponseModel extends UpdateStatsResponseEntity {
-  final String? iduser;
-  final int? filmsvu;
-  final int? tempsvu;
-  final int? livreslu;
-  final int? pageslu;
-
-  const UpdateStatsResponseModel({
-    this.iduser,
-    this.filmsvu,
-    this.tempsvu,
-    this.livreslu,
-    this.pageslu,
-}): super(
-    iduser: iduser,
-    filmsvu: filmsvu,
-    tempsvu: tempsvu,
-    livreslu: livreslu,
-    pageslu: pageslu,
-  );
-
-  factory UpdateStatsResponseModel.fromJson(Map<String, dynamic> json) =>
-    _$UpdateStatsResponseModelFromJson(json);
-  Map<String, dynamic> toJson() => _$UpdateStatsResponseModelToJson(this);
-
-  factory UpdateStatsResponseModel.fromEntity(UpdateStatsResponseEntity entity) {
-    return UpdateStatsResponseModel(
-      iduser: entity.iduser,
-      filmsvu: entity.filmsvu,
-      tempsvu: entity.tempsvu,
-      livreslu: entity.livreslu,
-      pageslu: entity.pageslu,
-    );
-  }
-}
-
-@JsonSerializable()
 class StatsRequestModel extends StatsRequestEntity {
-  final String? id;
-  final String? nom;
-  final String? prenom;
-  final String? username;
+  final int? tempsvu;
+  final int? pageslu;
 
   const StatsRequestModel({
-    this.id,
-    this.nom,
-    this.prenom,
-    this.username,
+    this.tempsvu,
+    this.pageslu
 }): super(
-    id: id,
-    nom: nom,
-    prenom: prenom,
-    username: username,
+    tempsvu: tempsvu,
+    pageslu: pageslu,
   );
 
   factory StatsRequestModel.fromJson(Map<String, dynamic> json) =>
@@ -105,34 +25,44 @@ class StatsRequestModel extends StatsRequestEntity {
 
   factory StatsRequestModel.fromEntity(StatsRequestEntity entity) {
     return StatsRequestModel(
-      id: entity.id,
-      nom: entity.nom,
-      prenom: entity.prenom,
-      username: entity.username,
+      tempsvu: entity.tempsvu,
+      pageslu: entity.pageslu,
     );
   }
 }
 
 @JsonSerializable()
 class StatsResponseModel extends StatsResponseEntity {
-  final String? iduser;
-  final int? filmsvu;
+  final String? id;
   final int? tempsvu;
-  final int? livreslu;
   final int? pageslu;
+  final int? filmotheque;
+  final int? bibliotheque;
+  final int? filmEnCours;
+  final int? filmsTermine;
+  final int? livreEnCours;
+  final int? livresTermine;
 
   const StatsResponseModel({
-    this.iduser,
-    this.filmsvu,
+    this.id,
     this.tempsvu,
-    this.livreslu,
     this.pageslu,
+    this.bibliotheque,
+    this.filmEnCours,
+    this.filmotheque,
+    this.filmsTermine,
+    this.livreEnCours,
+    this.livresTermine
 }): super(
-    iduser: iduser,
-    filmsvu: filmsvu,
+    id: id,
     tempsvu: tempsvu,
-    livreslu: livreslu,
     pageslu: pageslu,
+    bibliotheque: bibliotheque,
+    filmEnCours: filmEnCours,
+    filmotheque: filmotheque,
+    filmsTermine: filmsTermine,
+    livreEnCours: livreEnCours,
+    livresTermine: livresTermine
   );
 
   factory StatsResponseModel.fromJson(Map<String, dynamic> json) =>
@@ -141,11 +71,15 @@ class StatsResponseModel extends StatsResponseEntity {
 
   factory StatsResponseModel.fromEntity(StatsResponseEntity entity) {
     return StatsResponseModel(
-      iduser: entity.iduser,
-      filmsvu: entity.filmsvu,
+      id: entity.id,
       tempsvu: entity.tempsvu,
-      livreslu: entity.livreslu,
       pageslu: entity.pageslu,
+      bibliotheque: entity.bibliotheque,
+      filmEnCours: entity.filmEnCours,
+      filmotheque: entity.filmotheque,
+      filmsTermine: entity.filmsTermine,
+      livreEnCours: entity.livreEnCours,
+      livresTermine: entity.livresTermine
     );
   }
 }

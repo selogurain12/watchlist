@@ -21,8 +21,8 @@ class _StatsService implements StatsService {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<UpdateStatsResponseModel>> updatestats({
-    UpdateStatsRequestModel? body,
+  Future<HttpResponse<StatsResponseModel>> stats({
+    UserRequestModel? body,
     String? contentType,
     String? accept,
   }) async {
@@ -37,15 +37,15 @@ class _StatsService implements StatsService {
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<UpdateStatsResponseModel>>(Options(
-      method: 'POST',
+        _setStreamType<HttpResponse<StatsResponseModel>>(Options(
+      method: 'GET',
       headers: _headers,
       extra: _extra,
       contentType: contentType,
     )
             .compose(
               _dio.options,
-              '/user/me/updatestats',
+              '/user/me/stats',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -54,13 +54,14 @@ class _StatsService implements StatsService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = UpdateStatsResponseModel.fromJson(_result.data!);
+    final value = StatsResponseModel.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<StatsResponseModel>> stats({
+  Future<HttpResponse<StatsResponseModel>> updatestats({
+    String? id,
     StatsRequestModel? body,
     String? contentType,
     String? accept,
@@ -77,14 +78,14 @@ class _StatsService implements StatsService {
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<StatsResponseModel>>(Options(
-      method: 'POST',
+      method: 'PATCH',
       headers: _headers,
       extra: _extra,
       contentType: contentType,
     )
             .compose(
               _dio.options,
-              '/user/me/stats',
+              '/user/me/stats/${id}',
               queryParameters: queryParameters,
               data: _data,
             )

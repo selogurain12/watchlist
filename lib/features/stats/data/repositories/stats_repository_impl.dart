@@ -4,21 +4,22 @@ import 'package:whashlist/features/stats/data/datasource/remote/stats_remote_dat
 import 'package:whashlist/features/stats/data/models/stats_model.dart';
 import 'package:whashlist/features/stats/domain/entities/stats_entity.dart';
 import 'package:whashlist/features/stats/domain/repositories/stats_repository.dart';
+import 'package:whashlist/features/user/data/models/user_model.dart';
+import 'package:whashlist/features/user/domain/entities/user_entity.dart';
 
 class StatsRepositoryImpl implements StatsRepository {
   final StatsService apiService;
   const StatsRepositoryImpl(this.apiService);
 
   @override
-  Future<DataState<UpdateStatsResponseModel>> updatestats (
-      {UpdateStatsRequestEntity? body}) async {
+  Future<DataState<StatsResponseModel>> stats({UserRequestEntity? body}) async {
     try {
-      final response = await apiService.updatestats(
-        body: UpdateStatsRequestModel.fromEntity(body!),
+      final response = await apiService.stats(
+        body: UserRequestModel.fromEntity(body!),
         accept: "application/json",
         contentType: "application/json",
       );
-      if (response.response.statusCode == 201) {
+      if (response.response.statusCode == 200) {
         // await _getAndSaveToken();
         return DataSuccess(response.data);
       } else {
@@ -37,15 +38,17 @@ class StatsRepositoryImpl implements StatsRepository {
   }
 
   @override
-  Future<DataState<StatsResponseModel>> stats (
-      {StatsRequestEntity? body}) async {
+  Future<DataState<StatsResponseModel>> updatestats(
+      {StatsRequestEntity? body, String? id}) async {
     try {
-      final response = await apiService.stats(
+      final response = await apiService.updatestats(
+        id: id,
         body: StatsRequestModel.fromEntity(body!),
         accept: "application/json",
         contentType: "application/json",
       );
-      if (response.response.statusCode == 201) {
+      print(response);
+      if (response.response.statusCode == 200) {
         // await _getAndSaveToken();
         return DataSuccess(response.data);
       } else {
@@ -59,6 +62,7 @@ class StatsRepositoryImpl implements StatsRepository {
         );
       }
     } on DioException catch (e) {
+      print(e.requestOptions.path);
       return DataFailure(e);
     }
   }
