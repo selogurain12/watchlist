@@ -4,6 +4,7 @@ import 'package:whashlist/features/bibliotheques/presentation/pages/viewfilmo_sc
 import 'package:whashlist/features/book/domain/entities/book_entity.dart';
 import 'package:whashlist/features/book/presentation/pages/detailsbook_screen.dart';
 import 'package:whashlist/features/book/presentation/pages/searchbook_screen.dart';
+import 'package:whashlist/features/filmencours/presentation/pages/listfilmencours_screen.dart';
 import 'package:whashlist/features/filmotheques/domain/entities/filmotheques_entity.dart';
 import 'package:whashlist/features/filmotheques/presentation/pages/listmovie_screen.dart';
 import 'package:whashlist/features/filmotheques/presentation/pages/viewfilmo_screen.dart';
@@ -104,6 +105,10 @@ final router = GoRouter(
     GoRoute(
       path: '/filmtermine',
       builder: (context, state) => const ListFilmTermineScreen(),
+    ),
+    GoRoute(
+      path: '/filmencours',
+      builder: (context, state) => const ListFilmEnCoursScreen(),
     ),
     GoRoute(
       path: '/livretermine',
