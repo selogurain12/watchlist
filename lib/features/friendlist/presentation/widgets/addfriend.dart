@@ -63,7 +63,7 @@ class _AddFriend extends State<AddFriend> {
             Navigator.of(context).pop();
           });
         }
-        Future.delayed(const Duration(seconds: 5));
+        Future.delayed(const Duration(seconds: 2));
         if (state is AddFriendLoaded) {
           Future.delayed(const Duration(seconds: 2));
           widget.onFriendAdded();

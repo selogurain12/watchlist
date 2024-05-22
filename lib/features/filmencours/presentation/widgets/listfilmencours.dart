@@ -100,7 +100,7 @@ class _ListFilmEnCours extends State<ListFilmEnCours> {
                               },
                               child: Center(
                                 child: Image.network(
-                                  "https://image.tmdb.org/t/p/original/${filmencours.backdrop_path}",
+                                  "https://image.tmdb.org/t/p/original/${filmencours.poster_path}",
                                   fit: BoxFit.cover,
                                 ),
                               ),

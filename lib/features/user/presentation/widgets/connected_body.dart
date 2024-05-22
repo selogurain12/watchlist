@@ -12,7 +12,7 @@ class ConnectedBody extends StatelessWidget {
     final userProvider = Provider.of<UserProvider>(context);
 
     if (authProvider.isLoggedIn) {
-      Future.delayed(const Duration(seconds: 5), () {
+      Future.delayed(const Duration(seconds: 3), () {
         context.go('/');
       });
 

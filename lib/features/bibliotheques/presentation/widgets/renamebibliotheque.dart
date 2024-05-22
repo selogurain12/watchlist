@@ -55,7 +55,7 @@ class _RenameBibliotheque extends State<RenameBibliotheque> {
               Navigator.of(context).pop();
             });
           }
-          Future.delayed(const Duration(seconds: 5));
+          Future.delayed(const Duration(seconds: 2));
           if (state is ModifieBibliothequeLoaded) {
             Future.delayed(const Duration(seconds: 2));
             widget.onBibliothequeRename();

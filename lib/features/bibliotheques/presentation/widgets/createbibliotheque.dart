@@ -55,7 +55,7 @@ Widget build(BuildContext context) {
           Navigator.of(context).pop();
         });
       }
-       Future.delayed(const Duration(seconds: 5));
+       Future.delayed(const Duration(seconds: 2));
     if (state is CreateBibliothequeLoaded) {
         Future.delayed(const Duration(seconds: 2));
         widget.onBibliothequeAdded();

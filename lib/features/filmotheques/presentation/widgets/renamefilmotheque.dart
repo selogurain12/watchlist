@@ -55,7 +55,7 @@ class _RenameFilmotheque extends State<RenameFilmotheque> {
               Navigator.of(context).pop();
             });
           }
-          Future.delayed(const Duration(seconds: 5));
+          Future.delayed(const Duration(seconds: 2));
           if (state is ModifieFilmothequeLoaded) {
             Future.delayed(const Duration(seconds: 2));
             widget.onFilmothequeRename();
