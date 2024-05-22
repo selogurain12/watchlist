@@ -47,7 +47,6 @@ class StatsRepositoryImpl implements StatsRepository {
         accept: "application/json",
         contentType: "application/json",
       );
-      print(response);
       if (response.response.statusCode == 200) {
         // await _getAndSaveToken();
         return DataSuccess(response.data);
@@ -62,7 +61,6 @@ class StatsRepositoryImpl implements StatsRepository {
         );
       }
     } on DioException catch (e) {
-      print(e.requestOptions.path);
       return DataFailure(e);
     }
   }

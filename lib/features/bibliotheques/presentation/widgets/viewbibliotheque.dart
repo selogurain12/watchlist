@@ -72,7 +72,7 @@ class _ViewBibliotheque extends State<ViewBibliotheque> {
                           8.0), // Ajoutez du padding autour du bouton de retour
                   child: ElevatedButton(
                     onPressed: () {
-                      context.go("/");
+                      context.go("/livre");
                     },
                     child: const Icon(Icons.arrow_back_rounded),
                   ),
