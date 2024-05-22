@@ -13,7 +13,6 @@ export class LivrestermineController {
 
   @Get(':id')
   findAll(@Param('id') id: string) {
-    console.log(id);
     return this.livrestermineService.findAll(id);
   }
 

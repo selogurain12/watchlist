@@ -19,7 +19,6 @@ export class LivresencoursController {
 
   @Get('livre/:id')
   findfilm(@Param('id') id: string) {
-    console.log(id)
     return this.livresencoursService.findlivre(id);
   }
 
